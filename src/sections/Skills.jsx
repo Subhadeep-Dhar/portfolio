@@ -20,7 +20,7 @@ export default function Skills() {
 
         <SectionHeader
           label="Tools and Technologies"
-          title="Tools of the trade."
+          title="Tools that I used/learning."
           // subtitle="Grouped by domain. Dot = core skill. No dot = proficient. ~ = actively learning."
         />
 

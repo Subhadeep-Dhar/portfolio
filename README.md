@@ -1,192 +1,262 @@
-# Dev Lab Portfolio
+# 🧪 Dev Lab Portfolio
 
-A futuristic, modular personal portfolio built with Next.js, Tailwind CSS, and Framer Motion.
+> A futuristic, modular personal portfolio — built for developers who think like researchers.
+
+![Next.js](https://img.shields.io/badge/Next.js-14-black?style=flat-square&logo=next.js)
+![React](https://img.shields.io/badge/React-18-61DAFB?style=flat-square&logo=react&logoColor=black)
+![Tailwind CSS](https://img.shields.io/badge/Tailwind-3-06B6D4?style=flat-square&logo=tailwindcss&logoColor=white)
+![Framer Motion](https://img.shields.io/badge/Framer_Motion-11-FF0080?style=flat-square&logo=framer&logoColor=white)
+![License](https://img.shields.io/badge/license-MIT-green?style=flat-square)
 
 ---
 
-## Quick Start
+## Preview
+
+```
+┌─────────────────────────────────────────────────────┐
+│  LAB_INITIALIZED  ● OPEN TO WORK                    │
+│                                                     │
+│  Building Solutions Through                         │
+│  Code & Curiosity                                   │
+│                                                     │
+│  MCA Student · Developer · Analyst                  │
+│                                                     │
+│  [ ENTER MY LAB → ]   [ ABOUT ME ]                  │
+└─────────────────────────────────────────────────────┘
+```
+
+Dark futuristic UI · Neon accents · Glassmorphism · Fully responsive
+
+---
+
+## Features
+
+- **Fully data-driven** — add a project by editing one file. Zero UI changes needed.
+- **Modular sections** — reorder or hide any section by editing a single line in `page.jsx`
+- **Lightweight animations** — CSS-only background effects, Framer Motion only where it adds value
+- **Mobile-first** — responsive across all screen sizes
+- **Clean codebase** — well-commented, beginner-friendly to modify
+- **SEO ready** — Open Graph, Twitter cards, and metadata via Next.js
+
+---
+
+## Tech Stack
+
+| Layer | Technology |
+|---|---|
+| Framework | Next.js 14 (App Router) |
+| UI Library | React 18 |
+| Styling | Tailwind CSS 3 |
+| Animation | Framer Motion 11 |
+| Fonts | Syne · Space Grotesk · JetBrains Mono |
+| Deployment | Vercel (recommended) |
+
+---
+
+## Project Structure
+
+```
+my-portfolio/
+├── src/
+│   ├── app/
+│   │   ├── layout.jsx          # Root layout, metadata, SEO
+│   │   └── page.jsx            # ← Compose / reorder sections here
+│   │
+│   ├── components/             # Reusable UI building blocks
+│   │   ├── Navbar.jsx
+│   │   ├── ProjectCard.jsx     # Expandable experiment card
+│   │   ├── TimelineItem.jsx    # Single timeline entry
+│   │   ├── SkillBadge.jsx      # Skill pill with level indicator
+│   │   └── SectionHeader.jsx   # Consistent section titles
+│   │
+│   ├── sections/               # Full-page sections
+│   │   ├── Hero.jsx            # Landing + CTA
+│   │   ├── About.jsx           # Researcher profile
+│   │   ├── Skills.jsx          # Tech Arsenal
+│   │   ├── Projects.jsx        # Experiments (filtered grid)
+│   │   ├── CaseStudy.jsx       # Featured project deep-dives
+│   │   ├── Timeline.jsx        # Evolution Log
+│   │   ├── ConceptVault.jsx    # Ideas & future plans
+│   │   └── Contact.jsx         # Links + footer
+│   │
+│   ├── data/                   # ✦ Edit these for all content
+│   │   ├── projects.js         # All projects live here
+│   │   ├── skills.js           # Grouped skill categories
+│   │   ├── timeline.js         # Career milestones
+│   │   ├── concepts.js         # Idea vault entries
+│   │   └── siteConfig.js       # Name, bio, links, SEO
+│   │
+│   └── styles/
+│       └── globals.css         # Base styles + design tokens
+│
+├── public/                     # Static assets (resume, OG image)
+├── tailwind.config.js          # Design tokens + theme
+├── next.config.js
+└── jsconfig.json               # Path aliases (@/...)
+```
+
+---
+
+## Getting Started
+
+### Prerequisites
+
+- Node.js 18+
+- npm or yarn
+
+### Installation
 
 ```bash
-# 1. Install dependencies
+# Clone the repo
+git clone https://github.com/yourusername/dev-lab-portfolio.git
+cd dev-lab-portfolio
+
+# Install dependencies
 npm install
 
-# 2. Start dev server
+# Start the development server
 npm run dev
-
-# 3. Open browser
-# http://localhost:3000
 ```
+
+Open [http://localhost:3000](http://localhost:3000) in your browser.
 
 ---
 
-## Folder Structure
+## Personalising the Portfolio
 
-```
-src/
-├── app/
-│   ├── layout.jsx        ← SEO metadata, root HTML wrapper
-│   └── page.jsx          ← Compose/reorder sections here
-│
-├── components/           ← Reusable UI building blocks
-│   ├── Navbar.jsx
-│   ├── ProjectCard.jsx
-│   ├── TimelineItem.jsx
-│   ├── SkillBadge.jsx
-│   └── SectionHeader.jsx
-│
-├── sections/             ← Full page sections
-│   ├── Hero.jsx
-│   ├── About.jsx
-│   ├── Skills.jsx
-│   ├── Projects.jsx
-│   ├── CaseStudy.jsx
-│   ├── Timeline.jsx
-│   ├── ConceptVault.jsx
-│   └── Contact.jsx
-│
-├── data/                 ← ✦ EDIT THESE for all content changes
-│   ├── projects.js       ← Add/remove projects here
-│   ├── skills.js         ← Add/remove skills here
-│   ├── timeline.js       ← Update career history here
-│   ├── concepts.js       ← Add future ideas here
-│   └── siteConfig.js     ← Your name, bio, links, SEO
-│
-└── styles/
-    └── globals.css       ← Base styles, design tokens
+### 1. Update your identity
+
+Edit `src/data/siteConfig.js`:
+
+```js
+export const siteConfig = {
+  name: 'Your Name',
+  handle: '@yourhandle',
+  headline: 'Building Solutions Through Code & Curiosity',
+  bio: [
+    'First paragraph about you.',
+    'Second paragraph about your approach.',
+  ],
+  links: {
+    email:    'you@email.com',
+    github:   'https://github.com/yourusername',
+    linkedin: 'https://linkedin.com/in/yourprofile',
+    resume:   '/resume.pdf',   // place file in public/
+  },
+};
 ```
 
----
+### 2. Add a project
 
-## How to Update Content
-
-### Add a new project
-Open `src/data/projects.js` and add a new object to the `projects` array:
+Open `src/data/projects.js` and add a new entry to the `projects` array:
 
 ```js
 {
-  id: 'my-new-project',           // unique slug
+  id: 'my-new-project',
   title: 'My New Project',
-  tagline: 'One-line summary',
+  tagline: 'One-line hook',
   problem: 'What problem did this solve?',
   hypothesis: 'What did you think would work?',
   approach: 'How did you build it?',
-  result: 'What happened?',
-  future: 'What would you improve?',
-  tech: ['React', 'Python'],       // shown as badges
-  tags: ['Fullstack', 'ML'],       // for filter tabs
-  featured: false,                 // true = appears in Case Studies
-  status: 'completed',            // 'completed' | 'in-progress' | 'archived'
+  result: 'What happened — metrics, outcomes.',
+  future: 'What would you improve next?',
+  tech: ['React', 'Python', 'PostgreSQL'],
+  tags: ['Fullstack', 'ML'],
+  featured: false,              // true = appears in Case Studies
+  status: 'completed',          // 'completed' | 'in-progress' | 'archived'
   year: '2024',
   links: {
-    demo: 'https://...',           // or null
-    github: 'https://...',         // or null
+    demo: 'https://...',        // or null
+    github: 'https://...',      // or null
   },
 },
 ```
 
-That's it. The card appears automatically.
+The card renders automatically. No other file needs to change.
 
----
+### 3. Add a skill
 
-### Add a skill
 Open `src/data/skills.js` and add to an existing category:
 
 ```js
 { name: 'Redis', level: 'proficient' }
-// level: 'core' | 'proficient' | 'learning'
+// level options: 'core' | 'proficient' | 'learning'
 ```
 
-Or add a whole new category:
+### 4. Hide a section
 
-```js
-{
-  label: 'Databases',
-  icon: '◑',
-  color: 'purple',              // 'cyan' or 'purple'
-  skills: [
-    { name: 'Redis', level: 'core' },
-    { name: 'MongoDB', level: 'proficient' },
-  ],
-},
-```
-
----
-
-### Update your bio / personal info
-Open `src/data/siteConfig.js` and edit:
-- `name` — your name
-- `bio` — array of paragraphs shown in the About section
-- `links` — email, GitHub, LinkedIn, Twitter/X, resume path
-- `seo` — page title, description, OG image URL
-
----
-
-### Add a timeline entry
-Open `src/data/timeline.js`:
-
-```js
-{
-  year: '2025',
-  title: 'Joined XYZ as Backend Engineer',
-  desc: 'First full-time role. Building payment infrastructure at scale.',
-  type: 'milestone',    // 'education' | 'project' | 'achievement' | 'milestone'
-},
-```
-
----
-
-### Hide a section
-Open `src/app/page.jsx` and comment out the section:
+In `src/app/page.jsx`, comment out any section:
 
 ```jsx
 {/* <ConceptVault /> */}
 ```
 
----
+### 5. Reorder sections
 
-### Reorder sections
-In `src/app/page.jsx`, move the component lines into whatever order you want.
+In `src/app/page.jsx`, move the component lines into any order.
 
 ---
 
 ## Customisation
 
 ### Change accent colors
-Open `src/styles/globals.css` and edit the `:root` variables:
+
+Edit the CSS variables in `src/styles/globals.css`:
 
 ```css
 :root {
   --lab-cyan:   #00e5ff;   /* primary neon */
   --lab-purple: #a855f7;   /* secondary accent */
+  --lab-bg:     #050810;   /* background */
 }
 ```
 
-Or edit `tailwind.config.js` under `theme.extend.colors.lab`.
-
 ### Change fonts
-Edit the `@import` in `globals.css` and update `tailwind.config.js` under `fontFamily`.
+
+1. Update the `@import` in `globals.css` with your Google Fonts URL
+2. Update `tailwind.config.js` under `theme.extend.fontFamily`
 
 ---
 
 ## Deployment
 
-### Vercel (recommended — zero config)
+### Vercel (recommended)
+
 ```bash
 npx vercel
 ```
 
-### Build locally
+Or connect the GitHub repo directly in the [Vercel dashboard](https://vercel.com) — it auto-detects Next.js and deploys with zero configuration.
+
+### Manual build
+
 ```bash
-npm run build
-npm run start
+npm run build    # creates optimised production build
+npm run start    # serves production build locally
 ```
 
 ---
 
-## Performance Notes
+## Performance
 
-- Framer Motion is used **minimally**: only `whileInView` reveals + layout animations
-- Background is pure CSS grid animation (no canvas)
-- Glow effects are CSS box-shadow + opacity (no filters)
-- All images should be placed in `public/images/` and used via Next.js `<Image />`
-- Fonts are loaded via Google Fonts with `display=swap`
+- Background effect is pure CSS (`@keyframes`) — no canvas, no JS
+- Glow effects use CSS `box-shadow` — no SVG filters
+- Framer Motion only runs `whileInView` scroll reveals and layout transitions
+- Fonts loaded with `display=swap` to prevent layout shift
+- Images served via Next.js `<Image />` with AVIF/WebP optimisation
+
+---
+
+## License
+
+MIT — use it, modify it, ship it. Attribution appreciated but not required.
+
+---
+
+## Acknowledgements
+
+Built with [Next.js](https://nextjs.org), [Tailwind CSS](https://tailwindcss.com), and [Framer Motion](https://www.framer.com/motion).
+
+---
+
+<p align="center">Made with ☕ and too many terminal windows open</p>

@@ -23,102 +23,135 @@
  */
 
 export const projects = [
+  // {
+  //   id: 'sentiment-engine',
+  //   title: 'Sentiment Analysis Engine',
+  //   tagline: 'Real-time NLP pipeline for customer feedback classification',
+  //   problem:
+  //     'A retail client received 10,000+ monthly reviews across platforms. Manual tagging took 3 days per month and missed nuanced emotion categories.',
+  //   hypothesis:
+  //     'A fine-tuned transformer model with a streaming ingestion layer could classify sentiment and extract themes in under 200ms per document.',
+  //   approach:
+  //     'Built a Python FastAPI service wrapping a fine-tuned DistilBERT model. Kafka handles streaming ingestion; results are stored in PostgreSQL with a React dashboard for live visualization.',
+  //   result:
+  //     'Reduced tagging time from 3 days to under 4 hours. Accuracy: 91.3% on 5-class classification. Dashboard adopted by 3 internal teams.',
+  //   future:
+  //     'Add aspect-based sentiment (ABSA) to drill into specific product features. Explore few-shot classification for niche verticals.',
+  //   tech: ['Python', 'FastAPI', 'HuggingFace', 'Kafka', 'PostgreSQL', 'React', 'Docker'],
+  //   tags: ['ML', 'Backend', 'Data'],
+  //   featured: true,
+  //   status: 'completed',
+  //   year: '2024',
+  //   links: {
+  //     demo: null,
+  //     github: 'https://github.com/yourusername/sentiment-engine',
+  //   },
+  // },
   {
-    id: 'sentiment-engine',
-    title: 'Sentiment Analysis Engine',
-    tagline: 'Real-time NLP pipeline for customer feedback classification',
+    id: 'face-gesture-controller',
+    title: 'Face Gesture Controller',
+    tagline: 'Hands-free reels control using real-time gesture and facial expression detection',
     problem:
-      'A retail client received 10,000+ monthly reviews across platforms. Manual tagging took 3 days per month and missed nuanced emotion categories.',
+      'Controlling Instagram Reels requires constant hand interaction. Wanted a completely hands-free way to like, skip, and navigate short-form content using only facial expressions.',
     hypothesis:
-      'A fine-tuned transformer model with a streaming ingestion layer could classify sentiment and extract themes in under 200ms per document.',
+      'MediaPipe FaceMesh landmarks could reliably detect smile, eyebrow raises, and mouth open gestures with enough stability filtering to avoid false positives — and map them directly to browser keyboard shortcuts.',
     approach:
-      'Built a Python FastAPI service wrapping a fine-tuned DistilBERT model. Kafka handles streaming ingestion; results are stored in PostgreSQL with a React dashboard for live visualization.',
+      'Built a Python script using MediaPipe FaceLandmarker for 468-point face mesh detection and OpenCV for real-time webcam capture. Gesture stability is enforced by requiring 8+ consecutive frames before firing. PyAutoGUI sends keyboard shortcuts directly to the focused Chrome window — no mouse movement involved primarily focused on Instagram Reels (Arrow keys, L).',
     result:
-      'Reduced tagging time from 3 days to under 4 hours. Accuracy: 91.3% on 5-class classification. Dashboard adopted by 3 internal teams.',
+      'Achieved stable real-time gesture detection at 15+ FPS. Three gestures reliably detected — left head tilt for next video, right head tilt for previous video, mouth open for like. Zero mouse interaction needed once Chrome is focused.',
     future:
-      'Add aspect-based sentiment (ABSA) to drill into specific product features. Explore few-shot classification for niche verticals.',
-    tech: ['Python', 'FastAPI', 'HuggingFace', 'Kafka', 'PostgreSQL', 'React', 'Docker'],
-    tags: ['ML', 'Backend', 'Data'],
+      'Add wink detection for play/pause. Explore eye-tracking for cursor control. Package as a background system tray app so no terminal window is needed.',
+    tech: ['Python', 'MediaPipe', 'OpenCV', 'PyAutoGUI', 'NumPy'],
+    tags: ['Computer Vision', 'ML'],
     featured: true,
     status: 'completed',
-    year: '2024',
+    year: '2025',
     links: {
       demo: null,
-      github: 'https://github.com/yourusername/sentiment-engine',
+      github: 'https://github.com/Subhadeep-Dhar/face-gesture-media-controller',
     },
   },
+  // {
+  //   id: 'query-optimizer',
+  //   title: 'SQL Query Optimizer',
+  //   tagline: 'Static analysis tool that rewrites slow queries automatically',
+  //   problem:
+  //     'A reporting database ran 600+ daily queries. 30% took over 10s each, blocking the BI team during peak hours.',
+  //   hypothesis:
+  //     'Most slowdowns follow recognizable anti-patterns (missing indexes, N+1 fetches, SELECT *). A rule-based AST analyzer could catch and suggest fixes automatically.',
+  //   approach:
+  //     'Built a Python tool using sqlglot to parse SQL into ASTs. A rule engine checks 14 anti-pattern categories and emits annotated suggestions. Integrated as a pre-commit hook and a VSCode extension.',
+  //   result:
+  //     'Caught 78% of slow queries in CI before they hit production. Average query time on flagged queries dropped by 64% after applying suggestions.',
+  //   future:
+  //     'Add LLM-powered explain-plan analysis for queries that pass static rules but still run slow.',
+  //   tech: ['Python', 'sqlglot', 'AST', 'VSCode Extension API', 'TypeScript'],
+  //   tags: ['Tools', 'Backend', 'Data'],
+  //   featured: true,
+  //   status: 'completed',
+  //   year: '2024',
+  //   links: {
+  //     demo: null,
+  //     github: 'https://github.com/yourusername/sql-optimizer',
+  //   },
+  // },
   {
-    id: 'query-optimizer',
-    title: 'SQL Query Optimizer',
-    tagline: 'Static analysis tool that rewrites slow queries automatically',
+    id: 'famspace',
+    title: 'FamSpace – Offline-First Family Digital Vault',
+    tagline: 'Secure, hierarchical file manager for organizing family data',
     problem:
-      'A reporting database ran 600+ daily queries. 30% took over 10s each, blocking the BI team during peak hours.',
+      'Families often store important documents and media across devices without a structured system, making organization and controlled sharing difficult. Existing solutions rely heavily on cloud storage, raising privacy concerns and requiring constant internet access.',
     hypothesis:
-      'Most slowdowns follow recognizable anti-patterns (missing indexes, N+1 fetches, SELECT *). A rule-based AST analyzer could catch and suggest fixes automatically.',
+      'An offline-first, device-controlled system with structured storage can provide a secure and private way to organize and manage family data, while still being extensible to controlled sharing mechanisms.',
     approach:
-      'Built a Python tool using sqlglot to parse SQL into ASTs. A rule engine checks 14 anti-pattern categories and emits annotated suggestions. Integrated as a pre-commit hook and a VSCode extension.',
+      'Built an Android application using Kotlin and Jetpack Compose with a Room database for metadata and internal storage for file management. Implemented a hierarchical structure (Space → Member → Folder → File) with strict synchronization between database and filesystem. Designed role-based access (Owner vs Read-only simulation) and reactive state management using StateFlow for navigation, sorting, and search.',
     result:
-      'Caught 78% of slow queries in CI before they hit production. Average query time on flagged queries dropped by 64% after applying suggestions.',
+      'Developed a functional offline-first digital vault where users can organize, manage, preview, and share files locally with a clean UI and consistent data handling between storage and database.',
     future:
-      'Add LLM-powered explain-plan analysis for queries that pass static rules but still run slow.',
-    tech: ['Python', 'sqlglot', 'AST', 'VSCode Extension API', 'TypeScript'],
-    tags: ['Tools', 'Backend', 'Data'],
+      'Implement QR-based time-bound access with passkey authentication for secure sharing across devices. Add cloud synchronization for backup and multi-device access, along with end-to-end encryption and intelligent file organization features.',
+    tech: [
+      'Kotlin',
+      'Jetpack Compose',
+      'Room Database',
+      'Kotlin Coroutines',
+      'StateFlow',
+      'Kotlinx Serialization',
+      'ZXing (planned for QR)',
+      'Android DataStore'
+    ],
+    tags: ['Android'],
     featured: true,
-    status: 'completed',
-    year: '2024',
+    status: 'in-progress',
+    year: '2026',
     links: {
       demo: null,
-      github: 'https://github.com/yourusername/sql-optimizer',
+      github: 'https://github.com/Subhadeep-Dhar/FamSpace-offline',
     },
   },
-  {
-    id: 'devlog-cli',
-    title: 'DevLog CLI',
-    tagline: 'Local-first developer journal that syncs to Notion',
-    problem:
-      'My daily engineering notes lived in scattered files, Slack messages, and forgotten tabs. Retrospectives were painful reconstructions.',
-    hypothesis:
-      'A fast CLI that feels like a terminal habit — not a heavy app — would actually get used daily. Notion as a backend gives search and sharing for free.',
-    approach:
-      'Node.js CLI using Ink (React for terminals) for a clean TUI. Entries are markdown files locally; a sync daemon pushes diffs to Notion API on save.',
-    result:
-      '90+ consecutive days of personal use. Used as the basis for weekly standups and monthly retros. Zero missed days after habit formation.',
-    future:
-      'Natural language search across past logs. AI-powered weekly digest generation.',
-    tech: ['Node.js', 'Ink', 'Notion API', 'SQLite', 'Markdown'],
-    tags: ['Tools', 'CLI', 'Productivity'],
-    featured: false,
-    status: 'completed',
-    year: '2023',
-    links: {
-      demo: null,
-      github: 'https://github.com/yourusername/devlog-cli',
-    },
-  },
-  {
-    id: 'campus-nav',
-    title: 'Campus Navigation System',
-    tagline: 'Indoor routing and event discovery for university students',
-    problem:
-      'New students at our 80-building campus spent significant time finding classrooms, offices, and events — especially in the first weeks of term.',
-    hypothesis:
-      'A graph-based indoor routing model combined with real-time event data could reduce navigation time by at least 40%.',
-    approach:
-      'Built with React Native + Expo. Floor plans encoded as weighted graphs; Dijkstra\'s algorithm handles routing. Backend: Supabase with PostGIS for spatial queries and real-time event subscriptions.',
-    result:
-      '500+ installs in first month. Avg. time-to-destination reduced by 47% vs. asking at the info desk (user survey, n=120).',
-    future:
-      'BLE beacon integration for precise indoor positioning. AR overlay mode for corridor navigation.',
-    tech: ['React Native', 'Expo', 'Supabase', 'PostGIS', 'Dijkstra', 'TypeScript'],
-    tags: ['Mobile', 'Algorithms', 'Fullstack'],
-    featured: true,
-    status: 'completed',
-    year: '2023',
-    links: {
-      demo: 'https://campus-nav-demo.vercel.app',
-      github: 'https://github.com/yourusername/campus-nav',
-    },
-  },
+  // {
+  //   id: 'devlog-cli',
+  //   title: 'DevLog CLI',
+  //   tagline: 'Local-first developer journal that syncs to Notion',
+  //   problem:
+  //     'My daily engineering notes lived in scattered files, Slack messages, and forgotten tabs. Retrospectives were painful reconstructions.',
+  //   hypothesis:
+  //     'A fast CLI that feels like a terminal habit — not a heavy app — would actually get used daily. Notion as a backend gives search and sharing for free.',
+  //   approach:
+  //     'Node.js CLI using Ink (React for terminals) for a clean TUI. Entries are markdown files locally; a sync daemon pushes diffs to Notion API on save.',
+  //   result:
+  //     '90+ consecutive days of personal use. Used as the basis for weekly standups and monthly retros. Zero missed days after habit formation.',
+  //   future:
+  //     'Natural language search across past logs. AI-powered weekly digest generation.',
+  //   tech: ['Node.js', 'Ink', 'Notion API', 'SQLite', 'Markdown'],
+  //   tags: ['Tools', 'CLI', 'Productivity'],
+  //   featured: false,
+  //   status: 'completed',
+  //   year: '2023',
+  //   links: {
+  //     demo: null,
+  //     github: 'https://github.com/yourusername/devlog-cli',
+  //   },
+  // },
   {
     id: 'budget-tracker',
     title: 'Expense Insight Engine',
@@ -165,6 +198,49 @@ export const projects = [
     links: {
       demo: 'https://portfolio-subhadeep-dhar.vercel.app/',
       github: 'https://github.com/Subhadeep-Dhar/portfolio',
+    },
+  },
+  {
+    id: 'manipal_ndvi_lst',
+    title: 'NDVI–LST Multi-Temporal Analysis (Manipal)',
+    tagline: 'Assessing vegetation–temperature dynamics in a monsoon-driven coastal environment',
+
+    problem:
+      'Understanding the interaction between vegetation greenness and land surface temperature (LST) in monsoon-dominated regions is challenging due to strong seasonal variability and persistent cloud cover, which limits consistent satellite observations.',
+
+    hypothesis:
+      'Multi-temporal satellite observations can capture seasonal variability in vegetation and temperature, and reveal measurable relationships between NDVI, LST, and precipitation in a coastal monsoon environment.',
+
+    approach:
+      'Landsat 8 Collection 2 Level-2 data were processed in Google Earth Engine to generate monthly median composites of NDVI and LST from 2020 to 2025. Cloud masking and quality filtering were applied, followed by temporal aggregation. CHIRPS precipitation data were aggregated to monthly totals. Statistical analysis included correlation and trend analysis, while QGIS was used for spatial visualization and seasonal composite mapping.',
+
+    result:
+      'The study revealed strong seasonal variability, with higher NDVI during monsoon periods and elevated LST during pre-monsoon months. A weak inverse relationship between NDVI and LST (r ≈ −0.26) was observed, indicating that vegetation contributes to temperature moderation but is not the dominant controlling factor. Precipitation showed a stronger influence on vegetation dynamics.',
+
+    future:
+      'Future work can incorporate higher-resolution datasets, lag-based climatic analysis, and spatial modeling to better understand vegetation–temperature coupling and improve environmental monitoring in monsoon-affected regions.',
+
+    tech: [
+      'Remote Sensing',
+      'Google Earth Engine',
+      'Landsat 8',
+      'CHIRPS',
+      'QGIS',
+      'Time-Series Analysis'
+    ],
+
+    tags: [
+      'Remote Sensing / GIS',
+      'Research'
+    ],
+
+    featured: true,
+    status: 'in-progress',
+    year: '2025',
+
+    links: {
+      demo: null,
+      github: null,
     },
   },
   {

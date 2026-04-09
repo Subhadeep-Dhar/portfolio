@@ -1,0 +1,164 @@
+/* ─── Font imports ──────────────────────────────────────────────
+   Google Fonts: Geist Sans (body & display), JetBrains Mono (code)
+   ─────────────────────────────────────────────────────────────── */
+@import url('https://fonts.googleapis.com/css2?family=Geist+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ─── Base reset & root ─────────────────────────────────────────── */
+:root {
+  --lab-bg:      #050810;
+  --lab-surface: #0a0f1e;
+  --lab-cyan:    #00e5ff;
+  --lab-purple:  #a855f7;
+  --lab-text:    #e2e8f0;
+  --lab-muted:   #64748b;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  /* Offset for fixed nav */
+  scroll-padding-top: 80px;
+}
+
+body {
+  background-color: var(--lab-bg);
+  color: var(--lab-text);
+  font-family: 'Geist Sans', sans-serif;
+  line-height: 1.6;
+  overflow-x: hidden;
+  /* Animated grid background — subtle, CSS only */
+  background-image:
+    linear-gradient(rgba(0, 229, 255, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 229, 255, 0.03) 1px, transparent 1px);
+  background-size: 60px 60px;
+  animation: gridMove 20s linear infinite;
+}
+
+@keyframes gridMove {
+  0%   { background-position: 0 0; }
+  100% { background-position: 60px 60px; }
+}
+
+/* ─── Scrollbar ─────────────────────────────────────────────────── */
+::-webkit-scrollbar       { width: 4px; }
+::-webkit-scrollbar-track { background: var(--lab-bg); }
+::-webkit-scrollbar-thumb { background: rgba(0, 229, 255, 0.3); border-radius: 2px; }
+::-webkit-scrollbar-thumb:hover { background: rgba(0, 229, 255, 0.5); }
+
+/* ─── Selection ─────────────────────────────────────────────────── */
+::selection {
+  background: rgba(0, 229, 255, 0.2);
+  color: var(--lab-cyan);
+}
+
+/* ─── Utility: neon glow text ───────────────────────────────────── */
+.text-neon-cyan {
+  color: var(--lab-cyan);
+  text-shadow: 0 0 20px rgba(0, 229, 255, 0.5);
+}
+
+.text-neon-purple {
+  color: var(--lab-purple);
+  text-shadow: 0 0 20px rgba(168, 85, 247, 0.5);
+}
+
+/* ─── Glassmorphism card ────────────────────────────────────────── */
+.glass-card {
+  background: rgba(10, 15, 30, 0.7);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(0, 229, 255, 0.08);
+  border-radius: 12px;
+}
+
+.glass-card:hover {
+  border-color: rgba(0, 229, 255, 0.18);
+}
+
+/* ─── Section utility ───────────────────────────────────────────── */
+.section-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+}
+
+.scroll-mouse {
+  width: 22px;
+  height: 40px;
+  border: 1px solid rgba(226, 232, 240, 0.24);
+  border-radius: 16px;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding-top: 6px;
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.scroll-mouse-wheel {
+  width: 4px;
+  height: 8px;
+  border-radius: 999px;
+  background: rgba(0, 229, 255, 0.95);
+  animation: scroll-wheel 1.4s ease-in-out infinite;
+  box-shadow: 0 0 10px rgba(0, 229, 255, 0.35);
+}
+
+@keyframes scroll-wheel {
+  0%, 100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  50% {
+    opacity: 0.35;
+    transform: translateY(10px);
+  }
+}
+
+/* ─── Mono label (for "EXPERIMENT_01" style labels) ─────────────── */
+.mono-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.7rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--lab-cyan);
+  opacity: 0.8;
+}
+
+/* ─── Gradient border utility ───────────────────────────────────── */
+.border-gradient {
+  border: 1px solid transparent;
+  background-clip: padding-box;
+  position: relative;
+}
+
+.border-gradient::before {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  background: linear-gradient(135deg, rgba(0, 229, 255, 0.2), rgba(168, 85, 247, 0.2));
+  z-index: -1;
+}
+
+/* ─── Status badge colors ───────────────────────────────────────── */
+.status-completed   { color: #4ade80; background: rgba(74, 222, 128, 0.1); }
+.status-in-progress { color: #facc15; background: rgba(250, 204, 21, 0.1); }
+.status-archived    { color: #94a3b8; background: rgba(148, 163, 184, 0.1); }
+
+/* ─── Reduce motion preference ──────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  *, ::before, ::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  body { animation: none; }
+}

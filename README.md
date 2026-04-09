@@ -1,4 +1,4 @@
-# 🧪 Dev Lab Portfolio
+# 🧪 Subhadeep Dhar - Portfolio
 
 > A futuristic, modular personal portfolio — built for developers who think like researchers.
 
@@ -9,21 +9,6 @@
 ![License](https://img.shields.io/badge/license-MIT-green?style=flat-square)
 
 ---
-
-## Preview
-
-```
-┌─────────────────────────────────────────────────────┐
-│  LAB_INITIALIZED  ● OPEN TO WORK                    │
-│                                                     │
-│  Building Solutions Through                         │
-│  Code & Curiosity                                   │
-│                                                     │
-│  MCA Student · Developer · Analyst                  │
-│                                                     │
-│  [ ENTER MY LAB → ]   [ ABOUT ME ]                  │
-└─────────────────────────────────────────────────────┘
-```
 
 Dark futuristic UI · Neon accents · Glassmorphism · Fully responsive
 
@@ -249,7 +234,7 @@ npm run start    # serves production build locally
 
 ## License
 
-MIT — use it, modify it, ship it. Attribution appreciated but not required.
+Subhadeep Dhat — use it, modify it, ship it. Attribution appreciated but not required.
 
 ---
 

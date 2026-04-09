@@ -143,6 +143,30 @@ export const projects = [
       github: null,
     },
   },
+  {
+    id: 'south_lhonak_glacier',
+    title: 'South Lhonak Glacier Health Assessment',
+    tagline: 'Analyzing glacier velocity and health post-Teesta flood hazard in Sikkim',
+    problem:
+      'Rapid glacier changes and flood hazards make monitoring glacier health and predicting risks challenging.',
+    hypothesis:
+      'Remote sensing data combined with anomaly detection can identify accelerated glacier movement and areas of potential hazard without extensive field surveys.',
+    approach:
+      'Satellite imagery + digital elevation models (DEMs) for velocity mapping. K-means clustering for glacier zone classification; isolation forest for detecting abnormal velocity patterns.',
+    result:
+      'Initial analysis identified accelerated flow zones in the lower South Lhonak Glacier correlating with post-flood debris deposition, highlighting potential hazard zones.',
+    future:
+      'Integrate climate data to model seasonal glacier dynamics and predict flood risks. Develop early-warning alerts for downstream communities.',
+    tech: ['Satellite Imagery', 'Geospatial Analysis', 'GIS', 'QGIS', 'SNAP'],
+    tags: ['ML', 'Research', 'Remote Sensing / GIS'],
+    featured: false,
+    status: 'completed',
+    year: '2024',
+    links: {
+      demo: null,
+      github: null,
+    },
+  },
 ];
 
 // ─── Helper: get only featured projects for Case Studies ──────────

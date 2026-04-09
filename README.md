@@ -259,4 +259,4 @@ Built with [Next.js](https://nextjs.org), [Tailwind CSS](https://tailwindcss.com
 
 ---
 
-<p align="center">Made with ☕ and too many terminal windows open</p>
+<p align="center">Made with ☕ and too many terminal windows open hehehh :))</p>

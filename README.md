@@ -35,7 +35,7 @@ Live demo : https://portfolio-subhadeep-dhar.vercel.app/
 | Styling | Tailwind CSS 3 |
 | Animation | Framer Motion 11 |
 | Fonts | Syne · Space Grotesk · JetBrains Mono |
-| Deployment | Vercel (recommended) |
+| Deployment | Vercel |
 
 ---
 
@@ -94,8 +94,8 @@ my-portfolio/
 
 ```bash
 # Clone the repo
-git clone https://github.com/yourusername/dev-lab-portfolio.git
-cd dev-lab-portfolio
+git clone https://github.com/Subhadeep-Dhar/portfolio
+cd my-portfolio
 
 # Install dependencies
 npm install
@@ -235,7 +235,7 @@ npm run start    # serves production build locally
 
 ## License
 
-Subhadeep Dhat — use it, modify it, ship it. Attribution appreciated but not required.
+Subhadeep Dhar — use it, modify it, ship it. Attribution appreciated but not required.
 
 ---
 

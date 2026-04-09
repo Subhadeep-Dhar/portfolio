@@ -38,7 +38,7 @@ export const projects = [
     future:
       'Add aspect-based sentiment (ABSA) to drill into specific product features. Explore few-shot classification for niche verticals.',
     tech: ['Python', 'FastAPI', 'HuggingFace', 'Kafka', 'PostgreSQL', 'React', 'Docker'],
-    tags: ['ML', 'NLP', 'Backend', 'Data'],
+    tags: ['ML', 'Backend', 'Data'],
     featured: true,
     status: 'completed',
     year: '2024',
@@ -141,6 +141,30 @@ export const projects = [
     links: {
       demo: null,
       github: null,
+    },
+  },
+  {
+    id: 'portfolio_site',
+    title: 'Portfolio Website',
+    tagline: 'Showcasing my work and skills in a modern, responsive design',
+    problem:
+      'Developers often need a lightweight, high-performance way to present projects and skills without heavy frameworks or backend setup.',
+    hypothesis:
+      'A fully static, minimal-dependency site using Next.js, Tailwind CSS, and Framer Motion can deliver an interactive, visually appealing portfolio that loads fast and is easy to maintain.',
+    approach:
+      'Next.js 14 (App Router) for routing and SSR, React 18 for component state, Tailwind CSS 3 for styling with custom design tokens, and Framer Motion 11 for minimal scroll and layout animations. Pure CSS handles grid background and visual effects.',
+    result:
+      'A fully static portfolio site with minimal dependencies, optimized for Lighthouse scores and fast loading, deployed on Vercel.',
+    future:
+      'Add new projects dynamically, improve accessibility, and explore light theme/dark theme toggles for enhanced UX.',
+    tech: ['Next.js', 'React', 'Tailwind CSS', 'Framer Motion'],
+    tags: ['Frontend', 'Next.js / React'],
+    featured: true,
+    status: 'completed',
+    year: '2026',
+    links: {
+      demo: 'https://portfolio-subhadeep-dhar.vercel.app/',
+      github: 'https://github.com/Subhadeep-Dhar/portfolio',
     },
   },
   {

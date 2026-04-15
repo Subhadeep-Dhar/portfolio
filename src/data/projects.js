@@ -65,7 +65,7 @@ export const projects = [
     tags: ['Computer Vision', 'ML'],
     featured: true,
     status: 'completed',
-    year: '2025',
+    year: '2026',
     links: {
       demo: null,
       github: 'https://github.com/Subhadeep-Dhar/face-gesture-media-controller',
@@ -181,23 +181,47 @@ export const projects = [
     title: 'Portfolio Website',
     tagline: 'Showcasing my work and skills in a modern, responsive design',
     problem:
-      'Developers often need a lightweight, high-performance way to present projects and skills without heavy frameworks or backend setup.',
+    'Developers often need a lightweight, high-performance way to present projects and skills without heavy frameworks or backend setup.',
     hypothesis:
-      'A fully static, minimal-dependency site using Next.js, Tailwind CSS, and Framer Motion can deliver an interactive, visually appealing portfolio that loads fast and is easy to maintain.',
+    'A fully static, minimal-dependency site using Next.js, Tailwind CSS, and Framer Motion can deliver an interactive, visually appealing portfolio that loads fast and is easy to maintain.',
     approach:
-      'Next.js 14 (App Router) for routing and SSR, React 18 for component state, Tailwind CSS 3 for styling with custom design tokens, and Framer Motion 11 for minimal scroll and layout animations. Pure CSS handles grid background and visual effects.',
+    'Next.js 14 (App Router) for routing and SSR, React 18 for component state, Tailwind CSS 3 for styling with custom design tokens, and Framer Motion 11 for minimal scroll and layout animations. Pure CSS handles grid background and visual effects.',
     result:
       'A fully static portfolio site with minimal dependencies, optimized for Lighthouse scores and fast loading, deployed on Vercel.',
     future:
       'Add new projects dynamically, improve accessibility, and explore light theme/dark theme toggles for enhanced UX.',
-    tech: ['Next.js', 'React', 'Tailwind CSS', 'Framer Motion'],
-    tags: ['Frontend', 'Next.js / React'],
+      tech: ['Next.js', 'React', 'Tailwind CSS', 'Framer Motion'],
+      tags: ['Frontend', 'Next.js / React'],
     featured: true,
     status: 'completed',
     year: '2026',
     links: {
       demo: 'https://portfolio-subhadeep-dhar.vercel.app/',
       github: 'https://github.com/Subhadeep-Dhar/portfolio',
+    },
+  },
+  {
+    id: 'deepfake_detection',
+    title: 'Deepfake Image Detection',
+    tagline: 'Detecting AI-generated faces using machine learning for trustworthy digital media',
+    problem:
+      'With the rapid rise of AI-generated images, distinguishing real images from deepfakes has become increasingly difficult, leading to risks in misinformation, identity fraud, and digital trust.',
+    hypothesis:
+      'A machine learning-based approach leveraging convolutional neural networks (CNNs) trained on real vs. synthetic image datasets can accurately detect subtle artifacts and inconsistencies in deepfake images.',
+    approach:
+      'Built and trained a deep learning model using CNN architectures on labeled datasets of real and fake images. Applied image preprocessing techniques such as normalization, resizing, and augmentation to improve generalization. Used TensorFlow/PyTorch for model training, and integrated the trained model into a lightweight web interface for real-time predictions.',
+    result:
+      'Achieved high classification accuracy on validation data, with fast inference suitable for real-time detection. The system can reliably flag manipulated or AI-generated images, enhancing digital content verification.',
+    future:
+      'Expand the dataset to include newer deepfake techniques, improve model robustness against adversarial attacks, and deploy as an API or browser extension for wider accessibility.',
+    tech: ['Python', 'TensorFlow', 'PyTorch'],
+    tags: ['ML', 'AI', 'Research'],
+    featured: true,
+    status: 'completed',
+    year: '2025',
+    links: {
+      demo: '',
+      github: '',
     },
   },
   {

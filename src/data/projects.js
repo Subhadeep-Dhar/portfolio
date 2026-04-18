@@ -121,37 +121,58 @@ export const projects = [
     ],
     tags: ['Android'],
     featured: true,
-    status: 'in-progress',
+    status: 'completed',
     year: '2026',
     links: {
       demo: null,
       github: 'https://github.com/Subhadeep-Dhar/FamSpace-offline',
     },
   },
-  // {
-  //   id: 'devlog-cli',
-  //   title: 'DevLog CLI',
-  //   tagline: 'Local-first developer journal that syncs to Notion',
-  //   problem:
-  //     'My daily engineering notes lived in scattered files, Slack messages, and forgotten tabs. Retrospectives were painful reconstructions.',
-  //   hypothesis:
-  //     'A fast CLI that feels like a terminal habit — not a heavy app — would actually get used daily. Notion as a backend gives search and sharing for free.',
-  //   approach:
-  //     'Node.js CLI using Ink (React for terminals) for a clean TUI. Entries are markdown files locally; a sync daemon pushes diffs to Notion API on save.',
-  //   result:
-  //     '90+ consecutive days of personal use. Used as the basis for weekly standups and monthly retros. Zero missed days after habit formation.',
-  //   future:
-  //     'Natural language search across past logs. AI-powered weekly digest generation.',
-  //   tech: ['Node.js', 'Ink', 'Notion API', 'SQLite', 'Markdown'],
-  //   tags: ['Tools', 'CLI', 'Productivity'],
-  //   featured: false,
-  //   status: 'completed',
-  //   year: '2023',
-  //   links: {
-  //     demo: null,
-  //     github: 'https://github.com/yourusername/devlog-cli',
-  //   },
-  // },
+  {
+    id: 'muse-mart',
+    title: 'Muse Mart — E-Commerce Platform',
+    tagline: 'Full-stack musical instruments marketplace with real-time trending insights',
+
+    problem:
+      'Traditional e-commerce platforms lack real-time insights such as trending products and user interaction analytics, leading to less personalized and static browsing experiences.',
+
+    hypothesis:
+      'Integrating caching and real-time tracking using Redis can enable dynamic features like trending products and recently viewed items, improving user engagement and system performance.',
+
+    approach:
+      'Built a full-stack application using React (Vite) for frontend and Node.js with Express for backend. Used MongoDB Atlas for data storage and Upstash Redis for caching product views, trending data, and recently viewed items. Implemented REST APIs with filtering, pagination, and search functionality. Deployed backend on Render and frontend on Vercel.',
+
+    result:
+      'Successfully developed and deployed a scalable cloud-based e-commerce system with real-time trending features, efficient API performance, and a responsive user interface.',
+
+    future:
+      'Add authentication and user accounts, implement payment gateway integration, introduce recommendation systems, and enhance analytics with personalized suggestions.',
+
+    tech: [
+      'React',
+      'Vite',
+      'Node.js',
+      'Express.js',
+      'MongoDB Atlas',
+      'Mongoose',
+      'Redis',
+      'Upstash',
+      'REST API',
+      'Render',
+      'Vercel'
+    ],
+
+    tags: ['Fullstack', 'Next.js / React'],
+
+    featured: true,
+    status: 'completed',
+    year: '2026',
+
+    links: {
+      demo: 'https://e-commerce-product-nosql.vercel.app/',
+      github: 'https://github.com/Subhadeep-Dhar/E-commerce-product-nosql',
+    },
+  },
   {
     id: 'budget-tracker',
     title: 'Expense Insight Engine',
@@ -181,17 +202,17 @@ export const projects = [
     title: 'Portfolio Website',
     tagline: 'Showcasing my work and skills in a modern, responsive design',
     problem:
-    'Developers often need a lightweight, high-performance way to present projects and skills without heavy frameworks or backend setup.',
+      'Developers often need a lightweight, high-performance way to present projects and skills without heavy frameworks or backend setup.',
     hypothesis:
-    'A fully static, minimal-dependency site using Next.js, Tailwind CSS, and Framer Motion can deliver an interactive, visually appealing portfolio that loads fast and is easy to maintain.',
+      'A fully static, minimal-dependency site using Next.js, Tailwind CSS, and Framer Motion can deliver an interactive, visually appealing portfolio that loads fast and is easy to maintain.',
     approach:
-    'Next.js 14 (App Router) for routing and SSR, React 18 for component state, Tailwind CSS 3 for styling with custom design tokens, and Framer Motion 11 for minimal scroll and layout animations. Pure CSS handles grid background and visual effects.',
+      'Next.js 14 (App Router) for routing and SSR, React 18 for component state, Tailwind CSS 3 for styling with custom design tokens, and Framer Motion 11 for minimal scroll and layout animations. Pure CSS handles grid background and visual effects.',
     result:
       'A fully static portfolio site with minimal dependencies, optimized for Lighthouse scores and fast loading, deployed on Vercel.',
     future:
       'Add new projects dynamically, improve accessibility, and explore light theme/dark theme toggles for enhanced UX.',
-      tech: ['Next.js', 'React', 'Tailwind CSS', 'Framer Motion'],
-      tags: ['Frontend', 'Next.js / React'],
+    tech: ['Next.js', 'React', 'Tailwind CSS', 'Framer Motion'],
+    tags: ['Frontend', 'Next.js / React'],
     featured: true,
     status: 'completed',
     year: '2026',

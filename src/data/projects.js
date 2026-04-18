@@ -281,7 +281,7 @@ export const projects = [
 
     featured: true,
     status: 'in-progress',
-    year: '2025',
+    year: '2026',
 
     links: {
       demo: null,

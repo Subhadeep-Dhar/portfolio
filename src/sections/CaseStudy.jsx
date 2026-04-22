@@ -33,7 +33,7 @@ export default function CaseStudy() {
         <div className="h-px w-full bg-gradient-to-r from-transparent via-lab-line to-transparent mb-24" />
 
         <SectionHeader
-          label="SECTION_04 // CASE STUDIES"
+          label="CASE STUDIES"
           title="Deep dives."
           subtitle="Selected experiments with a full breakdown — problem to post-mortem."
         />

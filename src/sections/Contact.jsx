@@ -47,7 +47,7 @@ export default function Contact() {
         {/* Centered layout for contact */}
         <div className="max-w-xl mx-auto text-center">
           <SectionHeader
-            label="SECTION_07 // CONTACT"
+            label="CONTACT"
             title="Let's work on something."
             subtitle="Open to interesting problems — freelance, collaboration, or full-time roles."
             align="center"

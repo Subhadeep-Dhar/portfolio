@@ -23,7 +23,7 @@ export default function ConceptVault() {
         <div className="h-px w-full bg-gradient-to-r from-transparent via-lab-line to-transparent mb-24" />
 
         <SectionHeader
-          label="SECTION_06 // CONCEPT VAULT"
+          label="CONCEPT VAULT"
           title="Things I haven't built yet."
           subtitle="Ideas in progress, shelved experiments, and future directions."
         />

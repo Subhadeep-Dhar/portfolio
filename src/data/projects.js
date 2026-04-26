@@ -173,7 +173,7 @@ export const projects = [
       'Add authentication and user accounts, implement payment gateway integration, introduce recommendation systems, and enhance analytics with personalized suggestions.',
 
     tech: [
-      'React',
+      'Typescript',
       'Vite',
       'Node.js',
       'Express.js',

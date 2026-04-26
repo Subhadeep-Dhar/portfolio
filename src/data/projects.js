@@ -129,6 +129,30 @@ export const projects = [
     },
   },
   {
+    id: 'dooars_tutors',
+    title: 'Dooars Tutors',
+    tagline: 'A location-based platform to discover tutors, coaching centers, and trainers',
+    problem:
+      'Students in local regions struggle to find reliable tutors with proper filtering, verified profiles, and location-based discovery. Existing solutions are either unstructured or lack real-time search and mapping features.',
+    hypothesis:
+      'A full-stack platform with advanced search, location integration, and structured tutor profiles can significantly improve discoverability and user experience for both students and tutors.',
+    approach:
+      'Built using Next.js 16 (App Router) for frontend, Node.js + Express for backend APIs, MongoDB Atlas for data storage, and Upstash Redis for caching. Integrated Google Maps for location-based discovery, Cloudinary for media handling, and implemented JWT authentication with access and refresh tokens.',
+    result:
+      'A scalable, production-ready platform with fast search, map-based tutor discovery, and optimized performance using caching and modern deployment practices on Vercel and Render.',
+    future:
+      'Introduce real-time chat between students and tutors, AI-based tutor recommendations, mobile app integration, and enhanced analytics dashboard for tutors.',
+    tech: ['Next.js', 'React', 'Node.js', 'Express', 'MongoDB', 'Redis', 'Google Maps API', 'Cloudinary'],
+    tags: ['Full Stack', 'MERN', 'EdTech', 'Location-Based'],
+    featured: true,
+    status: 'completed',
+    year: '2026',
+    links: {
+      demo: 'https://dooarstutors.in',
+      github: 'https://github.com/Subhadeep-Dhar/dooars-tutors-recreation',
+    },
+  },
+  {
     id: 'muse-mart',
     title: 'Muse Mart — E-Commerce Platform',
     tagline: 'Full-stack musical instruments marketplace with real-time trending insights',
@@ -171,30 +195,6 @@ export const projects = [
     links: {
       demo: 'https://e-commerce-product-nosql.vercel.app/',
       github: 'https://github.com/Subhadeep-Dhar/E-commerce-product-nosql',
-    },
-  },
-  {
-    id: 'budget-tracker',
-    title: 'Expense Insight Engine',
-    tagline: 'Personal finance tracker with ML-powered anomaly detection',
-    problem:
-      'Generic budgeting apps show totals but miss the "why did I overspend this month" insight. Manual categorization is tedious.',
-    hypothesis:
-      'Auto-categorization + anomaly detection on transaction patterns can surface actionable insights without requiring manual input.',
-    approach:
-      'Next.js app + Plaid API for bank data ingestion. K-means clustering for category detection; isolation forest for anomaly scoring. Charts via Recharts.',
-    result:
-      'Personal use: identified 3 recurring forgotten subscriptions totalling ₹2,400/month within the first week.',
-    future:
-      'Predict upcoming large expenses based on seasonal patterns. Add goal-based savings nudges.',
-    tech: ['Next.js', 'Plaid API', 'Python', 'Scikit-learn', 'Recharts', 'Prisma'],
-    tags: ['ML', 'Fullstack', 'Data'],
-    featured: false,
-    status: 'in-progress',
-    year: '2024',
-    links: {
-      demo: null,
-      github: null,
     },
   },
   {

@@ -142,8 +142,8 @@ export const projects = [
       'A scalable, production-ready platform with fast search, map-based tutor discovery, and optimized performance using caching and modern deployment practices on Vercel and Render.',
     future:
       'Introduce real-time chat between students and tutors, AI-based tutor recommendations, mobile app integration, and enhanced analytics dashboard for tutors.',
-    tech: ['Next.js', 'React', 'Node.js', 'Express', 'MongoDB', 'Redis', 'Google Maps API', 'Cloudinary'],
-    tags: ['Full Stack', 'MERN', 'EdTech', 'Location-Based'],
+    tech: ['Next.js', 'Typescript', 'Node.js', 'Express', 'MongoDB', 'Redis', 'Google Maps API', 'Cloudinary'],
+    tags: ['Fullstack', 'Next.js / React'],
     featured: true,
     status: 'completed',
     year: '2026',
@@ -173,7 +173,7 @@ export const projects = [
       'Add authentication and user accounts, implement payment gateway integration, introduce recommendation systems, and enhance analytics with personalized suggestions.',
 
     tech: [
-      'Typescript',
+      'React',
       'Vite',
       'Node.js',
       'Express.js',

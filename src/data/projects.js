@@ -81,7 +81,7 @@ export const projects = [
       'EAS Build'
     ],
 
-    tags: ['Mobile', 'AI', 'Productivity', 'Location Intelligence'],
+    tags: ['App', 'AI', 'ML', 'Productivity', 'Fullstack', 'React-Native'],
 
     featured: true,
     status: 'in-progress',
@@ -140,7 +140,7 @@ export const projects = [
       'ZXing (planned for QR)',
       'Android DataStore'
     ],
-    tags: ['Android'],
+    tags: ['App'],
     featured: true,
     status: 'completed',
     year: '2026',
@@ -233,7 +233,7 @@ export const projects = [
     future:
       'Expand the dataset to include newer deepfake techniques, improve model robustness against adversarial attacks, and deploy as an API or browser extension for wider accessibility.',
     tech: ['Python', 'TensorFlow', 'PyTorch'],
-    tags: ['ML', 'AI', 'Research'],
+    tags: ['ML', 'Research'],
     featured: true,
     status: 'completed',
     year: '2025',

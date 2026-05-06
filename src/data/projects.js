@@ -81,7 +81,7 @@ export const projects = [
       'EAS Build'
     ],
 
-    tags: ['App', 'AI', 'ML', 'Productivity', 'Fullstack', 'React-Native'],
+    tags: ['App', 'AI', 'ML', 'Productivity', 'Fullstack'],
 
     featured: true,
     status: 'in-progress',

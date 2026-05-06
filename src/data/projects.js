@@ -23,30 +23,75 @@
  */
 
 export const projects = [
-  // {
-  //   id: 'sentiment-engine',
-  //   title: 'Sentiment Analysis Engine',
-  //   tagline: 'Real-time NLP pipeline for customer feedback classification',
-  //   problem:
-  //     'A retail client received 10,000+ monthly reviews across platforms. Manual tagging took 3 days per month and missed nuanced emotion categories.',
-  //   hypothesis:
-  //     'A fine-tuned transformer model with a streaming ingestion layer could classify sentiment and extract themes in under 200ms per document.',
-  //   approach:
-  //     'Built a Python FastAPI service wrapping a fine-tuned DistilBERT model. Kafka handles streaming ingestion; results are stored in PostgreSQL with a React dashboard for live visualization.',
-  //   result:
-  //     'Reduced tagging time from 3 days to under 4 hours. Accuracy: 91.3% on 5-class classification. Dashboard adopted by 3 internal teams.',
-  //   future:
-  //     'Add aspect-based sentiment (ABSA) to drill into specific product features. Explore few-shot classification for niche verticals.',
-  //   tech: ['Python', 'FastAPI', 'HuggingFace', 'Kafka', 'PostgreSQL', 'React', 'Docker'],
-  //   tags: ['ML', 'Backend', 'Data'],
-  //   featured: true,
-  //   status: 'completed',
-  //   year: '2024',
-  //   links: {
-  //     demo: null,
-  //     github: 'https://github.com/yourusername/sentiment-engine',
-  //   },
-  // },
+  {
+    id: 'dooars_tutors',
+    title: 'Dooars Tutors',
+    tagline: 'A location-based platform to discover tutors, coaching centers, and trainers',
+    problem:
+      'Students in local regions struggle to find reliable tutors with proper filtering, verified profiles, and location-based discovery. Existing solutions are either unstructured or lack real-time search and mapping features.',
+    hypothesis:
+      'A full-stack platform with advanced search, location integration, and structured tutor profiles can significantly improve discoverability and user experience for both students and tutors.',
+    approach:
+      'Built using Next.js 16 (App Router) for frontend, Node.js + Express for backend APIs, MongoDB Atlas for data storage, and Upstash Redis for caching. Integrated Google Maps for location-based discovery, Cloudinary for media handling, and implemented JWT authentication with access and refresh tokens.',
+    result:
+      'A scalable, production-ready platform with fast search, map-based tutor discovery, and optimized performance using caching and modern deployment practices on Vercel and Render.',
+    future:
+      'Introduce real-time chat between students and tutors, AI-based tutor recommendations, mobile app integration, and enhanced analytics dashboard for tutors.',
+    tech: ['Next.js', 'Typescript', 'Node.js', 'Express', 'MongoDB', 'Redis', 'Google Maps API', 'Cloudinary'],
+    tags: ['Fullstack', 'Next.js / React'],
+    featured: true,
+    status: 'completed',
+    year: '2026',
+    links: {
+      demo: 'https://dooarstutors.in',
+      github: 'https://github.com/Subhadeep-Dhar/dooars-tutors-recreation',
+    },
+  },
+  {
+    id: 'grounded_app',
+    title: 'Grounded — Discipline & Consistency Platform',
+    tagline: 'AI-powered accountability app that rewards consistency through real-world challenge completion',
+
+    problem:
+      'Students and young professionals often struggle with consistency, discipline, and maintaining healthy routines due to lack of accountability and motivation. Traditional habit trackers fail to create real-world commitment or social reinforcement.',
+
+    hypothesis:
+      'A geolocation-based challenge system combined with AI-driven engagement, trust scoring, and social accountability can significantly improve consistency and routine adherence among users.',
+
+    approach:
+      'Built a full-stack mobile application using Expo React Native and Firebase that assigns users real-world location-based challenges around the MIT Manipal campus. The platform uses GPS geofencing, live location tracking, image verification, streak systems, trust scoring, leaderboards, and AI-powered contextual engagement features including weather-aware recommendations and dynamic notifications.',
+
+    result:
+      'Successfully developed and deployed a production-ready Android application with real-time challenge tracking, geofenced validation, profile systems, social feeds, and AI-assisted engagement flows. Optimized for smooth mobile performance with native Android support, secure Firebase integration, and scalable architecture.',
+
+    future:
+      'Expand AI capabilities with personalized behavioral insights, adaptive challenge difficulty, intelligent consistency coaching, voice-based wake-up systems, and campus-wide social accountability networks. Planned additions include ML-driven trust analysis and smart habit prediction systems.',
+
+    tech: [
+      'React Native',
+      'Expo',
+      'Firebase',
+      'Firestore',
+      'Expo Location',
+      'Google Maps',
+      'Expo Notifications',
+      'Open-Meteo API',
+      'AI Integration',
+      'JavaScript',
+      'EAS Build'
+    ],
+
+    tags: ['Mobile', 'AI', 'Productivity', 'Location Intelligence'],
+
+    featured: true,
+    status: 'in-progress',
+    year: '2026',
+
+    links: {
+      demo: null,
+      github: 'https://github.com/Subhadeep-Dhar/grounded-app',
+    },
+  },
   {
     id: 'face-gesture-controller',
     title: 'Face Gesture Controller',
@@ -71,30 +116,6 @@ export const projects = [
       github: 'https://github.com/Subhadeep-Dhar/face-gesture-media-controller',
     },
   },
-  // {
-  //   id: 'query-optimizer',
-  //   title: 'SQL Query Optimizer',
-  //   tagline: 'Static analysis tool that rewrites slow queries automatically',
-  //   problem:
-  //     'A reporting database ran 600+ daily queries. 30% took over 10s each, blocking the BI team during peak hours.',
-  //   hypothesis:
-  //     'Most slowdowns follow recognizable anti-patterns (missing indexes, N+1 fetches, SELECT *). A rule-based AST analyzer could catch and suggest fixes automatically.',
-  //   approach:
-  //     'Built a Python tool using sqlglot to parse SQL into ASTs. A rule engine checks 14 anti-pattern categories and emits annotated suggestions. Integrated as a pre-commit hook and a VSCode extension.',
-  //   result:
-  //     'Caught 78% of slow queries in CI before they hit production. Average query time on flagged queries dropped by 64% after applying suggestions.',
-  //   future:
-  //     'Add LLM-powered explain-plan analysis for queries that pass static rules but still run slow.',
-  //   tech: ['Python', 'sqlglot', 'AST', 'VSCode Extension API', 'TypeScript'],
-  //   tags: ['Tools', 'Backend', 'Data'],
-  //   featured: true,
-  //   status: 'completed',
-  //   year: '2024',
-  //   links: {
-  //     demo: null,
-  //     github: 'https://github.com/yourusername/sql-optimizer',
-  //   },
-  // },
   {
     id: 'famspace',
     title: 'FamSpace – Offline-First Family Digital Vault',
@@ -126,30 +147,6 @@ export const projects = [
     links: {
       demo: null,
       github: 'https://github.com/Subhadeep-Dhar/FamSpace-offline',
-    },
-  },
-  {
-    id: 'dooars_tutors',
-    title: 'Dooars Tutors',
-    tagline: 'A location-based platform to discover tutors, coaching centers, and trainers',
-    problem:
-      'Students in local regions struggle to find reliable tutors with proper filtering, verified profiles, and location-based discovery. Existing solutions are either unstructured or lack real-time search and mapping features.',
-    hypothesis:
-      'A full-stack platform with advanced search, location integration, and structured tutor profiles can significantly improve discoverability and user experience for both students and tutors.',
-    approach:
-      'Built using Next.js 16 (App Router) for frontend, Node.js + Express for backend APIs, MongoDB Atlas for data storage, and Upstash Redis for caching. Integrated Google Maps for location-based discovery, Cloudinary for media handling, and implemented JWT authentication with access and refresh tokens.',
-    result:
-      'A scalable, production-ready platform with fast search, map-based tutor discovery, and optimized performance using caching and modern deployment practices on Vercel and Render.',
-    future:
-      'Introduce real-time chat between students and tutors, AI-based tutor recommendations, mobile app integration, and enhanced analytics dashboard for tutors.',
-    tech: ['Next.js', 'Typescript', 'Node.js', 'Express', 'MongoDB', 'Redis', 'Google Maps API', 'Cloudinary'],
-    tags: ['Fullstack', 'Next.js / React'],
-    featured: true,
-    status: 'completed',
-    year: '2026',
-    links: {
-      demo: 'https://dooarstutors.in',
-      github: 'https://github.com/Subhadeep-Dhar/dooars-tutors-recreation',
     },
   },
   {

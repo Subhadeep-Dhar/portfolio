@@ -218,30 +218,30 @@ export const projects = [
       github: 'https://github.com/Subhadeep-Dhar/portfolio',
     },
   },
-  {
-    id: 'deepfake_detection',
-    title: 'Deepfake Image Detection',
-    tagline: 'Detecting AI-generated faces using machine learning for trustworthy digital media',
-    problem:
-      'With the rapid rise of AI-generated images, distinguishing real images from deepfakes has become increasingly difficult, leading to risks in misinformation, identity fraud, and digital trust.',
-    hypothesis:
-      'A machine learning-based approach leveraging convolutional neural networks (CNNs) trained on real vs. synthetic image datasets can accurately detect subtle artifacts and inconsistencies in deepfake images.',
-    approach:
-      'Built and trained a deep learning model using CNN architectures on labeled datasets of real and fake images. Applied image preprocessing techniques such as normalization, resizing, and augmentation to improve generalization. Used TensorFlow/PyTorch for model training, and integrated the trained model into a lightweight web interface for real-time predictions.',
-    result:
-      'Achieved high classification accuracy on validation data, with fast inference suitable for real-time detection. The system can reliably flag manipulated or AI-generated images, enhancing digital content verification.',
-    future:
-      'Expand the dataset to include newer deepfake techniques, improve model robustness against adversarial attacks, and deploy as an API or browser extension for wider accessibility.',
-    tech: ['Python', 'TensorFlow', 'PyTorch'],
-    tags: ['ML', 'Research'],
-    featured: true,
-    status: 'completed',
-    year: '2025',
-    links: {
-      demo: '',
-      github: '',
-    },
-  },
+  // {
+  //   id: 'deepfake_detection',
+  //   title: 'Deepfake Image Detection',
+  //   tagline: 'Detecting AI-generated faces using machine learning for trustworthy digital media',
+  //   problem:
+  //     'With the rapid rise of AI-generated images, distinguishing real images from deepfakes has become increasingly difficult, leading to risks in misinformation, identity fraud, and digital trust.',
+  //   hypothesis:
+  //     'A machine learning-based approach leveraging convolutional neural networks (CNNs) trained on real vs. synthetic image datasets can accurately detect subtle artifacts and inconsistencies in deepfake images.',
+  //   approach:
+  //     'Built and trained a deep learning model using CNN architectures on labeled datasets of real and fake images. Applied image preprocessing techniques such as normalization, resizing, and augmentation to improve generalization. Used TensorFlow/PyTorch for model training, and integrated the trained model into a lightweight web interface for real-time predictions.',
+  //   result:
+  //     'Achieved high classification accuracy on validation data, with fast inference suitable for real-time detection. The system can reliably flag manipulated or AI-generated images, enhancing digital content verification.',
+  //   future:
+  //     'Expand the dataset to include newer deepfake techniques, improve model robustness against adversarial attacks, and deploy as an API or browser extension for wider accessibility.',
+  //   tech: ['Python', 'TensorFlow', 'PyTorch'],
+  //   tags: ['ML', 'Research'],
+  //   featured: true,
+  //   status: 'completed',
+  //   year: '2025',
+  //   links: {
+  //     demo: '',
+  //     github: '',
+  //   },
+  // },
   {
     id: 'manipal_ndvi_lst',
     title: 'NDVI–LST Multi-Temporal Analysis (Manipal)',

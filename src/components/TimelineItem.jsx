@@ -11,11 +11,11 @@ import { motion } from 'framer-motion';
 export default function TimelineItem({ item, index, isLast }) {
   // Color per type
   const typeConfig = {
-    education:   { color: 'lab-cyan',   dot: '#00e5ff', label: 'EDU' },
-    project:     { color: 'lab-purple', dot: '#a855f7', label: 'PROJ' },
-    achievement: { color: 'lab-cyan',   dot: '#00e5ff', label: 'WIN' },
-    milestone:   { color: 'lab-muted',  dot: '#64748b', label: 'LOG' },
-  }[item.type] ?? { color: 'lab-muted', dot: '#64748b', label: '—' };
+    education:   { dot: 'var(--active-accent)', label: 'EDU' },
+    project:     { dot: 'rgba(var(--active-accent-rgb), 0.5)', label: 'PROJ' },
+    achievement: { dot: 'var(--active-accent)', label: 'WIN' },
+    milestone:   { dot: 'var(--color-text-dim)', label: 'LOG' },
+  }[item.type] ?? { dot: 'var(--color-text-dim)', label: '—' };
 
   return (
     <motion.div
@@ -29,33 +29,33 @@ export default function TimelineItem({ item, index, isLast }) {
       <div className="flex flex-col items-center">
         {/* Dot */}
         <div
-          className="w-3 h-3 rounded-full shrink-0 mt-1 ring-2 ring-offset-2 ring-offset-lab-bg"
+          className="w-3 h-3 rounded-full shrink-0 mt-1 ring-2 ring-offset-2 ring-offset-[#111]"
           style={{ backgroundColor: typeConfig.dot, ringColor: typeConfig.dot }}
         />
         {/* Line (hidden after last item) */}
         {!isLast && (
-          <div className="w-px flex-1 mt-2 bg-lab-line" />
+          <div className="w-px flex-1 mt-2 bg-[var(--color-border)]" />
         )}
       </div>
 
       {/* ── Content ──────────────────────────────────────────────── */}
       <div className="pb-8">
         <div className="flex items-center gap-3 mb-1">
-          <span className="mono-label text-lab-muted">{item.year}</span>
+          <span className="mono-label text-neutral-500">{item.year}</span>
           <span
             className="font-mono text-xs px-1.5 py-0.5 rounded"
             style={{
               color: typeConfig.dot,
-              background: `${typeConfig.dot}18`,
+              background: typeConfig.dot.startsWith('var') ? 'rgba(var(--active-accent-rgb), 0.1)' : `${typeConfig.dot}18`,
             }}
           >
             {typeConfig.label}
           </span>
         </div>
-        <h4 className="font-display font-semibold text-lab-text mb-1 leading-snug">
+        <h4 className="font-display font-semibold text-[var(--color-text-main)] mb-1 leading-snug">
           {item.title}
         </h4>
-        <p className="text-sm text-lab-muted leading-relaxed">{item.desc}</p>
+        <p className="text-sm text-neutral-400 leading-relaxed">{item.desc}</p>
       </div>
     </motion.div>
   );

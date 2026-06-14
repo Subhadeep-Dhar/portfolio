@@ -58,13 +58,13 @@ export default function BootLoader({ onComplete }) {
       {/* Editorial System Panel */}
       <div className="max-w-md w-full border border-neutral-800 bg-[#1a1a1a]/90 backdrop-blur-md p-6 rounded shadow-lg relative z-10 text-neutral-400">
         {/* Panel Header */}
-        <div className="flex items-center justify-between border-b border-neutral-850 pb-3 mb-4 text-[9px] uppercase tracking-wider text-neutral-600">
+        <div className="flex items-center justify-between border-b border-neutral-850 pb-3 mb-4 text-xs uppercase tracking-wider text-neutral-600">
           <span>PORTFOLIO CORE BOOT</span>
           <span>SYS_VAL // 2026</span>
         </div>
 
         {/* Logs */}
-        <div className="space-y-2 h-48 overflow-y-auto text-[10px] leading-relaxed scrollbar-none">
+        <div className="space-y-2 h-48 overflow-y-auto text-xs sm:text-sm leading-relaxed scrollbar-none">
           {logs.map((log, index) => {
             const isLast = index === logs.length - 1;
             const isAnchor = log.includes('Resolved');
@@ -72,7 +72,7 @@ export default function BootLoader({ onComplete }) {
             return (
               <div
                 key={index}
-                className={`${isLast ? 'text-teal-400 font-medium' : ''} ${isAnchor ? 'text-lime-500/90' : ''} flex items-start`}
+                className={`${isLast ? 'text-[var(--active-accent)] font-medium' : ''} ${isAnchor ? 'text-stone-300 font-medium' : ''} flex items-start`}
               >
                 <span className="text-neutral-700 mr-2 select-none">::</span>
                 <span>{log}</span>
@@ -80,12 +80,12 @@ export default function BootLoader({ onComplete }) {
             );
           })}
           {logs.length < BOOT_LOGS.length && (
-            <span className="inline-block w-1.5 h-3 bg-teal-500/70 ml-1 animate-pulse" />
+            <span className="inline-block w-1.5 h-3 bg-[var(--active-accent)]/80 ml-1 animate-pulse" />
           )}
         </div>
 
         {/* Panel Footer */}
-        <div className="mt-4 pt-3 border-t border-neutral-850 flex justify-between text-[8px] text-neutral-600 uppercase tracking-widest">
+        <div className="mt-4 pt-3 border-t border-neutral-850 flex justify-between text-[10px] text-neutral-600 uppercase tracking-widest">
           <span>PORT: 3000</span>
           <span>STABLE CONNECT</span>
         </div>

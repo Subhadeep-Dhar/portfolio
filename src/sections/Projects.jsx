@@ -41,10 +41,10 @@ export default function Projects() {
             <button
               key={tag}
               onClick={() => setActiveTag(tag)}
-              className={`font-mono text-xs px-3 py-1.5 rounded border transition-all duration-200 ${
+              className={`font-mono text-sm px-3 py-1.5 rounded border transition-all duration-200 ${
                 activeTag === tag
-                  ? 'border-lab-cyan text-lab-cyan bg-lab-cyan/10'
-                  : 'border-lab-line text-lab-muted hover:border-lab-cyan/50 hover:text-lab-text'
+                  ? 'border-[var(--active-accent)] text-[var(--active-accent)] bg-[var(--active-accent)]/10'
+                  : 'border-[var(--color-border)] text-neutral-400 hover:border-[var(--active-accent)]/50 hover:text-neutral-200'
               }`}
             >
               {tag}
@@ -74,7 +74,7 @@ export default function Projects() {
         </AnimatePresence>
 
         {filteredProjects.length === 0 && (
-          <p className="font-mono text-sm text-lab-muted text-center py-12">
+          <p className="font-mono text-sm text-neutral-500 text-center py-12">
             No experiments tagged "{activeTag}" yet.
           </p>
         )}
@@ -84,12 +84,12 @@ export default function Projects() {
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
-          className="mt-10 p-4 border border-dashed border-lab-line rounded-lg"
+          className="mt-10 p-4 border border-dashed border-[var(--color-border)] rounded-lg"
         >
-          <p className="font-mono text-xs text-lab-muted">
-            <span className="text-lab-cyan">Moreover:</span>{' '}
+          <p className="font-mono text-sm text-neutral-400">
+            <span className="text-[var(--active-accent)]">Moreover:</span>{' '}
             Trying not to be the best, but be someone to {' '}
-            <code className="text-lab-purple">Contribute, Try again.</code>{' '}
+            <code className="text-neutral-500">Contribute, Try again.</code>{' '}
             
           </p>
         </motion.div>

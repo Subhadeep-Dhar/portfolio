@@ -89,7 +89,7 @@ export default function InteractiveBackground({ focus = 'home' }) {
       }
 
       // Draw subtle background spatial grid lines (Fine architectural grid ticks)
-      ctx.strokeStyle = 'rgba(210, 193, 168, 0.012)';
+      ctx.strokeStyle = 'rgba(210, 193, 168, 0.07)';
       ctx.lineWidth = 0.5;
       const gridSize = 120;
       for (let x = 0; x < width; x += gridSize) {
@@ -126,8 +126,8 @@ export default function InteractiveBackground({ focus = 'home' }) {
       }
 
       // Draw coordinate indicators (Pure IBM Plex Mono aesthetic)
-      ctx.font = '8px "IBM Plex Mono", monospace';
-      ctx.fillStyle = 'rgba(210, 193, 168, 0.12)';
+      ctx.font = '10px "IBM Plex Mono", monospace';
+      ctx.fillStyle = 'rgba(210, 193, 168, 0.45)';
       ctx.fillText('REF_SYS: WGS-84 / SPATIAL_GRID', 40, 40);
       if (mouse.x > 0) {
         const coordsText = focus === 'developer' ? '13.3444° N, 74.7944° E' : '27.7800° N, 88.6300° E';
@@ -160,7 +160,7 @@ export default function InteractiveBackground({ focus = 'home' }) {
             }
           }
 
-          ctx.fillStyle = focus === 'developer' ? 'rgba(155, 107, 78, 0.08)' : 'rgba(210, 193, 168, 0.04)';
+          ctx.fillStyle = focus === 'developer' ? 'rgba(155, 107, 78, 0.22)' : 'rgba(210, 193, 168, 0.15)';
           ctx.beginPath();
           ctx.arc(n.x, n.y, n.radius, 0, Math.PI * 2);
           ctx.fill();
@@ -170,8 +170,8 @@ export default function InteractiveBackground({ focus = 'home' }) {
             const dist = Math.sqrt((n.x - n2.x) ** 2 + (n.y - n2.y) ** 2);
             if (dist < 180) {
               ctx.strokeStyle = focus === 'developer'
-                ? `rgba(155, 107, 78, ${0.05 * (1 - dist / 180)})`
-                : `rgba(210, 193, 168, ${0.02 * (1 - dist / 180)})`;
+                ? `rgba(155, 107, 78, ${0.2 * (1 - dist / 180)})`
+                : `rgba(210, 193, 168, ${0.1 * (1 - dist / 180)})`;
               ctx.beginPath();
               ctx.moveTo(n.x, n.y);
               ctx.lineTo(n2.x, n2.y);
@@ -186,8 +186,8 @@ export default function InteractiveBackground({ focus = 'home' }) {
         ctx.lineWidth = 0.6;
         contours.forEach((contour, idx) => {
           ctx.strokeStyle = focus === 'researcher'
-            ? `rgba(111, 129, 103, ${0.06 - idx * 0.008})`
-            : `rgba(210, 193, 168, ${0.03 - idx * 0.004})`;
+            ? `rgba(111, 129, 103, ${0.18 - idx * 0.02})`
+            : `rgba(210, 193, 168, ${0.1 - idx * 0.01})`;
 
           ctx.beginPath();
           const segments = 80;
@@ -219,8 +219,8 @@ export default function InteractiveBackground({ focus = 'home' }) {
       // Render custom geofence ripple ring on click
       if (mouse.pulse > 0.01) {
         ctx.strokeStyle = focus === 'researcher'
-          ? `rgba(111, 129, 103, ${mouse.pulse * 0.07})`
-          : `rgba(155, 107, 78, ${mouse.pulse * 0.07})`;
+          ? `rgba(111, 129, 103, ${mouse.pulse * 0.25})`
+          : `rgba(155, 107, 78, ${mouse.pulse * 0.25})`;
         ctx.lineWidth = 1;
         ctx.beginPath();
         ctx.arc(mouse.x, mouse.y, (1 - mouse.pulse) * 140, 0, Math.PI * 2);

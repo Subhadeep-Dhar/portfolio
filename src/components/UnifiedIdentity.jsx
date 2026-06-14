@@ -29,7 +29,7 @@ export default function UnifiedIdentity() {
 
         {/* Narrative Center Header */}
         <div className="max-w-3xl mx-auto text-center mb-16 space-y-4">
-          <span className="mono-label tracking-[0.25em] text-[9px] text-[var(--active-accent)] block">
+          <span className="mono-label tracking-[0.25em] text-[var(--active-accent)] block">
             UNIFIED IDENTITY MERGE
           </span>
           <h2 className="text-3xl sm:text-4xl font-light text-neutral-100 tracking-tight leading-tight">
@@ -40,10 +40,10 @@ export default function UnifiedIdentity() {
 
         {/* Core Philosophy Callout */}
         <div className="max-w-4xl mx-auto border border-neutral-900 bg-[#24201c]/5 p-8 rounded mb-16 relative">
-          <div className="absolute top-0 left-6 -translate-y-1/2 bg-[#111111] px-3 font-mono-tech text-[9px] text-[var(--active-accent)] uppercase tracking-wider">
+          <div className="absolute top-0 left-6 -translate-y-1/2 bg-[#111111] px-3 font-mono-tech text-xs text-[var(--active-accent)] uppercase tracking-wider">
             STATEMENT // 01
           </div>
-          <p className="text-base sm:text-lg text-neutral-300 leading-relaxed text-center font-light">
+          <p className="text-base sm:text-lg text-neutral-350 leading-relaxed text-center font-light">
             “I do not simply build software or conduct research independently. <br className="hidden sm:inline" />
             I research problems, analyze systems, and build meaningful technological solutions around them.”
           </p>
@@ -61,13 +61,13 @@ export default function UnifiedIdentity() {
               className="p-6 border border-neutral-900 bg-transparent rounded hover:border-neutral-800 transition-colors duration-300 flex flex-col justify-between"
             >
               <div>
-                <span className="font-mono-tech text-[9px] text-neutral-500 border border-neutral-900 px-2 py-0.5 rounded bg-neutral-950/20 mb-4 inline-block">
+                <span className="font-mono-tech text-xs text-neutral-500 border border-neutral-900 px-2 py-0.5 rounded bg-neutral-950/20 mb-4 inline-block">
                   {item.tag}
                 </span>
-                <h4 className="font-semibold text-xs text-neutral-350 uppercase tracking-wider mb-2 leading-snug">
+                <h4 className="font-semibold text-sm text-neutral-350 uppercase tracking-wider mb-2 leading-snug">
                   {item.title}
                 </h4>
-                <p className="text-[11px] leading-relaxed text-neutral-500 font-light">
+                <p className="text-xs sm:text-sm leading-relaxed text-neutral-500 font-light">
                   {item.desc}
                 </p>
               </div>

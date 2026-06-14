@@ -28,17 +28,15 @@ export default function Timeline() {
             {/* Legend */}
             <div className="space-y-2 mt-8">
               {[
-                { dot: '#00e5ff', label: 'Education' },
-                { dot: '#a855f7', label: 'Project milestone' },
-                // { dot: '#00e5ff', label: 'Achievement / recognition' },
-                // { dot: '#64748b', label: 'Personal milestone' },
+                { dot: 'var(--active-accent)', label: 'Education' },
+                { dot: 'rgba(var(--active-accent-rgb), 0.4)', label: 'Project milestone' },
               ].map(({ dot, label }) => (
                 <div key={label} className="flex items-center gap-3">
                   <span
                     className="w-2.5 h-2.5 rounded-full shrink-0 ring-2 ring-offset-2 ring-offset-lab-bg"
                     style={{ backgroundColor: dot }}
                   />
-                  <span className="font-mono text-xs text-lab-muted">{label}</span>
+                  <span className="font-mono text-xs text-neutral-500">{label}</span>
                 </div>
               ))}
             </div>

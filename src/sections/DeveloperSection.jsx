@@ -22,7 +22,7 @@ export default function DeveloperSection() {
           <h2 className="text-3xl sm:text-4xl font-light text-neutral-100 tracking-tight leading-tight">
             Developer & Builder
           </h2>
-          <p className="text-xs text-neutral-500 mt-2 max-w-xl leading-relaxed">
+          <p className="text-sm text-neutral-400 mt-2 max-w-xl leading-relaxed">
             Architecting relational databases, designing offline-first local structures, and caching pipelines.
           </p>
         </div>
@@ -35,7 +35,7 @@ export default function DeveloperSection() {
         {/* 2. Systems Specs */}
         <div className="space-y-6">
           <div className="flex flex-col gap-1 mb-8">
-            <span className="mono-label text-[9px] text-neutral-500">System Blueprints</span>
+            <span className="mono-label text-neutral-500">System Blueprints</span>
             <h3 className="font-semibold text-lg text-neutral-200">Engineering experiments</h3>
           </div>
 
@@ -55,17 +55,17 @@ export default function DeveloperSection() {
                   >
                     <div className="space-y-1">
                       <div className="flex items-center gap-2.5">
-                        <span className="font-mono-tech text-[10px] text-neutral-500">
+                        <span className="font-mono-tech text-xs text-neutral-500">
                           SPEC_{String(idx + 1).padStart(2, '0')}
                         </span>
-                        <span className="font-mono-tech text-[9px] text-neutral-600">
+                        <span className="font-mono-tech text-xs text-neutral-600">
                           // {project.year}
                         </span>
                       </div>
                       <h4 className="font-semibold text-sm text-neutral-200">
                         {project.title}
                       </h4>
-                      <p className="text-xs text-neutral-500 leading-relaxed font-light">
+                      <p className="text-sm text-neutral-450 leading-relaxed font-light">
                         {project.tagline}
                       </p>
                     </div>
@@ -76,14 +76,14 @@ export default function DeveloperSection() {
                         {project.tech.slice(0, 3).map((t) => (
                           <span
                             key={t}
-                            className="font-mono-tech text-[9px] px-2 py-0.5 border border-neutral-900 text-neutral-500 rounded bg-[#171411]/40"
+                            className="font-mono-tech text-xs px-2 py-0.5 border border-neutral-900 text-neutral-450 rounded bg-[#171411]/40"
                           >
                             {t}
                           </span>
                         ))}
                       </div>
 
-                      <span className="font-mono-tech text-[10px] text-neutral-500 uppercase tracking-widest pl-2">
+                      <span className="font-mono-tech text-xs text-neutral-500 uppercase tracking-widest pl-2">
                         {isOpen ? '[ CLOSE ]' : '[ OPEN SPEC ]'}
                       </span>
                     </div>
@@ -99,44 +99,44 @@ export default function DeveloperSection() {
                         transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
                         className="overflow-hidden bg-[#171411]/25 border-t border-neutral-900"
                       >
-                        <div className="p-6 grid md:grid-cols-12 gap-8 text-xs sm:text-sm text-neutral-400 leading-relaxed font-light">
+                        <div className="p-6 grid md:grid-cols-12 gap-8 text-sm text-neutral-400 leading-relaxed font-light">
                           {/* Details parameters */}
                           <div className="md:col-span-8 space-y-5">
                             <div>
-                              <span className="mono-label text-[9px] text-neutral-650 block mb-1">THE PROBLEM</span>
-                              <p className="text-neutral-400">{project.problem}</p>
+                              <span className="mono-label text-neutral-600 block mb-1">THE PROBLEM</span>
+                              <p className="text-neutral-300">{project.problem}</p>
                             </div>
                             
                             <div>
-                              <span className="mono-label text-[9px] text-neutral-650 block mb-1">HYPOTHESIS FRAMEWORK</span>
-                              <p className="text-neutral-400">{project.hypothesis}</p>
+                              <span className="mono-label text-neutral-600 block mb-1">HYPOTHESIS FRAMEWORK</span>
+                              <p className="text-neutral-300">{project.hypothesis}</p>
                             </div>
 
                             <div>
-                              <span className="mono-label text-[9px] text-neutral-650 block mb-1">IMPLEMENTATION PATH</span>
-                              <p className="text-neutral-400">{project.approach}</p>
+                              <span className="mono-label text-neutral-600 block mb-1">IMPLEMENTATION PATH</span>
+                              <p className="text-neutral-300">{project.approach}</p>
                             </div>
 
                             <div>
-                              <span className="mono-label text-[9px] text-neutral-600 block mb-1">VALIDATION METRICS & OUTCOMES</span>
-                              <p className="text-neutral-350 font-normal">{project.result}</p>
+                              <span className="mono-label text-neutral-500 block mb-1">VALIDATION METRICS & OUTCOMES</span>
+                              <p className="text-neutral-200 font-normal">{project.result}</p>
                             </div>
 
                             <div>
-                              <span className="mono-label text-[9px] text-neutral-650 block mb-1">FUTURE ITERATIONS</span>
-                              <p className="text-neutral-550">{project.future}</p>
+                              <span className="mono-label text-neutral-600 block mb-1">FUTURE ITERATIONS</span>
+                              <p className="text-neutral-400">{project.future}</p>
                             </div>
                           </div>
 
                           {/* Tech Meta parameters */}
                           <div className="md:col-span-4 border-t md:border-t-0 md:border-l border-neutral-900 pt-6 md:pt-0 md:pl-6 space-y-4">
                             <div>
-                              <span className="mono-label text-[9px] text-neutral-650 block mb-1">FULL TECH STACK</span>
+                              <span className="mono-label text-neutral-600 block mb-1">FULL TECH STACK</span>
                               <div className="flex flex-wrap gap-1.5">
                                 {project.tech.map((t) => (
                                   <span
                                     key={t}
-                                    className="font-mono-tech text-[10px] px-2 py-0.5 border border-neutral-900 text-neutral-400 rounded bg-[#171411]/50"
+                                    className="font-mono-tech text-xs px-2 py-0.5 border border-neutral-900 text-neutral-400 rounded bg-[#171411]/50"
                                   >
                                     {t}
                                   </span>
@@ -145,9 +145,9 @@ export default function DeveloperSection() {
                             </div>
 
                             <div>
-                              <span className="mono-label text-[9px] text-neutral-650 block mb-1">STATUS INDEX</span>
+                              <span className="mono-label text-neutral-650 block mb-1">STATUS INDEX</span>
                               <span
-                                className={`status-tag text-[10px] inline-block ${
+                                className={`status-tag text-xs inline-block ${
                                   project.status === 'completed'
                                     ? 'status-completed'
                                     : 'status-in-progress'
@@ -160,13 +160,13 @@ export default function DeveloperSection() {
                             {/* Verification channels */}
                             {(project.links?.demo || project.links?.github) && (
                               <div className="pt-4 border-t border-neutral-900 space-y-2">
-                                <span className="mono-label text-[9px] text-neutral-650 block mb-2">VERIFICATION CHANNELS</span>
+                                <span className="mono-label text-neutral-650 block mb-2">VERIFICATION CHANNELS</span>
                                 {project.links.github && (
                                   <a
                                     href={project.links.github}
                                     target="_blank"
                                     rel="noopener noreferrer"
-                                    className="block font-mono-tech text-xs border border-neutral-900 text-neutral-400 hover:border-neutral-500 hover:text-neutral-200 text-center py-2 rounded transition-colors duration-200"
+                                    className="block font-mono-tech text-sm border border-neutral-900 text-neutral-400 hover:border-neutral-500 hover:text-neutral-200 text-center py-2 rounded transition-colors duration-200"
                                   >
                                     VIEW SOURCE CODE →
                                   </a>
@@ -176,7 +176,7 @@ export default function DeveloperSection() {
                                     href={project.links.demo}
                                     target="_blank"
                                     rel="noopener noreferrer"
-                                    className="block font-mono-tech text-xs bg-neutral-900/10 border border-neutral-850 text-neutral-400 hover:bg-neutral-900/20 text-center py-2 rounded transition-colors duration-200"
+                                    className="block font-mono-tech text-sm bg-neutral-900/10 border border-neutral-850 text-neutral-400 hover:bg-neutral-900/20 text-center py-2 rounded transition-colors duration-200"
                                   >
                                     DEPLOYED LIVE DEMO →
                                   </a>

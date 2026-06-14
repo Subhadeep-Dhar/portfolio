@@ -44,10 +44,10 @@ export default function CaseStudy() {
             <button
               key={p.id}
               onClick={() => setActive(i)}
-              className={`font-mono text-xs px-4 py-2 rounded border transition-all duration-200 ${
+              className={`font-mono text-sm px-4 py-2 rounded border transition-all duration-200 ${
                 active === i
-                  ? 'border-lab-cyan text-lab-cyan bg-lab-cyan/10'
-                  : 'border-lab-line text-lab-muted hover:border-lab-cyan/40 hover:text-lab-text'
+                  ? 'border-[var(--active-accent)] text-[var(--active-accent)] bg-[var(--active-accent)]/10'
+                  : 'border-[var(--color-border)] text-neutral-450 hover:border-[var(--active-accent)]/40 hover:text-[var(--color-text-main)]'
               }`}
             >
               {p.title}
@@ -69,17 +69,17 @@ export default function CaseStudy() {
               <span className="mono-label block mb-2">
                 CASE_STUDY // {project.year}
               </span>
-              <h3 className="font-display font-bold text-2xl sm:text-3xl text-lab-text">
+              <h3 className="font-display font-bold text-2xl sm:text-3xl text-[var(--color-text-main)]">
                 {project.title}
               </h3>
-              <p className="text-lab-muted mt-1">{project.tagline}</p>
+              <p className="text-neutral-450 mt-1">{project.tagline}</p>
             </div>
             {/* Tech stack */}
             <div className="flex flex-wrap gap-1.5">
               {project.tech.map((t) => (
                 <span
                   key={t}
-                  className="font-mono text-xs px-2 py-0.5 border border-lab-line text-lab-muted rounded"
+                  className="font-mono text-xs px-2 py-0.5 border border-[var(--color-border)] text-neutral-450 rounded"
                 >
                   {t}
                 </span>
@@ -102,24 +102,24 @@ export default function CaseStudy() {
               >
                 <span
                   className="mono-label block"
-                  style={{ color: step.key === 'result' ? '#4ade80' : undefined }}
+                  style={{ color: step.key === 'result' ? 'var(--active-accent)' : undefined }}
                 >
                   {step.label}
                 </span>
-                <p className="text-sm text-lab-muted leading-relaxed">{step.content}</p>
+                <p className="text-sm sm:text-base text-neutral-400 leading-relaxed">{step.content}</p>
               </motion.div>
             ))}
           </div>
 
           {/* Links */}
           {(project.links?.demo || project.links?.github) && (
-            <div className="flex gap-3 mt-8 pt-6 border-t border-lab-line">
+            <div className="flex gap-3 mt-8 pt-6 border-t border-[var(--color-border)]">
               {project.links.github && (
                 <a
                   href={project.links.github}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="font-mono text-xs border border-lab-line text-lab-muted px-4 py-2 rounded hover:border-lab-cyan hover:text-lab-cyan transition-all duration-200"
+                  className="font-mono text-xs border border-[var(--color-border)] text-neutral-400 px-4 py-2 rounded hover:border-[var(--active-accent)] hover:text-[var(--active-accent)] transition-all duration-200"
                 >
                   VIEW CODE →
                 </a>
@@ -129,7 +129,7 @@ export default function CaseStudy() {
                   href={project.links.demo}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="font-mono text-xs bg-lab-cyan text-lab-bg px-4 py-2 rounded hover:bg-lab-cyan/90 transition-all duration-200"
+                  className="font-mono text-xs bg-[var(--active-accent)] text-neutral-900 px-4 py-2 rounded hover:bg-[var(--active-accent)]/90 transition-all duration-200"
                 >
                   LIVE DEMO →
                 </a>

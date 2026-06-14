@@ -38,7 +38,7 @@ export default function Skills() {
               <div className="flex items-center gap-2 mb-4">
                 <span
                   className="font-mono text-base"
-                  style={{ color: category.color === 'cyan' ? '#00e5ff' : '#a855f7' }}
+                  style={{ color: category.color === 'cyan' ? 'var(--active-accent)' : 'var(--color-text-dim)' }}
                 >
                   {category.icon}
                 </span>
@@ -84,9 +84,9 @@ export default function Skills() {
           className="flex flex-wrap gap-6 mt-12 pt-8 border-t border-lab-line"
         >
           {[
-            { dot: '#00e5ff', label: 'Core (daily use)' },
-            { dot: '#00e5ff50', label: 'Proficient' },
-            { dot: '#64748b', label: 'Learning (~)' },
+            { dot: 'var(--active-accent)', label: 'Core (daily use)' },
+            { dot: 'rgba(var(--active-accent-rgb), 0.4)', label: 'Proficient' },
+            { dot: 'var(--color-text-dim)', label: 'Learning (~)' },
           ].map(({ dot, label }) => (
             <div key={label} className="flex items-center gap-2">
               <span

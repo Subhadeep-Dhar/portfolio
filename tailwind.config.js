@@ -25,10 +25,10 @@ module.exports = {
         },
       },
       fontFamily: {
-        // JetBrains Mono for terminal feel, Geist Sans for body & display
-        mono:    ['JetBrains Mono', 'monospace'],
-        display: ['Geist Sans', 'sans-serif'],
-        body:    ['Geist Sans', 'sans-serif'],
+        // Cohesive Google Fonts system
+        mono:    ['IBM Plex Mono', 'monospace'],
+        display: ['Manrope', 'sans-serif'],
+        body:    ['Inter', 'sans-serif'],
       },
       animation: {
         'pulse-slow':    'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',

@@ -41,7 +41,8 @@ export default function ExperienceLayer() {
   }, []);
 
   const { scrollYProgress } = useScroll({
-    target: containerRef
+    target: containerRef,
+    offset: ["start start", "end end"]
   });
 
   // Vertical scroll to horizontal translate transform
@@ -60,7 +61,7 @@ export default function ExperienceLayer() {
     return (
       <div className="py-20 bg-transparent space-y-16 px-6 relative z-20">
         <div className="flex flex-col gap-1 mb-8">
-          <span className="mono-label text-[10px] text-gray-500">EXPERIENCE LAYER</span>
+          <span className="mono-label text-xs text-gray-500">EXPERIENCE LAYER</span>
           <h3 className="text-2xl font-light text-gray-100 tracking-tight">Immersive Storytelling</h3>
         </div>
         
@@ -73,13 +74,13 @@ export default function ExperienceLayer() {
               <span className="text-4xl font-extrabold font-mono-tech opacity-15 text-neutral-400">
                 {slide.num}
               </span>
-              <span className="font-mono-tech text-[8px] text-neutral-600 uppercase tracking-widest">
+              <span className="font-mono-tech text-xs text-neutral-600 uppercase tracking-widest">
                 {slide.subtitle}
               </span>
             </div>
             <h4 className="text-xl font-light text-neutral-200 tracking-tight">{slide.title}</h4>
-            <p className="text-xs leading-relaxed text-neutral-400 font-light">{slide.desc}</p>
-            <span className="font-mono-tech text-[9px] text-teal-400/80 block pt-2">{slide.details}</span>
+            <p className="text-sm leading-relaxed text-neutral-450 font-light">{slide.desc}</p>
+            <span className="font-mono-tech text-xs text-[var(--active-accent)]/80 block pt-2">{slide.details}</span>
           </div>
         ))}
       </div>
@@ -87,7 +88,7 @@ export default function ExperienceLayer() {
   }
 
   return (
-    <div ref={containerRef} className="relative h-[250vh] w-full bg-transparent select-none z-20">
+    <div ref={containerRef} className="relative h-[300vh] w-full bg-transparent select-none z-20">
       {/* Sticky Scroll Lock Window */}
       <div className="sticky top-0 h-screen w-full overflow-hidden flex items-center bg-transparent">
         
@@ -103,7 +104,7 @@ export default function ExperienceLayer() {
 
         {/* Horizontal Track */}
         <motion.div
-          className="flex w-[300vw] h-full items-center relative z-10"
+          className="horizontal-scroll-container w-[300vw] h-full items-center relative z-10"
           style={{ x: xTranslate }}
         >
           {SLIDES_DATA.map((slide) => (
@@ -114,10 +115,10 @@ export default function ExperienceLayer() {
               <div className="max-w-4xl w-full grid md:grid-cols-12 gap-12 items-center">
                 {/* Left Numbering Indicator */}
                 <div className="md:col-span-4 flex flex-col items-start md:items-end md:text-right">
-                  <span className="text-7xl sm:text-9xl font-extrabold font-mono-tech opacity-10 text-neutral-400">
+                  <span className="text-7xl sm:text-9xl font-extrabold font-mono-tech opacity-10 text-neutral-450">
                     {slide.num}
                   </span>
-                  <span className="font-mono-tech text-[9px] text-gray-500 tracking-[0.25em] mt-3">
+                  <span className="font-mono-tech text-xs text-gray-500 tracking-[0.25em] mt-3">
                     {slide.subtitle}
                   </span>
                 </div>
@@ -127,12 +128,12 @@ export default function ExperienceLayer() {
                   <h3 className="text-2xl sm:text-3xl font-light text-neutral-100 tracking-tight">
                     {slide.title}
                   </h3>
-                  <p className="text-xs sm:text-sm text-neutral-400 leading-relaxed font-light max-w-xl">
+                  <p className="text-sm sm:text-base text-neutral-450 leading-relaxed font-light max-w-xl">
                     {slide.desc}
                   </p>
                   
-                  <div className="pt-4 flex items-center gap-2 text-[10px] font-mono-tech text-gray-600">
-                    <span className="w-1.5 h-1.5 rounded-full bg-teal-500/60" />
+                  <div className="pt-4 flex items-center gap-2 text-xs font-mono-tech text-gray-500">
+                    <span className="w-1.5 h-1.5 rounded-full bg-[var(--active-accent)]/80" />
                     <span>{slide.details}</span>
                   </div>
                 </div>
@@ -143,16 +144,16 @@ export default function ExperienceLayer() {
 
         {/* Scroll Progress line */}
         <div className="absolute bottom-16 left-1/2 -translate-x-1/2 flex items-center gap-4 z-20">
-          <span className="font-mono-tech text-[9px] text-gray-600">01 // START</span>
+          <span className="font-mono-tech text-xs text-gray-650">01 // START</span>
           <div className="w-40 h-px bg-neutral-900 relative">
             <motion.div 
-              className="absolute top-0 bottom-0 left-0 bg-neutral-450" 
+              className="absolute top-0 bottom-0 left-0 bg-[var(--active-accent)]/60" 
               style={{
                 width: progressWidth
               }}
             />
           </div>
-          <span className="font-mono-tech text-[9px] text-gray-600">03 // MERGE</span>
+          <span className="font-mono-tech text-xs text-gray-650">03 // MERGE</span>
         </div>
       </div>
     </div>

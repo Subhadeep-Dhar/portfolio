@@ -47,7 +47,7 @@ export default function HowIThink() {
   return (
     <div className="w-full border border-neutral-900 bg-[#1a211d]/5 p-6 sm:p-8 rounded select-none">
       <div className="flex flex-col gap-1 mb-8">
-        <span className="mono-label text-[9px] text-neutral-500">Cognitive Pipeline</span>
+        <span className="mono-label text-neutral-500">Cognitive Pipeline</span>
         <h3 className="font-semibold text-lg text-neutral-200">How I approach complex tasks</h3>
       </div>
 
@@ -71,7 +71,7 @@ export default function HowIThink() {
                   scale: isActive ? 1.15 : 1,
                   borderColor: isActive ? 'var(--active-accent)' : isPassed ? 'var(--color-text-dim)' : 'rgba(210, 193, 168, 0.05)',
                 }}
-                className={`w-7 h-7 rounded-full bg-[#111614] border-2 flex items-center justify-center text-[10px] font-mono-tech transition-colors duration-300`}
+                className={`w-7 h-7 rounded-full bg-[#111614] border-2 flex items-center justify-center text-xs font-mono-tech transition-colors duration-300`}
                 style={{
                   color: isActive ? 'var(--active-accent)' : 'rgba(210, 193, 168, 0.2)',
                 }}
@@ -80,7 +80,7 @@ export default function HowIThink() {
               </motion.div>
               
               <span
-                className={`text-[9px] font-mono-tech mt-2 tracking-wide hidden sm:inline-block transition-colors duration-300 ${
+                className={`text-xs font-mono-tech mt-2 tracking-wide hidden sm:inline-block transition-colors duration-300 ${
                   isActive ? 'text-neutral-300' : 'text-neutral-600'
                 }`}
               >
@@ -103,21 +103,21 @@ export default function HowIThink() {
             className="space-y-4"
           >
             <div>
-              <span className="font-mono-tech text-[9px] text-neutral-500 block mb-0.5">
+              <span className="font-mono-tech text-xs text-neutral-500 block mb-0.5">
                 STAGE_{THINK_STEPS[activeStep].phase} // PIPELINE
               </span>
               <h4 className="text-sm font-semibold text-neutral-200">
-                {THINK_STEPS[activeStep].title} — <span className="text-[var(--active-accent)] text-xs font-mono-tech font-medium">{THINK_STEPS[activeStep].subtitle}</span>
+                {THINK_STEPS[activeStep].title} — <span className="text-[var(--active-accent)] text-sm font-mono-tech font-medium">{THINK_STEPS[activeStep].subtitle}</span>
               </h4>
             </div>
 
-            <p className="text-xs sm:text-sm text-neutral-400 leading-relaxed max-w-2xl font-light">
+            <p className="text-sm sm:text-base text-neutral-400 leading-relaxed max-w-2xl font-light">
               {THINK_STEPS[activeStep].desc}
             </p>
 
-            <div className="border-t border-neutral-900/40 pt-3 flex gap-2 items-start text-[10px]">
-              <span className="font-mono-tech text-[9px] text-neutral-600 shrink-0 mt-0.5">APPLICATION:</span>
-              <span className="font-mono-tech text-[10px] text-[var(--color-text-dim)] leading-snug">
+            <div className="border-t border-neutral-900/40 pt-3 flex gap-2 items-start text-xs">
+              <span className="font-mono-tech text-xs text-neutral-600 shrink-0 mt-0.5">APPLICATION:</span>
+              <span className="font-mono-tech text-xs text-[var(--color-text-dim)] leading-snug">
                 {THINK_STEPS[activeStep].application}
               </span>
             </div>

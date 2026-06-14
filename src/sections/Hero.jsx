@@ -45,10 +45,10 @@ export default function Hero({ onFocusChange }) {
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden pt-20 select-none">
       {/* Visual coordinates tracking in background */}
-      <div className="absolute top-24 left-8 font-mono-tech text-[9px] text-gray-700 tracking-[0.2em] hidden sm:block">
+      <div className="absolute top-24 left-8 font-mono-tech text-xs text-gray-700 tracking-[0.2em] hidden sm:block">
         SYS_ANCHOR // 13.3444° N, 74.7944° E
       </div>
-      <div className="absolute bottom-24 right-8 font-mono-tech text-[9px] text-gray-700 tracking-[0.2em] hidden sm:block">
+      <div className="absolute bottom-24 right-8 font-mono-tech text-xs text-gray-700 tracking-[0.2em] hidden sm:block">
         ALT_ANCHOR // 27.7800° N, 88.6300° E
       </div>
 
@@ -62,7 +62,7 @@ export default function Hero({ onFocusChange }) {
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               transition={{ duration: 0.25 }}
-              className="font-mono-tech text-[10px] uppercase tracking-[0.3em] text-teal-500/70"
+              className="font-mono-tech text-xs uppercase tracking-[0.3em] text-[var(--active-accent)]/80"
             >
               {GREETINGS[greetIndex]} // STREAM
             </motion.span>
@@ -74,7 +74,7 @@ export default function Hero({ onFocusChange }) {
           <h1 className="text-4xl sm:text-5xl lg:text-6xl font-light tracking-tight text-gray-100 leading-tight">
             {siteConfig.name}
           </h1>
-          <p className="text-xs sm:text-sm font-mono-tech text-gray-400 tracking-wider max-w-lg mx-auto leading-relaxed">
+          <p className="text-sm sm:text-base font-mono-tech text-gray-400 tracking-wider max-w-lg mx-auto leading-relaxed">
             {siteConfig.headline}
           </p>
         </div>
@@ -85,10 +85,10 @@ export default function Hero({ onFocusChange }) {
             onClick={() => handleLinkClick('developer', 'ecosystem-section')}
             className="group flex flex-col items-center bg-transparent border-0 focus:outline-none"
           >
-            <span className="font-mono-tech text-[11px] tracking-[0.25em] text-gray-400 group-hover:text-teal-400 transition-colors uppercase">
+            <span className="font-mono-tech text-xs sm:text-sm tracking-[0.25em] text-gray-400 group-hover:text-[#9B6B4E] transition-colors uppercase">
               [ 13.34° N // Explore My Systems ]
             </span>
-            <span className="font-mono-tech text-[8px] text-gray-650 opacity-0 group-hover:opacity-100 transition-opacity duration-300 mt-1">
+            <span className="font-mono-tech text-[10px] text-neutral-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300 mt-1">
               BUILDER MODE ACTIVE ON SELECTION
             </span>
           </button>
@@ -99,10 +99,10 @@ export default function Hero({ onFocusChange }) {
             onClick={() => handleLinkClick('researcher', 'research-section')}
             className="group flex flex-col items-center bg-transparent border-0 focus:outline-none"
           >
-            <span className="font-mono-tech text-[11px] tracking-[0.25em] text-gray-400 group-hover:text-lime-500 transition-colors uppercase">
+            <span className="font-mono-tech text-xs sm:text-sm tracking-[0.25em] text-gray-400 group-hover:text-[#6F8167] transition-colors uppercase">
               [ 27.78° N // Enter Research Space ]
             </span>
-            <span className="font-mono-tech text-[8px] text-gray-650 opacity-0 group-hover:opacity-100 transition-opacity duration-300 mt-1">
+            <span className="font-mono-tech text-[10px] text-neutral-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300 mt-1">
               SPATIAL MODE ACTIVE ON SELECTION
             </span>
           </button>
@@ -112,8 +112,8 @@ export default function Hero({ onFocusChange }) {
         <div className="pt-8 flex justify-center">
           {siteConfig.available && (
             <div className="flex items-center gap-2 px-3 py-1 rounded border border-gray-900/60 bg-gray-950/10">
-              <span className="w-1.5 h-1.5 bg-teal-500 rounded-full animate-ping" />
-              <span className="font-mono-tech text-[9px] text-gray-500 tracking-wider uppercase">
+              <span className="w-1.5 h-1.5 bg-[var(--active-accent)] rounded-full animate-ping" />
+              <span className="font-mono-tech text-xs text-gray-500 tracking-wider uppercase">
                 Systems online · {siteConfig.location}
               </span>
             </div>

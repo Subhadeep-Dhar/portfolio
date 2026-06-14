@@ -43,7 +43,7 @@ export default function About() {
               </h2>
             </div>
             
-            <div className="space-y-4 text-xs sm:text-sm text-neutral-400 leading-relaxed font-light">
+            <div className="space-y-4 text-sm sm:text-base text-neutral-300 leading-relaxed font-light">
               {siteConfig.bio.map((paragraph, i) => (
                 <p key={i}>
                   {paragraph}
@@ -52,14 +52,14 @@ export default function About() {
             </div>
 
             <div className="flex flex-wrap gap-2 pt-2">
-              <span className="font-mono-tech text-[10px] border border-neutral-900 px-3 py-1 rounded bg-[#24201c]/5 text-neutral-500">
+              <span className="font-mono-tech text-xs border border-neutral-900 px-3 py-1 rounded bg-[#24201c]/5 text-neutral-500">
                 📍 {siteConfig.location}
               </span>
-              <span className="font-mono-tech text-[10px] border border-neutral-900 px-3 py-1 rounded bg-[#24201c]/5 text-neutral-500">
+              <span className="font-mono-tech text-xs border border-neutral-900 px-3 py-1 rounded bg-[#24201c]/5 text-neutral-500">
                 🎓 MCA Scholar
               </span>
               {siteConfig.available && (
-                <span className="font-mono-tech text-[10px] border border-[var(--active-accent)]/30 text-[var(--active-accent)] px-3 py-1 rounded bg-[var(--active-accent)]/5">
+                <span className="font-mono-tech text-xs border border-[var(--active-accent)]/30 text-[var(--active-accent)] px-3 py-1 rounded bg-[var(--active-accent)]/5">
                   ✦ Available for systems build
                 </span>
               )}
@@ -78,13 +78,13 @@ export default function About() {
                 className="p-5 border border-neutral-900 bg-[#24201c]/5 rounded group hover:border-neutral-800 transition-colors duration-300"
               >
                 <div className="flex items-center justify-between mb-3">
-                  <span className="font-mono-tech text-[9px] text-neutral-600">{trait.code}</span>
-                  <span className="w-1 h-1 rounded-full bg-[var(--active-accent)]/50" />
+                  <span className="font-mono-tech text-xs text-neutral-600">{trait.code}</span>
+                  <span className="w-1.5 h-1.5 rounded-full bg-[var(--active-accent)]/50" />
                 </div>
-                <h4 className="font-semibold text-xs text-neutral-350 uppercase tracking-wider mb-2">
+                <h4 className="font-semibold text-sm text-neutral-350 uppercase tracking-wider mb-2">
                   {trait.label}
                 </h4>
-                <p className="text-[11px] leading-relaxed text-neutral-500 font-light">
+                <p className="text-xs sm:text-sm leading-relaxed text-neutral-500 font-light">
                   {trait.desc}
                 </p>
               </motion.div>

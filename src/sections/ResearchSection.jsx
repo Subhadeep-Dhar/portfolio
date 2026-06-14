@@ -22,7 +22,7 @@ export default function ResearchSection() {
           <h2 className="text-3xl sm:text-4xl font-light text-neutral-100 tracking-tight leading-tight">
             Research & Location Intelligence
           </h2>
-          <p className="text-xs text-neutral-500 mt-2 max-w-xl leading-relaxed">
+          <p className="text-sm text-neutral-400 mt-2 max-w-xl leading-relaxed">
             Processing multi-temporal Landsat sensor bands, monitoring Sikkim glacier flow velocities, and assessing vegetation temperature dynamics.
           </p>
         </div>
@@ -30,7 +30,7 @@ export default function ResearchSection() {
         {/* 1. Research Projects List (Styled as Scientific Publication Records) */}
         <div className="space-y-6 mb-24">
           <div className="flex flex-col gap-1 mb-8">
-            <span className="mono-label text-[9px] text-neutral-500">Observation Records</span>
+            <span className="mono-label text-neutral-500">Observation Records</span>
             <h3 className="font-semibold text-lg text-neutral-200">Environmental & GIS assessments</h3>
           </div>
 
@@ -48,14 +48,14 @@ export default function ResearchSection() {
                     {/* Header */}
                     <div className="flex justify-between items-start gap-4 pb-3 border-b border-neutral-900">
                       <div>
-                        <span className="font-mono-tech text-[9px] text-[var(--active-accent)] block">
+                        <span className="font-mono-tech text-xs text-[var(--active-accent)] block">
                           PAPER_LOG_{String(idx + 1).padStart(2, '0')}
                         </span>
-                        <span className="font-mono-tech text-[9px] text-neutral-600 block mt-0.5">
+                        <span className="font-mono-tech text-xs text-neutral-600 block mt-0.5">
                           COORD: {coordsText}
                         </span>
                       </div>
-                      <span className="status-tag text-[8px] scale-90 origin-top-right">
+                      <span className="status-tag text-[10px] scale-90 origin-top-right">
                         {paper.status.toUpperCase()}
                       </span>
                     </div>
@@ -65,19 +65,19 @@ export default function ResearchSection() {
                       <h4 className="font-semibold text-sm text-neutral-200 leading-snug">
                         {paper.title}
                       </h4>
-                      <p className="text-xs text-neutral-500 leading-relaxed font-light">
+                      <p className="text-sm text-neutral-450 leading-relaxed font-light">
                         {paper.tagline}
                       </p>
                     </div>
 
                     <div className="text-xs text-neutral-400 space-y-2 pt-2">
                       <div>
-                        <span className="mono-label text-[8px] text-neutral-650 block">SENSORS & SYSTEMS</span>
+                        <span className="mono-label text-neutral-650 block">SENSORS & SYSTEMS</span>
                         <div className="flex flex-wrap gap-1.5 mt-1">
                           {paper.tech.map((t) => (
                             <span
                               key={t}
-                              className="font-mono-tech text-[9px] text-neutral-400"
+                              className="font-mono-tech text-xs text-neutral-400"
                             >
                               · {t}
                             </span>
@@ -91,11 +91,11 @@ export default function ResearchSection() {
                   <div className="pt-6 mt-4 border-t border-neutral-900 flex justify-between items-center">
                     <button
                       onClick={() => setActivePaperId(isOpen ? null : paper.id)}
-                      className="font-mono-tech text-[10px] text-[var(--active-accent)] hover:text-neutral-200 focus:outline-none bg-transparent border-0"
+                      className="font-mono-tech text-xs text-[var(--active-accent)] hover:text-neutral-200 focus:outline-none bg-transparent border-0"
                     >
                       {isOpen ? '[ CLOSE BRIEF ]' : '[ ACCESS BRIEF ]'}
                     </button>
-                    <span className="font-mono-tech text-[8px] text-neutral-600">SEC_REF: GEE_L8</span>
+                    <span className="font-mono-tech text-xs text-neutral-650">SEC_REF: GEE_L8</span>
                   </div>
 
                   {/* Expanded Brief */}
@@ -106,23 +106,23 @@ export default function ResearchSection() {
                         animate={{ height: 'auto', opacity: 1 }}
                         exit={{ height: 0, opacity: 0 }}
                         transition={{ duration: 0.3, ease: 'easeInOut' }}
-                        className="overflow-hidden mt-4 pt-4 border-t border-dashed border-neutral-900 text-xs text-neutral-400 space-y-4 leading-relaxed font-light"
+                        className="overflow-hidden mt-4 pt-4 border-t border-dashed border-neutral-900 text-sm text-neutral-400 space-y-4 leading-relaxed font-light"
                       >
                         <div>
-                          <span className="mono-label text-[8px] text-neutral-650 block">ABSTRACT friction</span>
-                          <p>{paper.problem}</p>
+                          <span className="mono-label text-neutral-650 block">ABSTRACT friction</span>
+                          <p className="text-neutral-350">{paper.problem}</p>
                         </div>
                         <div>
-                          <span className="mono-label text-[8px] text-neutral-650 block">RESEARCH HYPOTHESIS</span>
-                          <p>{paper.hypothesis}</p>
+                          <span className="mono-label text-neutral-650 block">RESEARCH HYPOTHESIS</span>
+                          <p className="text-neutral-350">{paper.hypothesis}</p>
                         </div>
                         <div>
-                          <span className="mono-label text-[8px] text-neutral-650 block">ANALYSIS & COMPOSITES PATH</span>
-                          <p>{paper.approach}</p>
+                          <span className="mono-label text-neutral-650 block">ANALYSIS & COMPOSITES PATH</span>
+                          <p className="text-neutral-350">{paper.approach}</p>
                         </div>
                         <div>
-                          <span className="mono-label text-[8px] text-green-700 block">FINDINGS & METRICS</span>
-                          <p className="text-neutral-300 font-normal">{paper.result}</p>
+                          <span className="mono-label text-green-650 block">FINDINGS & METRICS</span>
+                          <p className="text-neutral-200 font-normal">{paper.result}</p>
                         </div>
                       </motion.div>
                     )}

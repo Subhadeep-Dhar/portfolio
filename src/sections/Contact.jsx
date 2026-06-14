@@ -41,7 +41,7 @@ export default function Contact() {
           <div className="text-center space-y-4">
             <div className="flex justify-center items-center gap-2 mb-2">
               <span className="w-1.5 h-1.5 rounded-full bg-[var(--active-accent)] animate-ping" />
-              <span className="font-mono-tech text-[9px] text-[var(--active-accent)] uppercase tracking-[0.25em]">
+              <span className="font-mono-tech text-xs text-[var(--active-accent)] uppercase tracking-[0.25em]">
                 TRANSMITTING BEACON // STABLE
               </span>
             </div>
@@ -49,7 +49,7 @@ export default function Contact() {
             <h2 className="text-3xl font-light text-neutral-100 tracking-tight leading-tight">
               Let's build something meaningful.
             </h2>
-            <p className="text-xs text-neutral-500 max-w-sm mx-auto leading-relaxed">
+            <p className="text-sm text-neutral-400 max-w-sm mx-auto leading-relaxed">
               Open to collaborating on geospatial indices, cached database structures, or custom API channels.
             </p>
           </div>
@@ -69,12 +69,12 @@ export default function Contact() {
                 className="flex items-center justify-between p-4 border border-neutral-900 bg-[#24201c]/5 hover:border-[var(--active-accent)]/50 rounded transition-all duration-300 group"
               >
                 <div className="flex items-center gap-3">
-                  <span className="font-mono-tech text-[9px] text-neutral-600">{link.code}</span>
-                  <span className="mono-label text-[10px] text-neutral-450 group-hover:text-neutral-200 transition-colors">
+                  <span className="font-mono-tech text-xs text-neutral-500">{link.code}</span>
+                  <span className="mono-label text-neutral-350 group-hover:text-neutral-200 transition-colors">
                     {link.label}
                   </span>
                 </div>
-                <span className="font-mono-tech text-[10px] text-neutral-500 group-hover:text-[var(--active-accent)] transition-colors truncate max-w-xs sm:max-w-md">
+                <span className="font-mono-tech text-xs sm:text-sm text-neutral-400 group-hover:text-[var(--active-accent)] transition-colors truncate max-w-xs sm:max-w-md">
                   {link.value} →
                 </span>
               </motion.a>
@@ -96,10 +96,10 @@ export default function Contact() {
 
           {/* Immersive Footer */}
           <div className="border-t border-neutral-950 pt-12 mt-16 text-center space-y-3">
-            <p className="font-mono-tech text-[9px] text-neutral-600">
+            <p className="font-mono-tech text-xs text-neutral-500">
               BUILD // Next.js · CSS-in-JS · Canvas 2D · Framer Motion
             </p>
-            <p className="font-mono-tech text-[9px] text-neutral-700">
+            <p className="font-mono-tech text-xs text-neutral-600">
               {siteConfig.name} © {new Date().getFullYear()} · MANIPAL & SIKKIM
             </p>
             
@@ -107,7 +107,7 @@ export default function Contact() {
             <div className="pt-4">
               <button
                 onClick={handleReplayBoot}
-                className="font-mono-tech text-[8px] text-neutral-700 hover:text-[var(--active-accent)] focus:outline-none bg-transparent border-0 transition-colors duration-250 cursor-pointer"
+                className="font-mono-tech text-xs text-neutral-600 hover:text-[var(--active-accent)] focus:outline-none bg-transparent border-0 transition-colors duration-250 cursor-pointer"
               >
                 [ RESET EXPERIENCE SESSION ]
               </button>

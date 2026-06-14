@@ -143,7 +143,7 @@ export default function TechEcosystem() {
                 d={path}
                 className="svg-connection-path"
                 style={{
-                  stroke: isHighlighted ? 'var(--active-accent)' : 'rgba(210, 193, 168, 0.04)',
+                  stroke: isHighlighted ? 'var(--active-accent)' : 'rgba(210, 193, 168, 0.12)',
                   strokeWidth: isHighlighted ? 1.5 : 0.8,
                   opacity: isFaded ? 0.08 : 0.6,
                 }}
@@ -158,14 +158,14 @@ export default function TechEcosystem() {
         {/* Left: Technologies List */}
         <div className="md:col-span-7 space-y-6">
           <div className="flex flex-col gap-1 mb-2">
-            <span className="mono-label text-[9px] text-neutral-500">System Parameters</span>
+            <span className="mono-label text-neutral-500">System Parameters</span>
             <h3 className="font-semibold text-lg text-neutral-200">Technologies utilized in projects</h3>
           </div>
           
           <div className="space-y-4">
             {skillCategories.map((category) => (
               <div key={category.label} className="border-b border-neutral-900 pb-4 last:border-0 last:pb-0">
-                <span className="font-mono-tech text-[10px] text-neutral-500 block mb-2">{category.label}</span>
+                <span className="font-mono-tech text-xs text-neutral-500 block mb-2">{category.label}</span>
                 <div className="flex flex-wrap gap-2">
                   {category.skills.map((skill) => {
                     const highlighted = isTechHighlighted(skill.name);
@@ -179,7 +179,7 @@ export default function TechEcosystem() {
                         onMouseEnter={() => setHoveredTech(skill.name)}
                         onMouseLeave={() => setHoveredTech(null)}
                         onClick={() => handleTechClick(skill.name)}
-                        className="flex items-center gap-2 px-3 py-1 rounded-full border text-[11px] font-mono-tech transition-all duration-300 focus:outline-none"
+                        className="flex items-center gap-2 px-3 py-1 rounded-full border text-xs font-mono-tech transition-all duration-300 focus:outline-none"
                         style={{
                           borderColor: isSelected
                             ? 'var(--active-accent)'
@@ -214,7 +214,7 @@ export default function TechEcosystem() {
         {/* Right: Projects list */}
         <div className="md:col-span-5 space-y-4 md:pl-6">
           <div className="flex flex-col gap-1 mb-2">
-            <span className="mono-label text-[9px] text-neutral-500">Execution Targets</span>
+            <span className="mono-label text-neutral-500">Execution Targets</span>
             <h3 className="font-semibold text-lg text-neutral-200">Active systems</h3>
           </div>
 
@@ -243,19 +243,19 @@ export default function TechEcosystem() {
                 >
                   <div className="flex justify-between items-start gap-2">
                     <div>
-                      <span className="mono-label text-[8px] text-neutral-500 block mb-0.5">SYS_{proj.year}</span>
+                      <span className="mono-label text-neutral-500 block mb-0.5">SYS_{proj.year}</span>
                       <h4
-                        className="font-semibold text-xs transition-colors duration-200"
+                        className="font-semibold text-xs sm:text-sm transition-colors duration-200"
                         style={{ color: highlighted ? 'var(--color-text-main)' : 'rgba(210, 193, 168, 0.2)' }}
                       >
                         {proj.title}
                       </h4>
                     </div>
-                    <span className="status-tag text-[8px] scale-90 origin-top-right">
+                    <span className="status-tag text-xs scale-90 origin-top-right">
                       {proj.status}
                     </span>
                   </div>
-                  <p className="text-[10px] text-neutral-500 mt-1 line-clamp-1 leading-snug">
+                  <p className="text-xs text-neutral-500 mt-1 line-clamp-1 leading-snug">
                     {proj.tagline}
                   </p>
                 </div>

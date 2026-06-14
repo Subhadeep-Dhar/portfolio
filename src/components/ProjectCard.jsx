@@ -43,15 +43,15 @@ export default function ProjectCard({ project, index }) {
               <span className="mono-label">
                 EXP_{String(index + 1).padStart(2, '0')}
               </span>
-              <span className="font-mono text-xs text-lab-muted opacity-60">
+              <span className="font-mono text-xs text-neutral-500 opacity-60">
                 {project.year}
               </span>
             </div>
 
-            <h3 className="font-display font-semibold text-lg text-lab-text leading-tight mb-1 group-hover:text-lab-cyan transition-colors duration-200">
+            <h3 className="font-display font-semibold text-lg text-[var(--color-text-main)] leading-tight mb-1 group-hover:text-[var(--active-accent)] transition-colors duration-200">
               {project.title}
             </h3>
-            <p className="text-sm text-lab-muted leading-relaxed">
+            <p className="text-sm text-neutral-400 leading-relaxed">
               {project.tagline}
             </p>
           </div>
@@ -64,7 +64,7 @@ export default function ProjectCard({ project, index }) {
             <motion.span
               animate={{ rotate: expanded ? 45 : 0 }}
               transition={{ duration: 0.2 }}
-              className="text-lab-cyan text-lg font-mono leading-none"
+              className="text-[var(--active-accent)] text-lg font-mono leading-none"
             >
               +
             </motion.span>
@@ -76,13 +76,13 @@ export default function ProjectCard({ project, index }) {
           {project.tech.slice(0, 5).map((t) => (
             <span
               key={t}
-              className="font-mono text-xs px-2 py-0.5 rounded border border-lab-line text-lab-muted hover:border-lab-cyan hover:text-lab-cyan transition-colors duration-150"
+              className="font-mono text-xs px-2 py-0.5 rounded border border-[var(--color-border)] text-neutral-450 hover:border-[var(--active-accent)] hover:text-[var(--active-accent)] transition-colors duration-150"
             >
               {t}
             </span>
           ))}
           {project.tech.length > 5 && (
-            <span className="font-mono text-xs px-2 py-0.5 text-lab-muted">
+            <span className="font-mono text-xs px-2 py-0.5 text-neutral-500">
               +{project.tech.length - 5}
             </span>
           )}
@@ -100,7 +100,7 @@ export default function ProjectCard({ project, index }) {
             transition={{ duration: 0.3, ease: 'easeInOut' }}
             className="overflow-hidden"
           >
-            <div className="border-t border-lab-line mx-5 sm:mx-6" />
+            <div className="border-t border-[var(--color-border)] mx-5 sm:mx-6" />
 
             <div className="p-5 sm:p-6 space-y-4">
               {/* Lab notebook rows */}
@@ -113,7 +113,7 @@ export default function ProjectCard({ project, index }) {
               ].map(({ label, content }) => (
                 <div key={label}>
                   <span className="mono-label block mb-1">{label}</span>
-                  <p className="text-sm text-lab-muted leading-relaxed">{content}</p>
+                  <p className="text-sm text-neutral-400 leading-relaxed">{content}</p>
                 </div>
               ))}
 
@@ -126,7 +126,7 @@ export default function ProjectCard({ project, index }) {
                       target="_blank"
                       rel="noopener noreferrer"
                       onClick={(e) => e.stopPropagation()}
-                      className="mono-label hover:text-lab-text border border-lab-line hover:border-lab-cyan px-3 py-1.5 rounded transition-all duration-200"
+                      className="mono-label hover:text-[var(--color-text-main)] border border-[var(--color-border)] hover:border-[var(--active-accent)] px-3 py-1.5 rounded transition-all duration-200"
                     >
                       GITHUB →
                     </a>
@@ -137,7 +137,7 @@ export default function ProjectCard({ project, index }) {
                       target="_blank"
                       rel="noopener noreferrer"
                       onClick={(e) => e.stopPropagation()}
-                      className="mono-label text-lab-cyan border border-lab-cyan hover:bg-lab-cyan hover:text-lab-bg px-3 py-1.5 rounded transition-all duration-200"
+                      className="mono-label text-[var(--active-accent)] border border-[var(--active-accent)] hover:bg-[var(--active-accent)] hover:text-neutral-900 px-3 py-1.5 rounded transition-all duration-200"
                     >
                       LIVE DEMO →
                     </a>

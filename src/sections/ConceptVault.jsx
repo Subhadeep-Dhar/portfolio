@@ -12,7 +12,7 @@ import { concepts } from '@/data/concepts';
  */
 export default function ConceptVault() {
   const statusConfig = {
-    idea:         { label: 'IDEA',         color: '#00e5ff' },
+    idea:         { label: 'IDEA',         color: 'var(--active-accent)' },
     prototyping:  { label: 'PROTOTYPING',  color: '#facc15' },
     shelved:      { label: 'SHELVED',      color: '#64748b' },
   };
@@ -20,7 +20,7 @@ export default function ConceptVault() {
   return (
     <section id="vault" className="py-24">
       <div className="section-container">
-        <div className="h-px w-full bg-gradient-to-r from-transparent via-lab-line to-transparent mb-24" />
+        <div className="h-px w-full bg-gradient-to-r from-transparent via-[var(--color-border)] to-transparent mb-24" />
 
         <SectionHeader
           label="CONCEPT VAULT"
@@ -39,7 +39,7 @@ export default function ConceptVault() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: i * 0.07, duration: 0.4 }}
-                className="glass-card p-5 group hover:border-lab-cyan/20 transition-colors duration-300"
+                className="glass-card p-5 group hover:border-[var(--active-accent)]/20 transition-colors duration-300"
               >
                 {/* Status */}
                 <div className="flex items-center justify-between mb-3">
@@ -47,21 +47,21 @@ export default function ConceptVault() {
                     className="font-mono text-xs px-2 py-0.5 rounded"
                     style={{
                       color: cfg.color,
-                      background: `${cfg.color}15`,
+                      background: cfg.color.startsWith('var') ? `rgba(var(--active-accent-rgb), 0.1)` : `${cfg.color}15`,
                     }}
                   >
                     {cfg.label}
                   </span>
                 </div>
 
-                <h4 className="font-display font-semibold text-lab-text mb-2 group-hover:text-lab-cyan transition-colors duration-200">
+                <h4 className="font-display font-semibold text-[var(--color-text-main)] mb-2 group-hover:text-[var(--active-accent)] transition-colors duration-200">
                   {concept.title}
                 </h4>
-                <p className="text-sm text-lab-muted leading-relaxed mb-3">{concept.desc}</p>
+                <p className="text-sm text-neutral-450 leading-relaxed mb-3">{concept.desc}</p>
 
-                <div className="border-t border-lab-line pt-3">
+                <div className="border-t border-[var(--color-border)] pt-3">
                   <span className="mono-label block mb-1">WHY IT MATTERS</span>
-                  <p className="text-xs text-lab-muted leading-relaxed">{concept.why}</p>
+                  <p className="text-xs sm:text-sm text-neutral-500 leading-relaxed">{concept.why}</p>
                 </div>
               </motion.div>
             );

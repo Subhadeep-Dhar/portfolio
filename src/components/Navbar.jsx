@@ -52,7 +52,7 @@ export default function Navbar({ mode = 'home', onExitMode }) {
           <a
             href="#"
             onClick={handleBrandClick}
-            className="font-mono-tech text-[10px] text-teal-400 hover:text-gray-100 transition-colors uppercase tracking-[0.2em] font-semibold"
+            className="font-mono-tech text-xs text-[var(--active-accent)] hover:text-gray-100 transition-colors uppercase tracking-[0.2em] font-semibold"
           >
             {mode === 'home' ? (
               <>
@@ -71,7 +71,7 @@ export default function Navbar({ mode = 'home', onExitMode }) {
                 <a
                   key={link.href}
                   href={link.href}
-                  className="font-mono-tech text-[10px] text-gray-400 hover:text-teal-400 transition-colors tracking-widest uppercase"
+                  className="font-mono-tech text-xs text-gray-400 hover:text-[var(--active-accent)] transition-colors tracking-widest uppercase"
                 >
                   {link.label}
                 </a>
@@ -80,7 +80,7 @@ export default function Navbar({ mode = 'home', onExitMode }) {
                 <a
                   href={siteConfig.links.resume}
                   download
-                  className="font-mono-tech text-[9px] border border-teal-900/60 text-teal-400 px-3 py-1 rounded hover:bg-teal-950/15 transition-all duration-200"
+                  className="font-mono-tech text-xs border border-[var(--active-accent)]/30 text-[var(--active-accent)] px-3 py-1 rounded hover:bg-[var(--active-accent)]/10 transition-all duration-200"
                 >
                   RESUME
                 </a>
@@ -91,7 +91,7 @@ export default function Navbar({ mode = 'home', onExitMode }) {
           {/* Mobile menu trigger */}
           {mode !== 'home' && (
             <button
-              className="md:hidden font-mono-tech text-teal-400 text-xs focus:outline-none"
+              className="md:hidden font-mono-tech text-[var(--active-accent)] text-sm focus:outline-none"
               onClick={() => setMenuOpen(!menuOpen)}
               aria-label="Toggle menu"
             >
@@ -117,7 +117,7 @@ export default function Navbar({ mode = 'home', onExitMode }) {
                   key={link.href}
                   href={link.href}
                   onClick={() => setMenuOpen(false)}
-                  className="font-mono-tech text-xs text-gray-400 hover:text-teal-400 transition-colors uppercase tracking-wider"
+                  className="font-mono-tech text-sm text-gray-400 hover:text-[var(--active-accent)] transition-colors uppercase tracking-wider"
                 >
                   {link.label}
                 </a>
@@ -126,7 +126,7 @@ export default function Navbar({ mode = 'home', onExitMode }) {
                 <a
                   href={siteConfig.links.resume}
                   download
-                  className="font-mono-tech text-xs border border-teal-900 text-teal-400 py-2 rounded text-center"
+                  className="font-mono-tech text-sm border border-[var(--active-accent)]/50 text-[var(--active-accent)] py-2 rounded text-center"
                 >
                   DOWNLOAD RESUME
                 </a>

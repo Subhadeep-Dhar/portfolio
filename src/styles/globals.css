@@ -58,11 +58,18 @@ body {
   background-color: var(--color-bg);
   color: var(--color-text-main);
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 16px;
   line-height: 1.75;
   overflow-x: hidden;
   letter-spacing: -0.01em;
   -webkit-font-smoothing: antialiased;
   transition: background-color 0.8s cubic-bezier(0.16, 1, 0.3, 1), color 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@media (max-width: 640px) {
+  body {
+    font-size: 15px;
+  }
 }
 
 h1, h2, h3, h4, .font-display {
@@ -114,8 +121,8 @@ h1, h2, h3, h4, .font-display {
 
 .mono-label {
   font-family: 'IBM Plex Mono', monospace;
-  font-size: 0.65rem;
-  letter-spacing: 0.25em;
+  font-size: 0.75rem;
+  letter-spacing: 0.2em;
   text-transform: uppercase;
   color: var(--color-text-muted);
 }
@@ -123,8 +130,8 @@ h1, h2, h3, h4, .font-display {
 /* Immersive Link Aesthetic */
 .cinematic-link {
   font-family: 'IBM Plex Mono', monospace;
-  font-size: 0.8rem;
-  letter-spacing: 0.2em;
+  font-size: 0.875rem;
+  letter-spacing: 0.15em;
   text-transform: uppercase;
   color: var(--color-text-muted);
   position: relative;

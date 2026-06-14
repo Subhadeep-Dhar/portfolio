@@ -78,7 +78,8 @@ export default function InteractiveTimeline() {
   }, []);
 
   const { scrollYProgress } = useScroll({
-    target: scrollContainerRef
+    target: scrollContainerRef,
+    offset: ["start start", "end end"]
   });
 
   // Translate vertical scroll to horizontal shift of items
@@ -113,7 +114,7 @@ export default function InteractiveTimeline() {
     return (
       <div className="py-20 px-6 bg-transparent space-y-12 relative z-20">
         <div className="flex flex-col gap-1 mb-8">
-          <span className="mono-label text-[10px] text-gray-500">EVOLUTION LOG</span>
+          <span className="mono-label text-xs text-gray-500">EVOLUTION LOG</span>
           <h3 className="text-2xl font-light text-gray-100 tracking-tight">How I Got Here</h3>
         </div>
 
@@ -125,13 +126,13 @@ export default function InteractiveTimeline() {
             >
               <div className="flex items-center justify-between border-b border-gray-950 pb-2">
                 <span className="font-mono-tech text-xs text-neutral-500">{item.year}</span>
-                <span className="font-mono-tech text-[8px] text-teal-400 border border-teal-950 px-1.5 py-0.5 rounded">
+                <span className="font-mono-tech text-xs text-[var(--active-accent)] border border-[var(--active-accent)]/30 bg-[var(--active-accent)]/5 px-1.5 py-0.5 rounded">
                   {item.type}
                 </span>
               </div>
               <h4 className="text-sm font-semibold text-neutral-200">{item.title}</h4>
               <p className="text-xs text-neutral-400 font-light leading-relaxed">{item.desc}</p>
-              <span className="font-mono-tech text-[9px] text-neutral-600 block">{item.coords} // {item.location}</span>
+              <span className="font-mono-tech text-xs text-neutral-500 block">{item.coords} // {item.location}</span>
             </div>
           ))}
         </div>
@@ -140,7 +141,7 @@ export default function InteractiveTimeline() {
   }
 
   return (
-    <div ref={scrollContainerRef} className="relative h-[250vh] w-full bg-transparent select-none z-20">
+    <div ref={scrollContainerRef} className="relative h-[350vh] w-full bg-transparent select-none z-20">
       <div className="sticky top-0 h-screen overflow-hidden flex flex-col justify-center bg-transparent">
         
         {/* Horizontal scroll grid */}
@@ -149,28 +150,28 @@ export default function InteractiveTimeline() {
           {/* Left Column: Sticky Title + Coordinate updates */}
           <div className="lg:col-span-4 space-y-6 sticky left-0 z-20 bg-transparent pr-4">
             <div>
-              <span className="mono-label block mb-2 text-teal-400">Evolution Log</span>
+              <span className="mono-label block mb-2 text-[var(--active-accent)]">Evolution Log</span>
               <h2 className="text-3xl font-semibold text-neutral-100 tracking-tight">How I got here.</h2>
-              <p className="text-xs text-neutral-500 mt-2 leading-relaxed">
+              <p className="text-sm text-neutral-450 mt-2 leading-relaxed">
                 A horizontal ledger of academic steps, software builds, and location telemetry.
               </p>
             </div>
 
-            {/* Static DOM coordinates indicator (Zero state-updates on scroll) */}
+            {/* Static DOM coordinates indicator */}
             <div className="p-4 border border-neutral-900 bg-[#070b15]/60 backdrop-blur-md rounded space-y-2 max-w-xs">
-              <span className="mono-label text-[9px] block text-neutral-500">GEODESIC LOCATOR</span>
+              <span className="mono-label text-xs block text-neutral-500">GEODESIC LOCATOR</span>
               <div className="space-y-0.5 font-mono-tech text-neutral-300">
-                <div ref={coordsRef} className="text-xs text-teal-400 font-semibold uppercase">
+                <div ref={coordsRef} className="text-xs text-[var(--active-accent)] font-semibold uppercase">
                   27.7800° N, 88.6300° E
                 </div>
-                <div ref={locationRef} className="text-[9px] text-neutral-500 uppercase tracking-wider">
+                <div ref={locationRef} className="text-xs text-neutral-500 uppercase tracking-wider">
                   Sikkim Manipal Institute
                 </div>
               </div>
               <div className="h-px bg-neutral-950 w-full pt-1" />
               <div className="flex items-center gap-1.5 pt-1">
-                <span className="w-1 h-1 rounded-full bg-teal-500/80" />
-                <span className="text-[8px] font-mono-tech text-neutral-600">60FPS SPATIAL BIND</span>
+                <span className="w-1.5 h-1.5 rounded-full bg-[var(--active-accent)]/80 animate-pulse" />
+                <span className="text-[10px] font-mono-tech text-neutral-600">60FPS SPATIAL BIND</span>
               </div>
             </div>
           </div>
@@ -178,18 +179,18 @@ export default function InteractiveTimeline() {
           {/* Right Column: Horizontal track */}
           <div className="lg:col-span-8 overflow-hidden h-[420px] flex items-center relative">
             <motion.div
-              className="flex gap-6 w-[350vw] items-center"
+              className="horizontal-scroll-container w-[350vw] gap-6 items-center"
               style={{ x: xTranslation }}
             >
               {TIMELINE_DATA.map((item, index) => (
                 <div
                   key={index}
-                  className="w-[300px] shrink-0 border border-neutral-900 bg-[#070b15]/20 p-6 rounded hover:border-neutral-850 transition-colors duration-300 space-y-4"
+                  className="w-[300px] shrink-0 border border-neutral-900 bg-[#070b15]/20 p-6 rounded hover:border-neutral-800 transition-colors duration-300 space-y-4"
                 >
-                  <div className="flex items-center justify-between gap-4 border-b border-gray-950 pb-2 text-[10px] font-mono-tech text-neutral-600">
+                  <div className="flex items-center justify-between gap-4 border-b border-gray-950 pb-2 text-xs font-mono-tech text-neutral-500">
                     <div className="flex items-center gap-2">
                       <span>{item.year}</span>
-                      <span className="font-mono text-[9px] border border-neutral-850 text-neutral-400 px-1.5 py-0.2 rounded">
+                      <span className="font-mono text-xs border border-neutral-850 text-neutral-450 px-1.5 py-0.2 rounded">
                         {item.type}
                       </span>
                     </div>
@@ -200,12 +201,12 @@ export default function InteractiveTimeline() {
                     <h4 className="font-semibold text-sm text-neutral-200 leading-snug">
                       {item.title}
                     </h4>
-                    <p className="text-xs text-neutral-500 leading-relaxed font-light">
+                    <p className="text-xs sm:text-sm text-neutral-500 leading-relaxed font-light">
                       {item.desc}
                     </p>
                   </div>
 
-                  <div className="pt-2 border-t border-gray-950 flex gap-1 items-center font-mono-tech text-[8px] text-neutral-600">
+                  <div className="pt-2 border-t border-gray-950 flex gap-1 items-center font-mono-tech text-xs text-neutral-600">
                     <span>SYS_LOC:</span>
                     <span className="text-neutral-500">{item.coords}</span>
                   </div>

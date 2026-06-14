@@ -9,53 +9,60 @@ const TIMELINE_DATA = [
     type: 'Education',
     title: 'Bachelor of Computer Applications',
     desc: 'Graduated with distinction from Sikkim Manipal Institute of Technology. Focus on relational databases, networking parameters, and algorithm design.',
-    location: 'Sikkim, India'
+    location: 'Sikkim, India',
+    mode: 'both'
   },
   {
     year: '2024',
     type: 'Work',
     title: 'SH1ELD Tech — InfoSec Intern',
     desc: 'Conducted system log audits, analyzed vulnerability metrics, and mapped early local security configurations.',
-    location: 'Gangtok, Sikkim'
+    location: 'Gangtok, Sikkim',
+    mode: 'developer'
   },
   {
     year: '2024',
     type: 'Research & GIS',
     title: 'South Lhonak Glacier Analysis',
     desc: 'Assessed glacier flow velocity post-glacial lake flood disaster. Processed remote sensing imagery in SNAP and Google Earth Engine, classifying anomalies via K-Means.',
-    location: 'Lhonak Lake, Sikkim'
+    location: 'Lhonak Lake, Sikkim',
+    mode: 'researcher'
   },
   {
     year: '2024',
     type: 'Research',
     title: 'ADRI — Research Intern',
     desc: 'Contributed to regional health surveillance mapping (IHIP-IDSP Bihar project). Modeled spatial trends to optimize department reporting indices.',
-    location: 'ADRI Department, Bihar'
+    location: 'ADRI Department, Bihar',
+    mode: 'researcher'
   },
   {
     year: '2024',
     type: 'Work',
     title: 'SH1ELD Tech — Web Developer',
     desc: 'Built tailored tourism portals and local data workflows for regional agencies. Integrated API routes and optimized database access pipelines.',
-    location: 'Gangtok, Sikkim'
+    location: 'Gangtok, Sikkim',
+    mode: 'developer'
   },
   {
     year: '2025',
     type: 'Education',
     title: 'Master of Computer Applications',
     desc: 'Began postgraduate MCA studies at Manipal Institute of Technology. Focus on location analytics, systems caching, and responsive product structures.',
-    location: 'Manipal, Karnataka'
+    location: 'Manipal, Karnataka',
+    mode: 'both'
   },
   {
     year: '2026',
     type: 'Systems',
     title: 'Grounded App & Location Systems',
     desc: 'Built a consistency challenge application utilizing geofencing trackers and weather indicators to audit user accountability.',
-    location: 'Manipal, Karnataka'
+    location: 'Manipal, Karnataka',
+    mode: 'developer'
   }
 ];
 
-export default function InteractiveTimeline() {
+export default function InteractiveTimeline({ mode = 'developer' }) {
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
@@ -63,6 +70,8 @@ export default function InteractiveTimeline() {
   }, []);
 
   if (!mounted) return null;
+
+  const filteredData = TIMELINE_DATA.filter(item => item.mode === 'both' || item.mode === mode);
 
   return (
     <div id="evolution" className="py-24 relative bg-transparent select-none z-20">
@@ -72,17 +81,19 @@ export default function InteractiveTimeline() {
         <div className="max-w-3xl mb-16">
           <span className="mono-label block mb-2 text-[var(--active-accent)]">Evolution Log</span>
           <h2 className="text-3xl sm:text-4xl font-light text-neutral-100 tracking-tight leading-tight">
-            How I got here.
+            {mode === 'developer' ? 'How I got here.' : 'Research & Academic Ledger'}
           </h2>
-          <p className="text-sm text-neutral-400 mt-2 leading-relaxed">
-            A chronological timeline of academic milestones, systems engineering, and remote sensing research.
+          <p className="text-sm text-neutral-450 mt-2 leading-relaxed font-light">
+            {mode === 'developer'
+              ? 'A chronological log of academic foundations, security operations, and systems engineering.'
+              : 'A chronological log of remote sensing analysis, GIS development, and academic milestones.'}
           </p>
         </div>
 
         {/* Vertical Timeline Structure */}
         <div className="relative border-l border-neutral-900 ml-4 sm:ml-8 space-y-12 py-4">
           
-          {TIMELINE_DATA.map((item, index) => (
+          {filteredData.map((item, index) => (
             <motion.div
               key={index}
               initial={{ opacity: 0, x: -10 }}
@@ -105,11 +116,11 @@ export default function InteractiveTimeline() {
                     <span className="text-sm font-semibold text-[var(--active-accent)]">
                       {item.year}
                     </span>
-                    <span className="text-[10px] uppercase font-mono border border-neutral-900 text-neutral-450 px-2 py-0.5 rounded bg-[var(--color-bg)]/60">
+                    <span className="text-[10px] uppercase font-body border border-neutral-900 text-neutral-450 px-2 py-0.5 rounded bg-[var(--color-bg)]/60">
                       {item.type}
                     </span>
                   </div>
-                  <span className="text-neutral-500 font-mono text-[10px]">Record {String(index + 1).padStart(2, '0')}</span>
+                  <span className="text-neutral-550 font-body text-[10px]">Record {String(index + 1).padStart(2, '0')}</span>
                 </div>
 
                 {/* Content */}

@@ -79,7 +79,7 @@ export default function Home() {
                   <DeveloperSection />
 
                   {/* Vertical scroll timeline log */}
-                  <InteractiveTimeline />
+                  <InteractiveTimeline mode="developer" />
 
                   {/* Narrative bridge block */}
                   <UnifiedIdentity />
@@ -107,7 +107,7 @@ export default function Home() {
                   <ExperienceLayer />
 
                   {/* Horizontal scroll timeline log */}
-                  <InteractiveTimeline />
+                  <InteractiveTimeline mode="researcher" />
 
                   {/* Narrative bridge block */}
                   <UnifiedIdentity />

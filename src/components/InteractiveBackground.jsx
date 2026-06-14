@@ -331,11 +331,12 @@ export default function InteractiveBackground({ focus = 'home' }) {
           ctx.fillStyle = r.fill;
           ctx.fill();
 
-          // 5.2 Draw Snowcaps with 3D Shading (Sunlit vs Shadowed side)
+          // 5.2 Draw Snowcaps — Isolated Per-Peak Segments with Off-White Tones
           if (r.hasSnow) {
             const worldSnowLineY = r.base - r.scale * height * 0.17;
-            
-            // Helper to calculate deflected screen Y
+            const step = 3;
+
+            // Helper: deflected screen Y (mouse interaction)
             const getDeflectedScreenY = (x, wy) => {
               const sy = getScreenY(wy);
               const dx = x - mouse.x;
@@ -348,49 +349,188 @@ export default function InteractiveBackground({ focus = 'home' }) {
               return sy + deflection;
             };
 
-            // Draw snow cap in vertical panel slices of width 6
-            for (let x = 0; x < width; x += 6) {
-              const xNext = Math.min(width, x + 6);
-              
-              let wy = getKanchenjunghaHeight(x, width, height, r.base, r.scale, r.seed);
-              let wyNext = getKanchenjunghaHeight(xNext, width, height, r.base, r.scale, r.seed);
-              
-              const finalSy = getDeflectedScreenY(x, wy);
-              const finalSyNext = getDeflectedScreenY(xNext, wyNext);
-              
-              const w_snowBase = getSnowBase(x, worldSnowLineY, wy);
-              const w_snowBaseNext = getSnowBase(xNext, worldSnowLineY, wyNext);
-              
-              // Deflect snow base exactly by same deflection amount
-              const s_snowBase = getScreenY(w_snowBase) + (finalSy - getScreenY(wy));
-              const s_snowBaseNext = getScreenY(w_snowBaseNext) + (finalSyNext - getScreenY(wyNext));
-              
-              if (finalSy < s_snowBase || finalSyNext < s_snowBaseNext) {
-                const topY = Math.min(finalSy, s_snowBase);
-                const topYNext = Math.min(finalSyNext, s_snowBaseNext);
-                
-                ctx.beginPath();
-                ctx.moveTo(x, topY);
-                ctx.lineTo(xNext, topYNext);
-                ctx.lineTo(xNext, s_snowBaseNext);
-                ctx.lineTo(x, s_snowBase);
-                ctx.closePath();
-                
-                const slopeRatio = (finalSyNext - finalSy) / (xNext - x);
-                
-                if (slopeRatio < -0.12) {
-                  // Left-facing slope (going up): sunlit side
-                  ctx.fillStyle = 'rgba(255, 255, 255, 0.98)';
-                } else if (slopeRatio > 0.12) {
-                  // Right-facing slope (going down): shadowed side
-                  ctx.fillStyle = 'rgba(195, 212, 230, 0.94)';
-                } else {
-                  // Flat ridge: soft transition white
-                  ctx.fillStyle = 'rgba(235, 245, 255, 0.96)';
+            // --- A. Collect snow points, splitting into separate segments per peak ---
+            const snowSegments = []; // Array of { top: [], bot: [] }
+            let currentSeg = null;
+
+            for (let x = 0; x <= width; x += step) {
+              const wy = getKanchenjunghaHeight(x, width, height, r.base, r.scale, r.seed);
+              const snowBase = getSnowBase(x, worldSnowLineY, wy);
+              if (wy < snowBase) {
+                // This point has snow
+                const peakY = getDeflectedScreenY(x, wy);
+                const baseY = getScreenY(snowBase) + (peakY - getScreenY(wy));
+                if (!currentSeg) {
+                  currentSeg = { top: [], bot: [] };
                 }
-                ctx.fill();
+                currentSeg.top.push({ x, y: peakY });
+                currentSeg.bot.push({ x, y: baseY });
+              } else {
+                // No snow — close current segment if it exists
+                if (currentSeg && currentSeg.top.length > 2) {
+                  snowSegments.push(currentSeg);
+                }
+                currentSeg = null;
               }
             }
+            // Don't forget the last segment
+            if (currentSeg && currentSeg.top.length > 2) {
+              snowSegments.push(currentSeg);
+            }
+
+            // --- B. Draw each snow segment independently ---
+            snowSegments.forEach((seg) => {
+              // Main off-white snow polygon
+              ctx.beginPath();
+              ctx.moveTo(seg.top[0].x, seg.top[0].y);
+              for (let i = 1; i < seg.top.length; i++) {
+                ctx.lineTo(seg.top[i].x, seg.top[i].y);
+              }
+              for (let i = seg.bot.length - 1; i >= 0; i--) {
+                ctx.lineTo(seg.bot[i].x, seg.bot[i].y);
+              }
+              ctx.closePath();
+
+              // Off-white gradient that fades smoothly at the snowline
+              const snowGrad = ctx.createLinearGradient(0, seg.top[0].y, 0, seg.bot[0].y);
+              snowGrad.addColorStop(0, 'rgba(245, 243, 238, 0.92)');
+              snowGrad.addColorStop(0.35, 'rgba(235, 234, 228, 0.88)');
+              snowGrad.addColorStop(0.65, 'rgba(220, 225, 232, 0.55)');
+              snowGrad.addColorStop(0.85, 'rgba(200, 210, 222, 0.2)');
+              snowGrad.addColorStop(1, 'rgba(180, 195, 210, 0.0)');
+              ctx.fillStyle = snowGrad;
+              ctx.fill();
+
+              // Soft feather at the snowline: draw a blurred duplicate of just the bottom edge zone
+              ctx.save();
+              // Clip to only the bottom 40% of the snow region for the blur pass
+              const blurZoneTop = seg.top[0].y + (seg.bot[0].y - seg.top[0].y) * 0.6;
+              ctx.beginPath();
+              ctx.rect(seg.top[0].x - 5, blurZoneTop, seg.top[seg.top.length - 1].x - seg.top[0].x + 10, seg.bot[0].y - blurZoneTop + 20);
+              ctx.clip();
+              ctx.filter = 'blur(6px)';
+              // Redraw just the snow polygon in the blur zone
+              ctx.beginPath();
+              ctx.moveTo(seg.top[0].x, seg.top[0].y);
+              for (let i = 1; i < seg.top.length; i++) {
+                ctx.lineTo(seg.top[i].x, seg.top[i].y);
+              }
+              for (let i = seg.bot.length - 1; i >= 0; i--) {
+                ctx.lineTo(seg.bot[i].x, seg.bot[i].y);
+              }
+              ctx.closePath();
+              const blurGrad = ctx.createLinearGradient(0, blurZoneTop, 0, seg.bot[0].y);
+              blurGrad.addColorStop(0, 'rgba(230, 230, 225, 0.3)');
+              blurGrad.addColorStop(1, 'rgba(200, 210, 220, 0.0)');
+              ctx.fillStyle = blurGrad;
+              ctx.fill();
+              ctx.filter = 'none';
+              ctx.restore();
+
+              // Shadow overlay on right-facing (descending) slopes
+              let shadowStartIdx = -1;
+              for (let i = 0; i < seg.top.length - 1; i++) {
+                const slope = (seg.top[i + 1].y - seg.top[i].y) / step;
+                if (slope > 0.05) {
+                  if (shadowStartIdx < 0) shadowStartIdx = i;
+                } else if (shadowStartIdx >= 0) {
+                  // Draw completed shadow segment
+                  ctx.beginPath();
+                  for (let j = shadowStartIdx; j <= i; j++) {
+                    if (j === shadowStartIdx) ctx.moveTo(seg.top[j].x, seg.top[j].y);
+                    else ctx.lineTo(seg.top[j].x, seg.top[j].y);
+                  }
+                  for (let j = i; j >= shadowStartIdx; j--) {
+                    ctx.lineTo(seg.bot[j].x, seg.bot[j].y);
+                  }
+                  ctx.closePath();
+                  ctx.fillStyle = 'rgba(175, 190, 210, 0.35)';
+                  ctx.fill();
+                  shadowStartIdx = -1;
+                }
+              }
+              // Close any trailing shadow
+              if (shadowStartIdx >= 0) {
+                const endI = seg.top.length - 1;
+                ctx.beginPath();
+                for (let j = shadowStartIdx; j <= endI; j++) {
+                  if (j === shadowStartIdx) ctx.moveTo(seg.top[j].x, seg.top[j].y);
+                  else ctx.lineTo(seg.top[j].x, seg.top[j].y);
+                }
+                for (let j = endI; j >= shadowStartIdx; j--) {
+                  ctx.lineTo(seg.bot[j].x, seg.bot[j].y);
+                }
+                ctx.closePath();
+                ctx.fillStyle = 'rgba(175, 190, 210, 0.35)';
+                ctx.fill();
+              }
+
+              // Snow texture: speckle dots, wind streaks, and grain
+              // Dense speckle dots across the snow surface
+              for (let i = 0; i < seg.top.length; i += 6) {
+                const midY = (seg.top[i].y + seg.bot[i].y) / 2;
+                const dotSeed = ((i * 31 + 7) * 7919) % 1000 / 1000;
+                const dotSeed2 = ((i * 43 + 11) * 7919) % 1000 / 1000;
+                const dotX = seg.top[i].x + (dotSeed - 0.5) * 8;
+                const dotY = midY + (dotSeed2 - 0.4) * (seg.bot[i].y - seg.top[i].y) * 0.6;
+                ctx.fillStyle = `rgba(195, 200, 210, ${0.15 + dotSeed * 0.12})`;
+                ctx.beginPath();
+                ctx.arc(dotX, dotY, 0.5 + dotSeed * 0.7, 0, Math.PI * 2);
+                ctx.fill();
+              }
+              // Wind-streak lines (horizontal wispy marks)
+              ctx.strokeStyle = 'rgba(210, 215, 225, 0.14)';
+              ctx.lineWidth = 0.4;
+              for (let i = 3; i < seg.top.length - 3; i += 18) {
+                const streakSeed = ((i * 53 + 19) * 7919) % 1000 / 1000;
+                const sy = seg.top[i].y + (seg.bot[i].y - seg.top[i].y) * (0.2 + streakSeed * 0.5);
+                ctx.beginPath();
+                ctx.moveTo(seg.top[i].x, sy);
+                ctx.lineTo(seg.top[i].x + 8 + streakSeed * 12, sy + (streakSeed - 0.5) * 2);
+                ctx.stroke();
+              }
+              // Subtle grain marks (tiny diagonal hatches for snow crystal texture)
+              ctx.strokeStyle = 'rgba(185, 195, 210, 0.10)';
+              ctx.lineWidth = 0.3;
+              for (let i = 1; i < seg.top.length; i += 10) {
+                const grainSeed = ((i * 67 + 23) * 7919) % 1000 / 1000;
+                const gy = seg.top[i].y + (seg.bot[i].y - seg.top[i].y) * (0.3 + grainSeed * 0.4);
+                ctx.beginPath();
+                ctx.moveTo(seg.top[i].x, gy);
+                ctx.lineTo(seg.top[i].x + 3, gy - 2 + grainSeed * 4);
+                ctx.stroke();
+              }
+            });
+
+            // --- C. Rock Texture between snow segments (scree and ledge lines) ---
+            // Draw rock dots and short ledge lines in snow-free high-altitude zones
+            for (let x = 0; x < width; x += 8) {
+              const wy = getKanchenjunghaHeight(x, width, height, r.base, r.scale, r.seed);
+              const snowBase = getSnowBase(x, worldSnowLineY, wy);
+              // Only draw rock texture in the zone just below snowline but above the base
+              const rockZoneTop = worldSnowLineY + 15;
+              const rockZoneBot = worldSnowLineY + height * r.scale * 0.08;
+              if (wy >= snowBase && wy < rockZoneBot && wy > r.base - r.scale * height * 0.35) {
+                const sy = getScreenY(wy);
+                const rockSeed = ((x * 17 + 3) * 7919) % 1000 / 1000;
+                // Scree dots
+                ctx.fillStyle = `rgba(90, 80, 70, ${0.12 + rockSeed * 0.08})`;
+                ctx.beginPath();
+                ctx.arc(x + rockSeed * 4, sy + rockSeed * 3, 0.6 + rockSeed * 0.5, 0, Math.PI * 2);
+                ctx.fill();
+                // Short ledge line (every 3rd)
+                if (x % 24 === 0) {
+                  ctx.strokeStyle = 'rgba(80, 75, 65, 0.10)';
+                  ctx.lineWidth = 0.5;
+                  ctx.beginPath();
+                  ctx.moveTo(x, sy);
+                  ctx.lineTo(x + 6 + rockSeed * 5, sy + 1);
+                  ctx.stroke();
+                }
+              }
+            }
+
+
           }
 
           // 5.3 Draw Ridge Outline
@@ -413,39 +553,12 @@ export default function InteractiveBackground({ focus = 'home' }) {
           ctx.stroke();
         });
 
-        // 6. Draw Glaciers (White/cyan icy texture in the foreground mountain valley)
-        const glacierStartY = height * 0.64;
-        const glacierEndY = height * 0.82;
-        const glacierStartScreenY = getScreenY(glacierStartY);
-        
-        if (glacierStartScreenY < height && getScreenY(glacierEndY) > -100) {
-          const glacierGrad = ctx.createLinearGradient(width * 0.5, getScreenY(glacierStartY), width * 0.5, getScreenY(glacierEndY));
-          glacierGrad.addColorStop(0, 'rgba(242, 248, 255, 0.9)');
-          glacierGrad.addColorStop(0.4, 'rgba(210, 238, 255, 0.85)');
-          glacierGrad.addColorStop(1, 'rgba(155, 218, 240, 0.95)');
-          
-          ctx.beginPath();
-          for (let wy = glacierStartY; wy <= glacierEndY; wy += 8) {
-            const progress = (wy - glacierStartY) / (glacierEndY - glacierStartY);
-            const widthAtY = (24 - progress * 14) * (width / 1440);
-            const xOffset = Math.sin(wy * 0.05) * 8;
-            ctx.lineTo(width * 0.51 + xOffset - widthAtY, getScreenY(wy));
-          }
-          for (let wy = glacierEndY; wy >= glacierStartY; wy -= 8) {
-            const progress = (wy - glacierStartY) / (glacierEndY - glacierStartY);
-            const widthAtY = (24 - progress * 14) * (width / 1440);
-            const xOffset = Math.sin(wy * 0.05) * 8;
-            ctx.lineTo(width * 0.51 + xOffset + widthAtY, getScreenY(wy));
-          }
-          ctx.closePath();
-          ctx.fillStyle = glacierGrad;
-          ctx.fill();
-        }
+
 
         // 7. Core positions setup for lakes and river meanders
         const lakeWorldY = height * 0.82;
         const lakeScreenY = getScreenY(lakeWorldY);
-        const lakeX = width * 0.51 + Math.sin(lakeWorldY * 0.05) * 8;
+        const lakeX = width * 0.57 + Math.sin(lakeWorldY * 0.05) * 6;
 
         const fhLakeWorldY = height * 1.2;
         const fhLakeScreenY = getScreenY(fhLakeWorldY);
@@ -580,7 +693,7 @@ export default function InteractiveBackground({ focus = 'home' }) {
 
         // 11. Draw Glacial Lake on top of river start to mask junction
         if (lakeScreenY > -50 && lakeScreenY < height + 50) {
-          ctx.fillStyle = 'rgba(72, 209, 204, 0.75)'; // Turquoise
+          ctx.fillStyle = 'rgba(72, 209, 204, 0.75)';
           ctx.strokeStyle = 'rgba(255, 255, 255, 0.4)';
           ctx.lineWidth = 1.5;
           ctx.beginPath();
@@ -588,7 +701,6 @@ export default function InteractiveBackground({ focus = 'home' }) {
           ctx.fill();
           ctx.stroke();
         }
-
         // 12. Draw Foothills Lake on top of hills and river start/ends to mask junction
         if (fhLakeScreenY > -50 && fhLakeScreenY < height + 50) {
           ctx.fillStyle = 'rgba(46, 120, 95, 0.72)'; // Forest Green/Teal

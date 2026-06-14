@@ -45,14 +45,19 @@ export default function ExperienceLayer() {
     offset: ["start start", "end end"]
   });
 
-  // Vertical scroll to horizontal translate transform (with 10% padding at start/end)
-  const xTranslate = useTransform(scrollYProgress, [0.1, 0.9], ['0%', '-66.6%']);
+  // Horizontal translate: map vertical scroll to full horizontal traverse.
+  // 3 slides × 100vw = 300vw total track. Need to shift by 200vw (2 screens).
+  // -66.67% of 300vw = exactly -200vw, revealing all 3 slides sequentially.
+  // Range [0.0, 0.65]: horizontal scrolling completes at 65% scroll progress,
+  // leaving a 35% buffer before the section unpins — ensuring slide 03 is fully
+  // visible and the user can read it before vertical scrolling resumes.
+  const xTranslate = useTransform(scrollYProgress, [0.0, 0.65], ['0%', '-66.67%']);
   
   // Parallax elements translations
-  const labelX = useTransform(scrollYProgress, [0.1, 0.9], ['0px', '-100px']);
+  const labelX = useTransform(scrollYProgress, [0.0, 0.65], ['0px', '-100px']);
 
-  // Unconditional hook for scrollbar progress
-  const progressWidth = useTransform(scrollYProgress, [0.1, 0.9], ['0%', '100%']);
+  // Scrollbar progress indicator
+  const progressWidth = useTransform(scrollYProgress, [0.0, 0.65], ['0%', '100%']);
 
   const [mounted, setMounted] = useState(false);
   useEffect(() => {
@@ -95,8 +100,8 @@ export default function ExperienceLayer() {
   }
 
   return (
-    <div ref={containerRef} className="relative h-[550vh] w-full bg-transparent select-none z-20">
-      {/* Sticky Scroll Lock Window */}
+    <div ref={containerRef} className="relative h-[500vh] w-full bg-transparent select-none z-20">
+      {/* Sticky Scroll Lock Window — stays pinned for the full 500vh scroll */}
       <div className="sticky top-0 h-screen w-full overflow-hidden flex items-center bg-transparent">
         
         {/* Parallax layer: large monospaced label in background */}
@@ -109,7 +114,7 @@ export default function ExperienceLayer() {
           <div className="text-[120px] font-extrabold leading-none self-end">BUILD</div>
         </motion.div>
 
-        {/* Horizontal Track */}
+        {/* Horizontal Track — 3 slides × 100vw = 300vw */}
         <motion.div
           className="horizontal-scroll-container w-[300vw] h-full items-center relative z-10"
           style={{ x: xTranslate }}

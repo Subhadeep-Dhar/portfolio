@@ -53,7 +53,7 @@ export default function InteractiveBackground({ focus = 'home' }) {
 
     // Pre-build star coordinates for Milky Way Galaxy (Researcher Mode)
     const stars = [];
-    const numStars = 80;
+    const numStars = 220;
     for (let i = 0; i < numStars; i++) {
       const isMilkyWay = Math.random() < 0.75; // 75% of stars lie in the Milky Way band
       let x, y;
@@ -117,6 +117,22 @@ export default function InteractiveBackground({ focus = 'home' }) {
         radius: 120 + c * 45,
       });
     }
+
+    // Pre-build ocean particles (bubbles/bioluminescence for sea level zone)
+    const oceanParticles = [];
+    const numOceanParticles = 35;
+    for (let i = 0; i < numOceanParticles; i++) {
+      oceanParticles.push({
+        x: Math.random() * width,
+        y: Math.random() * height,
+        radius: 0.6 + Math.random() * 1.5,
+        speedY: 0.15 + Math.random() * 0.35,
+        wobbleSpeed: 0.01 + Math.random() * 0.02,
+        wobbleAmp: 4 + Math.random() * 8,
+        phase: Math.random() * Math.PI * 2,
+      });
+    }
+
     // Procedural multi-peak height function for Kanchenjungha Massif
     const getKanchenjunghaHeight = (x, w, h, baseHeight, scale, seedOffset) => {
       // Yalung Kang (~0.41), Main Peak (~0.52), Central/South Peak (~0.63)
@@ -149,10 +165,22 @@ export default function InteractiveBackground({ focus = 'home' }) {
       return maxVal > 0 ? baseHeight - (maxVal + roughness) : baseHeight;
     };
 
+    let currentScroll = window.scrollY;
+    let targetScroll = window.scrollY;
+
+    const handleScroll = () => {
+      targetScroll = window.scrollY;
+    };
+    window.addEventListener('scroll', handleScroll, { passive: true });
+
     let time = 0;
+    let researcherFade = 0;
 
     const render = () => {
       ctx.clearRect(0, 0, width, height);
+
+      // Smooth scroll interpolation
+      currentScroll += (targetScroll - currentScroll) * 0.08;
 
       // Interpolate mouse coordinates (smooth lag)
       const mouse = mouseRef.current;
@@ -162,9 +190,16 @@ export default function InteractiveBackground({ focus = 'home' }) {
         mouse.pulse -= 0.02;
       }
 
+      // Smooth fade state for researcher background transitions
+      if (focus === 'researcher') {
+        researcherFade += (1 - researcherFade) * 0.045;
+      } else {
+        researcherFade = 0;
+      }
+
       // Mode-specific canvas render operations
       if (focus === 'developer') {
-        // ─── Developer Layer: Blueprint Node Schema ───
+        // ─── Developer Layer: Blueprint Node Schema (No Parallax, strictly static floating) ───
         ctx.lineWidth = 1.0;
         nodes.forEach((n, idx) => {
           if (!reducedMotion) {
@@ -208,149 +243,482 @@ export default function InteractiveBackground({ focus = 'home' }) {
       }
 
       if (focus === 'researcher') {
-        // ─── Researcher Layer: Milky Way, Twinkling Stars, Kanchenjungha Peaks, Glacier River & GIS Patterns ───
+        // ─── Researcher Layer: Unified Scenic Landscape ───
         
-        // 1. Milky Way Galaxy Nebular Dust Lane
-        const mwGrad = ctx.createLinearGradient(0, height * 0.2, width, height * 0.8);
-        mwGrad.addColorStop(0, 'rgba(111, 129, 103, 0.0)');
-        mwGrad.addColorStop(0.3, 'rgba(111, 129, 103, 0.025)');
-        mwGrad.addColorStop(0.5, 'rgba(166, 138, 109, 0.065)'); // soft golden-brown galaxy dust lane
-        mwGrad.addColorStop(0.7, 'rgba(111, 129, 103, 0.025)');
-        mwGrad.addColorStop(1, 'rgba(111, 129, 103, 0.0)');
-        
-        ctx.fillStyle = mwGrad;
-        ctx.fillRect(0, 0, width, height);
+        ctx.save();
+        ctx.globalAlpha = researcherFade;
 
-        // 2. Twinkling Stars (with slight color variations)
-        stars.forEach((star) => {
-          const alpha = 0.25 + 0.65 * Math.abs(Math.sin(time * star.speed + star.phase));
-          // Alternate star colors between glacier green-blue and soft cream
-          ctx.fillStyle = star.phase > Math.PI 
-            ? `rgba(184, 199, 194, ${alpha})` 
-            : `rgba(210, 193, 168, ${alpha})`;
-          ctx.beginPath();
-          ctx.arc(star.x, star.y, star.radius, 0, Math.PI * 2);
-          ctx.fill();
-        });
+        const totalScrollable = (document.documentElement.scrollHeight - window.innerHeight) || 3000;
+        const scrollProgress = Math.min(1, Math.max(0, currentScroll / totalScrollable));
 
-        // 3. Kanchenjungha Massif Ridges (3 Layered Solid Mountain Ridges)
+        // 1. Unified Scenic Scroll Range (World Height = 2.25 * Viewport Height)
+        const landscapeScrollRange = height * 1.25;
+        const getScreenY = (worldY) => {
+          return worldY - scrollProgress * landscapeScrollRange;
+        };
+
+        // Sky and galactic elements opacity fading
+        const skyOpacity = Math.max(0, 1 - scrollProgress * 1.85); 
+
+        // 2. Milky Way Galaxy Nebular Dust Lane (Slow Parallax)
+        if (skyOpacity > 0.01) {
+          const mwGrad = ctx.createLinearGradient(0, height * 0.2 - scrollProgress * height * 0.1, width, height * 0.8 - scrollProgress * height * 0.1);
+          mwGrad.addColorStop(0, 'rgba(111, 129, 103, 0.0)');
+          mwGrad.addColorStop(0.3, `rgba(111, 129, 103, ${0.025 * skyOpacity})`);
+          mwGrad.addColorStop(0.5, `rgba(166, 138, 109, ${0.065 * skyOpacity})`);
+          mwGrad.addColorStop(0.7, `rgba(111, 129, 103, ${0.025 * skyOpacity})`);
+          mwGrad.addColorStop(1, 'rgba(111, 129, 103, 0.0)');
+          
+          ctx.fillStyle = mwGrad;
+          ctx.fillRect(0, 0, width, height);
+
+          // 3. Twinkling Stars (Parallax Scroll)
+          stars.forEach((star) => {
+            const starY = star.y - scrollProgress * (height * 0.35);
+            if (starY < -20 || starY > height + 20) return;
+
+            const alpha = (0.25 + 0.65 * Math.abs(Math.sin(time * star.speed + star.phase))) * skyOpacity;
+            ctx.fillStyle = star.phase > Math.PI 
+              ? `rgba(184, 199, 194, ${alpha})` 
+              : `rgba(210, 193, 168, ${alpha})`;
+            ctx.beginPath();
+            ctx.arc(star.x, starY, star.radius, 0, Math.PI * 2);
+            ctx.fill();
+          });
+        }
+
+        // 4. Shared Snowcap Line Calculator
+        const getSnowBase = (x, worldSnowLineY, wy) => {
+          // Subtle natural variation in the snow line (less wavy as requested)
+          const noise = Math.sin(x * 0.04) * 3 + Math.cos(x * 0.02) * 1.5;
+          // Glacier troughs/snow tongues extend further down in the valleys (larger wy)
+          const gullyBonus = Math.max(0, wy - worldSnowLineY) * 0.22;
+          return worldSnowLineY + gullyBonus + noise;
+        };
+
+        // 5. Mountain Ridges (Distant, Mid, Foreground)
+        // Background ridges in unified world coordinate systems (shifted down for text visibility)
         const ridges = [
-          { base: height * 0.72, scale: 0.75, stroke: 'rgba(111, 129, 103, 0.12)', fill: 'rgba(13, 18, 15, 0.55)', seed: 50 },
-          { base: height * 0.80, scale: 0.95, stroke: 'rgba(111, 129, 103, 0.22)', fill: 'rgba(13, 18, 15, 0.78)', seed: -120 },
-          { base: height * 0.87, scale: 1.15, stroke: 'rgba(111, 129, 103, 0.40)', fill: 'rgba(13, 18, 15, 0.96)', seed: 230 }
+          { base: height * 0.82, scale: 0.75, stroke: 'rgba(111, 129, 103, 0.12)', fill: 'rgba(13, 18, 15, 0.55)', seed: 50, hasSnow: true },
+          { base: height * 0.89, scale: 0.95, stroke: 'rgba(111, 129, 103, 0.22)', fill: 'rgba(13, 18, 15, 0.78)', seed: -120, hasSnow: true },
+          { base: height * 0.96, scale: 1.15, stroke: 'rgba(111, 129, 103, 0.40)', fill: 'rgba(13, 18, 15, 0.96)', seed: 230, hasSnow: true }
         ];
 
         ridges.forEach((r) => {
+          const rBaseScreenY = getScreenY(r.base);
+          if (rBaseScreenY + r.scale * height * 0.4 < -100) return; // Completely scrolled off screen
+
+          // 5.1 Draw Solid Mountain Shape
           ctx.beginPath();
           ctx.moveTo(0, height);
-          
-          for (let x = 0; x <= width; x += 10) {
-            let y = getKanchenjunghaHeight(x, width, height, r.base, r.scale, r.seed);
+          for (let x = 0; x <= width; x += 6) {
+            let wy = getKanchenjunghaHeight(x, width, height, r.base, r.scale, r.seed);
+            const sy = getScreenY(wy);
             
             // Cursor deflection
             const dx = x - mouse.x;
-            const dy = y - mouse.y;
+            const dy = sy - mouse.y;
             const dist = Math.sqrt(dx * dx + dy * dy);
+            let finalSy = sy;
             if (dist < 180) {
-              const push = (180 - dist) / 180 * 12;
-              y += (dy / dist) * push;
+              const push = (180 - dist) / 180 * 12 * (dy / dist);
+              finalSy += push;
             }
-            
-            ctx.lineTo(x, y);
+            ctx.lineTo(x, finalSy);
           }
-          
           ctx.lineTo(width, height);
           ctx.closePath();
-          
-          // Fill first
           ctx.fillStyle = r.fill;
           ctx.fill();
-          
-          // Stroke the ridge outline only
+
+          // 5.2 Draw Snowcaps with 3D Shading (Sunlit vs Shadowed side)
+          if (r.hasSnow) {
+            const worldSnowLineY = r.base - r.scale * height * 0.17;
+            
+            // Helper to calculate deflected screen Y
+            const getDeflectedScreenY = (x, wy) => {
+              const sy = getScreenY(wy);
+              const dx = x - mouse.x;
+              const dy = sy - mouse.y;
+              const dist = Math.sqrt(dx * dx + dy * dy);
+              let deflection = 0;
+              if (dist < 180) {
+                deflection = (180 - dist) / 180 * 12 * (dy / dist);
+              }
+              return sy + deflection;
+            };
+
+            // Draw snow cap in vertical panel slices of width 6
+            for (let x = 0; x < width; x += 6) {
+              const xNext = Math.min(width, x + 6);
+              
+              let wy = getKanchenjunghaHeight(x, width, height, r.base, r.scale, r.seed);
+              let wyNext = getKanchenjunghaHeight(xNext, width, height, r.base, r.scale, r.seed);
+              
+              const finalSy = getDeflectedScreenY(x, wy);
+              const finalSyNext = getDeflectedScreenY(xNext, wyNext);
+              
+              const w_snowBase = getSnowBase(x, worldSnowLineY, wy);
+              const w_snowBaseNext = getSnowBase(xNext, worldSnowLineY, wyNext);
+              
+              // Deflect snow base exactly by same deflection amount
+              const s_snowBase = getScreenY(w_snowBase) + (finalSy - getScreenY(wy));
+              const s_snowBaseNext = getScreenY(w_snowBaseNext) + (finalSyNext - getScreenY(wyNext));
+              
+              if (finalSy < s_snowBase || finalSyNext < s_snowBaseNext) {
+                const topY = Math.min(finalSy, s_snowBase);
+                const topYNext = Math.min(finalSyNext, s_snowBaseNext);
+                
+                ctx.beginPath();
+                ctx.moveTo(x, topY);
+                ctx.lineTo(xNext, topYNext);
+                ctx.lineTo(xNext, s_snowBaseNext);
+                ctx.lineTo(x, s_snowBase);
+                ctx.closePath();
+                
+                const slopeRatio = (finalSyNext - finalSy) / (xNext - x);
+                
+                if (slopeRatio < -0.12) {
+                  // Left-facing slope (going up): sunlit side
+                  ctx.fillStyle = 'rgba(255, 255, 255, 0.98)';
+                } else if (slopeRatio > 0.12) {
+                  // Right-facing slope (going down): shadowed side
+                  ctx.fillStyle = 'rgba(195, 212, 230, 0.94)';
+                } else {
+                  // Flat ridge: soft transition white
+                  ctx.fillStyle = 'rgba(235, 245, 255, 0.96)';
+                }
+                ctx.fill();
+              }
+            }
+          }
+
+          // 5.3 Draw Ridge Outline
           ctx.strokeStyle = r.stroke;
           ctx.lineWidth = 1.5;
           ctx.beginPath();
           for (let x = 0; x <= width; x += 10) {
-            let y = getKanchenjunghaHeight(x, width, height, r.base, r.scale, r.seed);
+            let wy = getKanchenjunghaHeight(x, width, height, r.base, r.scale, r.seed);
+            const sy = getScreenY(wy);
             const dx = x - mouse.x;
-            const dy = y - mouse.y;
+            const dy = sy - mouse.y;
             const dist = Math.sqrt(dx * dx + dy * dy);
+            let finalSy = sy;
             if (dist < 180) {
-              const push = (180 - dist) / 180 * 12;
-              y += (dy / dist) * push;
+              finalSy += (180 - dist) / 180 * 12 * (dy / dist);
             }
-            if (x === 0) ctx.moveTo(x, y);
-            else ctx.lineTo(x, y);
+            if (x === 0) ctx.moveTo(x, finalSy);
+            else ctx.lineTo(x, finalSy);
           }
           ctx.stroke();
         });
 
-        // 4. Glacier Melt Winding River (emerging from the valley center)
-        ctx.strokeStyle = 'rgba(111, 129, 103, 0.45)';
-        ctx.lineWidth = 2.0;
-        ctx.beginPath();
-        const riverStartY = height * 0.76;
+        // 6. Draw Glaciers (White/cyan icy texture in the foreground mountain valley)
+        const glacierStartY = height * 0.64;
+        const glacierEndY = height * 0.82;
+        const glacierStartScreenY = getScreenY(glacierStartY);
         
-        for (let y = riverStartY; y <= height; y += 6) {
-          const progress = (y - riverStartY) / (height - riverStartY);
-          const windOffset = Math.sin(y * 0.015 - time * 0.1) * 40 * progress 
-                           + Math.cos(y * 0.03 + time * 0.05) * 15 * progress;
-          let x = width * 0.52 + windOffset;
-
-          // Cursor deflection
-          const dx = x - mouse.x;
-          const dy = y - mouse.y;
-          const dist = Math.sqrt(dx * dx + dy * dy);
-          if (dist < 120) {
-            const push = (120 - dist) / 120 * 15;
-            x += (dx / dist) * push;
-          }
-
-          if (y === riverStartY) ctx.moveTo(x, y);
-          else ctx.lineTo(x, y);
-        }
-        ctx.stroke();
-
-        // 5. GIS Isoline Contours & Text Labels (NDVI vegetation & LST isotherm)
-        gisContours.forEach((c, idx) => {
-          const cx = idx === 0 ? width * 0.35 : width * 0.7;
-          const cy = idx === 0 ? height * 0.78 : height * 0.82;
-
-          ctx.strokeStyle = c.color;
-          ctx.setLineDash(c.dash);
-          ctx.lineWidth = 1.0;
+        if (glacierStartScreenY < height && getScreenY(glacierEndY) > -100) {
+          const glacierGrad = ctx.createLinearGradient(width * 0.5, getScreenY(glacierStartY), width * 0.5, getScreenY(glacierEndY));
+          glacierGrad.addColorStop(0, 'rgba(242, 248, 255, 0.9)');
+          glacierGrad.addColorStop(0.4, 'rgba(210, 238, 255, 0.85)');
+          glacierGrad.addColorStop(1, 'rgba(155, 218, 240, 0.95)');
+          
           ctx.beginPath();
-          
-          const segments = 60;
-          for (let i = 0; i <= segments; i++) {
-            const angle = Math.PI + (i / segments) * Math.PI;
-            const noise = Math.sin(angle * 6 + time * 0.04) * 8 + Math.cos(angle * 3) * 4;
-            
-            let px = cx + Math.cos(angle) * (c.radius + noise);
-            let py = cy + Math.sin(angle) * (c.radius * 0.5 + noise * 0.5);
-            
-            // Cursor deflection
-            const dx = px - mouse.x;
-            const dy = py - mouse.y;
-            const dist = Math.sqrt(dx * dx + dy * dy);
-            if (dist < 140) {
-              const push = (140 - dist) / 140 * 12;
-              px += (dx / dist) * push;
-              py += (dy / dist) * push;
-            }
-            
-            if (i === 0) ctx.moveTo(px, py);
-            else ctx.lineTo(px, py);
+          for (let wy = glacierStartY; wy <= glacierEndY; wy += 8) {
+            const progress = (wy - glacierStartY) / (glacierEndY - glacierStartY);
+            const widthAtY = (24 - progress * 14) * (width / 1440);
+            const xOffset = Math.sin(wy * 0.05) * 8;
+            ctx.lineTo(width * 0.51 + xOffset - widthAtY, getScreenY(wy));
           }
-          ctx.stroke();
-          ctx.setLineDash([]); // Reset dash state
+          for (let wy = glacierEndY; wy >= glacierStartY; wy -= 8) {
+            const progress = (wy - glacierStartY) / (glacierEndY - glacierStartY);
+            const widthAtY = (24 - progress * 14) * (width / 1440);
+            const xOffset = Math.sin(wy * 0.05) * 8;
+            ctx.lineTo(width * 0.51 + xOffset + widthAtY, getScreenY(wy));
+          }
+          ctx.closePath();
+          ctx.fillStyle = glacierGrad;
+          ctx.fill();
+        }
+
+        // 7. Core positions setup for lakes and river meanders
+        const lakeWorldY = height * 0.82;
+        const lakeScreenY = getScreenY(lakeWorldY);
+        const lakeX = width * 0.51 + Math.sin(lakeWorldY * 0.05) * 8;
+
+        const fhLakeWorldY = height * 1.2;
+        const fhLakeScreenY = getScreenY(fhLakeWorldY);
+        const fhLakeX = width * 0.6;
+
+        // 8. Draw Smooth Hills (Foothills zone, Sikkim tea gardens style)
+        const drawHills = () => {
+          const hillLayers = [
+            { base: height * 1.08, scale: 35, freq: 0.003, fill: 'rgba(15, 25, 18, 0.82)', stroke: 'rgba(95, 119, 88, 0.16)' },
+            { base: height * 1.25, scale: 22, freq: 0.005, fill: 'rgba(12, 22, 15, 0.95)', stroke: 'rgba(75, 100, 68, 0.28)' }
+          ];
           
-          // Label drawing with low opacity Inter font
-          ctx.font = '400 10px Inter, -apple-system, BlinkMacSystemFont, sans-serif';
-          ctx.fillStyle = c.color.replace('0.22', '0.45'); // Slightly higher opacity for text readability
-          ctx.textAlign = 'center';
-          ctx.fillText(c.label, cx, cy - c.radius * 0.5 - 12);
-        });
+          hillLayers.forEach((hl) => {
+            const hillBaseScreenY = getScreenY(hl.base);
+            if (hillBaseScreenY + hl.scale * 1.5 < -100 || getScreenY(hl.base + 100) > height + 100) return;
+
+            ctx.beginPath();
+            ctx.moveTo(0, height);
+            for (let x = 0; x <= width; x += 10) {
+              let wy = hl.base + Math.sin(x * hl.freq) * hl.scale + Math.cos(x * 0.007) * (hl.scale * 0.4);
+              const sy = getScreenY(wy);
+              ctx.lineTo(x, sy);
+            }
+            ctx.lineTo(width, height);
+            ctx.closePath();
+            ctx.fillStyle = hl.fill;
+            ctx.fill();
+            
+            ctx.strokeStyle = hl.stroke;
+            ctx.lineWidth = 1.2;
+            ctx.beginPath();
+            for (let x = 0; x <= width; x += 10) {
+              let wy = hl.base + Math.sin(x * hl.freq) * hl.scale + Math.cos(x * 0.007) * (hl.scale * 0.4);
+              const sy = getScreenY(wy);
+              if (x === 0) ctx.moveTo(x, sy);
+              else ctx.lineTo(x, sy);
+            }
+            ctx.stroke();
+          });
+        };
+        drawHills();
+
+        // 9. Draw Low-Altitude Plains Terrain Patches
+        const drawTerrainPatches = () => {
+          const patches = [
+            { wy: height * 1.45, wx: width * 0.25, rx: 70, ry: 35, color: 'rgba(85, 115, 80, 0.08)' },
+            { wy: height * 1.52, wx: width * 0.75, rx: 85, ry: 45, color: 'rgba(105, 125, 90, 0.08)' },
+            { wy: height * 1.68, wx: width * 0.35, rx: 95, ry: 50, color: 'rgba(95, 120, 85, 0.07)' },
+            { wy: height * 1.82, wx: width * 0.65, rx: 115, ry: 55, color: 'rgba(80, 110, 75, 0.08)' }
+          ];
+          
+          patches.forEach((p) => {
+            const sy = getScreenY(p.wy);
+            if (sy > -100 && sy < height + 100) {
+              ctx.fillStyle = p.color;
+              ctx.beginPath();
+              ctx.ellipse(p.wx, sy, p.rx * (width / 1440), p.ry * (height / 900), Math.PI * 0.05, 0, Math.PI * 2);
+              ctx.fill();
+            }
+          });
+        };
+        drawTerrainPatches();
+
+        // 10. Draw River Body (Filled polygon tracing left & right banks, winding widely from side to side)
+        const riverPoints = [
+          { wy: height * 0.82, wx: lakeX },                  // Glacial Lake source (starts precisely here)
+          { wy: height * 0.94, wx: width * 0.25 },           // Wide meander left
+          { wy: height * 1.06, wx: width * 0.75 },           // Wide meander right
+          { wy: height * 1.2, wx: fhLakeX },                 // Foothills Lake
+          { wy: height * 1.34, wx: width * 0.15 },           // Wide meander left
+          { wy: height * 1.52, wx: width * 0.82 },           // Wide meander right
+          { wy: height * 1.7, wx: width * 0.12 },            // Wide meander left
+          { wy: height * 1.85, wx: width * 0.78 },           // Wide meander right
+          { wy: height * 1.95, wx: width * 0.5 }             // Ocean delta apex
+        ];
+
+        const getRiverX = (wy) => {
+          if (wy <= riverPoints[0].wy) return riverPoints[0].wx;
+          if (wy >= riverPoints[riverPoints.length - 1].wy) return riverPoints[riverPoints.length - 1].wx;
+          
+          let idx = 0;
+          for (let j = 0; j < riverPoints.length - 1; j++) {
+            if (wy >= riverPoints[j].wy && wy < riverPoints[j + 1].wy) {
+              idx = j;
+              break;
+            }
+          }
+          
+          const p1 = riverPoints[idx];
+          const p2 = riverPoints[idx + 1];
+          const t = (wy - p1.wy) / (p2.wy - p1.wy);
+          const smoothT = (1 - Math.cos(t * Math.PI)) / 2;
+          
+          const waveFreq = wy < height * 1.35 ? 0.05 : 0.015;
+          const waveAmp = wy < height * 1.35 ? 3.5 : 7.0;
+          const microNoise = Math.sin(wy * waveFreq - time * 0.08) * waveAmp + Math.cos(wy * 0.02) * 2.5;
+          
+          return p1.wx + (p2.wx - p1.wx) * smoothT + microNoise;
+        };
+
+        const drawRiver = () => {
+          const startWY = height * 0.82;
+          const endWY = height * 1.95;
+          const startScreenY = getScreenY(startWY);
+          const endScreenY = getScreenY(endWY);
+          
+          if (endScreenY < -100 || startScreenY > height + 100) return;
+
+          ctx.beginPath();
+          // Left bank going down
+          for (let wy = startWY; wy <= endWY; wy += 4) {
+            const rx = getRiverX(wy);
+            const progress = (wy - startWY) / (endWY - startWY);
+            const rWidth = (2.2 + progress * 7.5) * (width / 1440);
+            ctx.lineTo(rx - rWidth / 2, getScreenY(wy));
+          }
+          // Right bank going up
+          for (let wy = endWY; wy >= startWY; wy -= 4) {
+            const rx = getRiverX(wy);
+            const progress = (wy - startWY) / (endWY - startWY);
+            const rWidth = (2.2 + progress * 7.5) * (width / 1440);
+            ctx.lineTo(rx + rWidth / 2, getScreenY(wy));
+          }
+          ctx.closePath();
+          ctx.fillStyle = 'rgba(72, 132, 122, 0.46)'; // Glacial teal water
+          ctx.fill();
+          ctx.strokeStyle = 'rgba(111, 129, 103, 0.32)';
+          ctx.lineWidth = 1.0;
+          ctx.stroke();
+        };
+        drawRiver();
+
+        // 11. Draw Glacial Lake on top of river start to mask junction
+        if (lakeScreenY > -50 && lakeScreenY < height + 50) {
+          ctx.fillStyle = 'rgba(72, 209, 204, 0.75)'; // Turquoise
+          ctx.strokeStyle = 'rgba(255, 255, 255, 0.4)';
+          ctx.lineWidth = 1.5;
+          ctx.beginPath();
+          ctx.ellipse(lakeX, lakeScreenY, 32 * (width / 1440), 12 * (height / 900), 0, 0, Math.PI * 2);
+          ctx.fill();
+          ctx.stroke();
+        }
+
+        // 12. Draw Foothills Lake on top of hills and river start/ends to mask junction
+        if (fhLakeScreenY > -50 && fhLakeScreenY < height + 50) {
+          ctx.fillStyle = 'rgba(46, 120, 95, 0.72)'; // Forest Green/Teal
+          ctx.strokeStyle = 'rgba(75, 100, 68, 0.4)';
+          ctx.lineWidth = 1.5;
+          ctx.beginPath();
+          ctx.ellipse(fhLakeX, fhLakeScreenY, 44 * (width / 1440), 16 * (height / 900), 0, 0, Math.PI * 2);
+          ctx.fill();
+          ctx.stroke();
+        }
+
+        // 13. Draw Organic GIS Isotherms & NDVI Contours (Plains Altitude overlays)
+        const drawGISOverlays = () => {
+          gisContours.forEach((c, idx) => {
+            const cx = idx === 0 ? width * 0.35 : width * 0.7;
+            const cy = getScreenY(height * (idx === 0 ? 1.55 : 1.7));
+            
+            if (cy > -100 && cy < height + 100) {
+              ctx.strokeStyle = c.color.replace('0.22', '0.12');
+              ctx.setLineDash(c.dash);
+              ctx.lineWidth = 1.0;
+              ctx.beginPath();
+              const segments = 60;
+              for (let i = 0; i <= segments; i++) {
+                const angle = Math.PI + (i / segments) * Math.PI;
+                const noise = Math.sin(angle * 6 + time * 0.04) * 8 + Math.cos(angle * 3) * 4;
+                let px = cx + Math.cos(angle) * (c.radius + noise);
+                let py = cy + Math.sin(angle) * (c.radius * 0.5 + noise * 0.5);
+                
+                // Cursor deflection
+                const dx = px - mouse.x;
+                const dy = py - mouse.y;
+                const dist = Math.sqrt(dx * dx + dy * dy);
+                if (dist < 140) {
+                  const push = (140 - dist) / 140 * 12;
+                  px += (dx / dist) * push;
+                  py += (dy / dist) * push;
+                }
+                if (i === 0) ctx.moveTo(px, py);
+                else ctx.lineTo(px, py);
+              }
+              ctx.stroke();
+              ctx.setLineDash([]);
+              
+              ctx.font = '400 10px Inter, -apple-system, BlinkMacSystemFont, sans-serif';
+              ctx.fillStyle = c.color.replace('0.22', '0.45');
+              ctx.textAlign = 'center';
+              ctx.fillText(c.label, cx, cy - c.radius * 0.5 - 12);
+            }
+          });
+        };
+        drawGISOverlays();
+
+        // 14. Draw Delta Estuary (River mouth splits into 3 branches entering the ocean)
+        const drawDelta = () => {
+          const deltaStartY = height * 1.95;
+          const deltaStartScreenY = getScreenY(deltaStartY);
+          const deltaStartX = getRiverX(deltaStartY);
+          
+          if (deltaStartScreenY < height && deltaStartScreenY > -150) {
+            ctx.strokeStyle = 'rgba(72, 132, 122, 0.58)';
+            ctx.lineWidth = 1.6;
+            
+            const numBranches = 3;
+            for (let b = 0; b < numBranches; b++) {
+              ctx.beginPath();
+              ctx.moveTo(deltaStartX, deltaStartScreenY);
+              
+              for (let wy = deltaStartY; wy <= height * 2.2; wy += 6) {
+                const sy = getScreenY(wy);
+                const t = (wy - deltaStartY) / (height * 0.25);
+                const spreadX = (b - 1) * 65 * t * (width / 1440);
+                const winding = Math.sin(wy * 0.05 - time * 0.05 + b) * 10;
+                
+                ctx.lineTo(deltaStartX + spreadX + winding, sy);
+              }
+              ctx.stroke();
+            }
+          }
+        };
+        drawDelta();
+
+        // 15. Draw Sea-Level Ocean Zone (Rises up during scroll progress)
+        const oceanWorldY = height * 1.95;
+        const oceanScreenY = getScreenY(oceanWorldY);
+        
+        if (oceanScreenY < height) {
+          const oceanHeight = height - oceanScreenY;
+          const oceanOpacity = Math.min(1, Math.max(0, oceanHeight / (height * 0.55)));
+          
+          if (oceanOpacity > 0.01) {
+            const waveLayers = [
+              { base: oceanScreenY, amp: 16, freq: 0.008, speed: 0.025, fill: `rgba(12, 30, 48, ${0.45 * oceanOpacity})`, stroke: `rgba(56, 120, 180, ${0.35 * oceanOpacity})` },
+              { base: oceanScreenY + 35, amp: 12, freq: 0.012, speed: -0.035, fill: `rgba(9, 24, 42, ${0.65 * oceanOpacity})`, stroke: `rgba(56, 120, 180, ${0.5 * oceanOpacity})` },
+              { base: oceanScreenY + 70, amp: 8, freq: 0.018, speed: 0.02, fill: `rgba(5, 15, 30, ${0.92 * oceanOpacity})`, stroke: `rgba(56, 120, 180, ${0.65 * oceanOpacity})` }
+            ];
+
+            waveLayers.forEach((w) => {
+              ctx.beginPath();
+              ctx.moveTo(0, height);
+              for (let x = 0; x <= width; x += 10) {
+                const y = w.base + Math.sin(x * w.freq + time * w.speed) * w.amp;
+                ctx.lineTo(x, y);
+              }
+              ctx.lineTo(width, height);
+              ctx.closePath();
+              ctx.fillStyle = w.fill;
+              ctx.fill();
+              ctx.strokeStyle = w.stroke;
+              ctx.lineWidth = 1.2;
+              ctx.stroke();
+            });
+
+            // Bioluminescent bubbles
+            oceanParticles.forEach((p) => {
+              if (!reducedMotion) {
+                p.y -= p.speedY;
+                if (p.y < oceanScreenY) p.y = height + 10;
+              }
+              const px = p.x + Math.sin(time * p.wobbleSpeed + p.phase) * p.wobbleAmp;
+              if (p.y > oceanScreenY) {
+                ctx.fillStyle = `rgba(56, 180, 200, ${0.2 * oceanOpacity * Math.abs(Math.sin(time * 0.03 + p.phase))})`;
+                ctx.beginPath();
+                ctx.arc(px, p.y, p.radius, 0, Math.PI * 2);
+                ctx.fill();
+              }
+            });
+          }
+        }
+        ctx.restore();
       }
 
       if (focus === 'home') {
@@ -409,6 +777,7 @@ export default function InteractiveBackground({ focus = 'home' }) {
       window.removeEventListener('mousemove', handleMouseMove);
       window.removeEventListener('mouseleave', handleMouseLeave);
       window.removeEventListener('mousedown', handleMouseDown);
+      window.removeEventListener('scroll', handleScroll);
       cancelAnimationFrame(animationId);
     };
   }, [focus, reducedMotion]);

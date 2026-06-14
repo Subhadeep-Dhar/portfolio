@@ -21,6 +21,24 @@ export default function Home() {
   const [loading, setLoading] = useState(true);
   const [experienceMode, setExperienceMode] = useState('home');
 
+  // Permanent fix for cached service workers causing static chunk 404s on reload
+  useState(() => {
+    if (typeof window !== 'undefined') {
+      if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.getRegistrations().then((registrations) => {
+          for (let registration of registrations) {
+            registration.unregister();
+          }
+        });
+      }
+      if ('caches' in window) {
+        caches.keys().then((keys) => {
+          keys.forEach((key) => caches.delete(key));
+        });
+      }
+    }
+  });
+
   const handleExitMode = () => {
     setExperienceMode('home');
     const body = document.querySelector('body');

@@ -41,7 +41,7 @@ export default function ResearchSection() {
               return (
                 <div
                   key={paper.id}
-                  className="border border-neutral-900 bg-[#1a211d]/10 rounded p-6 hover:border-neutral-800 transition-colors duration-300 flex flex-col justify-between"
+                  className="border border-neutral-900/60 bg-[#060b08]/85 backdrop-blur-md rounded p-6 hover:border-neutral-800 transition-colors duration-300 flex flex-col justify-between"
                 >
                   <div className="space-y-4">
                     {/* Header */}

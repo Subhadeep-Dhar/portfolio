@@ -75,7 +75,7 @@ export default function About() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: idx * 0.08, duration: 0.4 }}
-                className="p-5 border border-neutral-900 bg-[#24201c]/5 rounded group hover:border-neutral-800 transition-colors duration-300"
+                className="p-5 border border-neutral-900/60 bg-neutral-950/80 backdrop-blur-md rounded group hover:border-neutral-800 transition-colors duration-300"
               >
                 <div className="flex items-center justify-between mb-3">
                   <span className="font-mono-tech text-xs text-neutral-600">{trait.code}</span>

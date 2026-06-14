@@ -1,54 +1,66 @@
-/**
- * ╔══════════════════════════════════════════════════════════════╗
- * ║  MAIN PAGE — src/app/page.jsx                               ║
- * ║                                                              ║
- * ║  This file composes all sections in order.                  ║
- * ║  To hide a section: comment it out here.                    ║
- * ║  To reorder sections: move the component line.              ║
- * ║  To add content: edit the data files in src/data/           ║
- * ╚══════════════════════════════════════════════════════════════╝
- */
+'use client';
 
-import Navbar       from '@/components/Navbar';
-import Hero         from '@/sections/Hero';
-import About        from '@/sections/About';
-import Skills       from '@/sections/Skills';
-import Projects     from '@/sections/Projects';
-import CaseStudy    from '@/sections/CaseStudy';
-import Timeline     from '@/sections/Timeline';
-import ConceptVault from '@/sections/ConceptVault';
-import Contact      from '@/sections/Contact';
+import { useState } from 'react';
+import { AnimatePresence } from 'framer-motion';
+
+import BootLoader from '@/components/BootLoader';
+import Navbar from '@/components/Navbar';
+import InteractiveBackground from '@/components/InteractiveBackground';
+
+import Hero from '@/sections/Hero';
+import About from '@/sections/About';
+import DeveloperSection from '@/sections/DeveloperSection';
+import ResearchSection from '@/sections/ResearchSection';
+import UnifiedIdentity from '@/components/UnifiedIdentity';
+import InteractiveTimeline from '@/components/InteractiveTimeline';
+import Contact from '@/sections/Contact';
 
 export default function Home() {
+  const [loading, setLoading] = useState(true);
+  const [experienceFocus, setExperienceFocus] = useState('unified');
+
   return (
     <>
-      <Navbar />
+      {/* 1. Custom boot loader (run-once session check) */}
+      <AnimatePresence>
+        {loading && (
+          <BootLoader onComplete={() => setLoading(false)} />
+        )}
+      </AnimatePresence>
 
-      <main>
-        {/* 1. Landing */}
-        <Hero />
+      {!loading && (
+        <>
+          {/* 2. Unified Header navigation */}
+          <Navbar />
 
-        {/* 2. Researcher Profile */}
-        <About />
+          {/* 3. Performance layered atmospheric background */}
+          <InteractiveBackground focus={experienceFocus} />
 
-        {/* 3. Tech Arsenal */}
-        <Skills />
+          {/* 4. Core experiential content sections */}
+          <main className="relative z-10">
+            {/* Cinematic landing, updates focus state */}
+            <Hero onFocusChange={setExperienceFocus} />
 
-        {/* 4. Experiments (Projects) */}
-        <Projects />
+            {/* Mindset overview bio */}
+            <About />
 
-        {/* 5. Case Studies */}
-        <CaseStudy />
+            {/* Developer technology grid & system specs */}
+            <DeveloperSection />
 
-        {/* 6. Evolution Log */}
-        <Timeline />
+            {/* Scientific assessments & How I think pipeline */}
+            <ResearchSection />
 
-        {/* 7. Concept Vault — comment out to hide */}
-        <ConceptVault />
+            {/* Identity merge bridge */}
+            <UnifiedIdentity />
 
-        {/* 8. Contact */}
-        <Contact />
-      </main>
+            {/* Coordinate-driven scroll log */}
+            <InteractiveTimeline />
+
+            {/* Signal pulse contact & boot reset footer */}
+            <Contact />
+          </main>
+        </>
+      )}
     </>
   );
 }

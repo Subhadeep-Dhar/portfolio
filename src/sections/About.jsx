@@ -1,114 +1,95 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import SectionHeader from '@/components/SectionHeader';
 import { siteConfig } from '@/data/siteConfig';
 
-/**
- * About / Researcher Profile Section
- * ───────────────────────────────────
- * A non-generic intro focused on mindset and approach.
- * Pulls from siteConfig.bio — edit that file to update content.
- */
 export default function About() {
-  // Core traits / working principles — edit here or move to siteConfig if preferred
   const traits = [
     {
-      icon: '◈',
-      label: 'Systems thinker',
-      desc: 'I map dependencies before writing a single line. Complexity is managed, not feared.',
+      code: 'SYS_01',
+      label: 'Systems Thinking',
+      desc: 'Mapping relational dependencies before writing a single line of logic. Complex configurations are managed through systematic blueprints.'
     },
     {
-      icon: '◑',
-      label: 'Data-driven',
-      desc: 'Gut feelings get a hypothesis. Hypotheses get experiments. Experiments get measured.',
+      code: 'DAT_02',
+      label: 'Data Validation',
+      desc: 'Gut instincts get a hypothesis. Hypotheses get experiments. Experiments get measured, evaluated, and resolved.'
     },
     {
-      icon: '◎',
-      label: 'Finish-line focused',
-      desc: 'Features ship when they solve the problem they were built for — not before, not after.',
+      code: 'GIS_03',
+      label: 'Spatial Intelligence',
+      desc: 'Analyzing how environmental variables interact across space and time. Integrating physical satellite parameters with cloud workflows.'
     },
     {
-      icon: '◻',
-      label: 'Curiosity-led',
-      desc: 'The best projects started as "I wonder if..." Most of mine still do.',
-    },
+      code: 'DEV_04',
+      label: 'Execution focus',
+      desc: 'Building performant software that resolves real-world problems. Delivering minimal overhead, clear architecture, and clean documentation.'
+    }
   ];
 
   return (
-    <section id="profile" className="py-24">
+    <section id="profile" className="py-24 relative">
       <div className="section-container">
-        <div className="grid lg:grid-cols-2 gap-16 items-start">
+        {/* Subtle grid line separator */}
+        <div className="h-px w-full bg-gradient-to-r from-transparent via-gray-900 to-transparent mb-24" />
 
-          {/* ── Left: Text ─────────────────────────────────────── */}
-          <div>
-            <SectionHeader
-              label="RESEARCHER PROFILE"
-              title="Not just a developer."
-              subtitle="I treat engineering like applied science. Every project starts with a problem, not a feature list."
-            />
-
-            <div className="space-y-4">
+        <div className="grid lg:grid-cols-12 gap-12 items-start">
+          {/* Left: Bio Story */}
+          <div className="lg:col-span-5 space-y-6">
+            <div>
+              <span className="mono-label block mb-2 text-teal-400">RESEARCHER PROFILE</span>
+              <h2 className="text-3xl font-semibold text-gray-150 tracking-tight leading-tight">
+                Engineering through scientific discipline.
+              </h2>
+            </div>
+            
+            <div className="space-y-4 text-xs sm:text-sm text-gray-400 leading-relaxed font-light">
               {siteConfig.bio.map((paragraph, i) => (
-                <motion.p
-                  key={i}
-                  initial={{ opacity: 0, y: 12 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: i * 0.1, duration: 0.4 }}
-                  className="text-lab-muted leading-relaxed"
-                >
+                <p key={i}>
                   {paragraph}
-                </motion.p>
+                </p>
               ))}
             </div>
 
-            {/* Location + availability */}
-            <motion.div
-              initial={{ opacity: 0 }}
-              whileInView={{ opacity: 1 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.4, duration: 0.4 }}
-              className="flex flex-wrap gap-4 mt-8"
-            >
-              <span className="font-mono text-xs text-lab-muted border border-lab-line px-3 py-1.5 rounded">
+            <div className="flex flex-wrap gap-2 pt-2">
+              <span className="font-mono-tech text-[10px] border border-gray-900 px-3 py-1 rounded bg-[#070b15]/40 text-gray-450">
                 📍 {siteConfig.location}
               </span>
-              <span className="font-mono text-xs text-lab-muted border border-lab-line px-3 py-1.5 rounded">
-                🎓 MCA Student
+              <span className="font-mono-tech text-[10px] border border-gray-900 px-3 py-1 rounded bg-[#070b15]/40 text-gray-450">
+                🎓 MCA Scholar
               </span>
               {siteConfig.available && (
-                <span className="font-mono text-xs text-green-400 border border-green-400/30 px-3 py-1.5 rounded">
-                  ✦ Available for projects
+                <span className="font-mono-tech text-[10px] border border-teal-900/40 text-teal-400 px-3 py-1 rounded bg-teal-950/10">
+                  ✦ Available for systems build
                 </span>
               )}
-            </motion.div>
+            </div>
           </div>
 
-          {/* ── Right: Traits grid ────────────────────────────── */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            {traits.map((trait, i) => (
+          {/* Right: Traits Matrix */}
+          <div className="lg:col-span-7 grid sm:grid-cols-2 gap-4">
+            {traits.map((trait, idx) => (
               <motion.div
                 key={trait.label}
-                initial={{ opacity: 0, scale: 0.96 }}
-                whileInView={{ opacity: 1, scale: 1 }}
+                initial={{ opacity: 0, y: 10 }}
+                whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                transition={{ delay: i * 0.08, duration: 0.4 }}
-                className="glass-card p-5 group hover:border-lab-cyan/20 transition-colors duration-300"
+                transition={{ delay: idx * 0.08, duration: 0.4 }}
+                className="p-5 border border-gray-900 bg-[#070b15]/20 rounded group hover:border-gray-800 transition-colors duration-300"
               >
-                <span className="text-lab-cyan text-xl block mb-3 font-mono group-hover:scale-110 transition-transform duration-200 inline-block">
-                  {trait.icon}
-                </span>
-                <h4 className="font-display font-semibold text-lab-text text-sm mb-2">
+                <div className="flex items-center justify-between mb-3">
+                  <span className="font-mono-tech text-[9px] text-gray-650">{trait.code}</span>
+                  <span className="w-1 h-1 rounded-full bg-teal-500/50" />
+                </div>
+                <h4 className="font-semibold text-xs text-gray-350 uppercase tracking-wider mb-2">
                   {trait.label}
                 </h4>
-                <p className="text-xs text-lab-muted leading-relaxed">
+                <p className="text-[11px] leading-relaxed text-gray-500 font-light">
                   {trait.desc}
                 </p>
               </motion.div>
             ))}
           </div>
-
         </div>
       </div>
     </section>

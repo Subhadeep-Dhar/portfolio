@@ -1,142 +1,116 @@
 'use client';
 
-import { motion } from 'framer-motion';
+import { useState, useEffect } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 import { siteConfig } from '@/data/siteConfig';
 
-/**
- * Hero / Landing Section
- * ─────────────────────
- * Features:
- *  - Staggered text reveals
- *  - CSS-only scan-line effect (no canvas, no JS)
- *  - CTA button to enter the lab
- *  - Floating availability badge
- */
-export default function Hero() {
+const GREETINGS = [
+  'Hello',
+  'Namaste',
+  'Nomoskar',
+  'Bonjour',
+  'Hola',
+  'こんにちは',
+  'Welcome'
+];
+
+export default function Hero({ onFocusChange }) {
+  const [greetIndex, setGreetIndex] = useState(0);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setGreetIndex((prev) => (prev + 1) % GREETINGS.length);
+    }, 2500);
+    return () => clearInterval(interval);
+  }, []);
+
+  const handleLinkClick = (focusType, elementId) => {
+    if (onFocusChange) {
+      onFocusChange(focusType);
+    }
+    const el = document.getElementById(elementId);
+    if (el) {
+      el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  };
+
   return (
-    <section className="relative min-h-screen flex items-center overflow-hidden">
-      {/* ── Scan-line effect (CSS only, lightweight) ─────────────── */}
-      <div className="pointer-events-none absolute inset-0 overflow-hidden">
-        <div
-          className="absolute inset-x-0 h-px bg-gradient-to-r from-transparent via-lab-cyan/20 to-transparent"
-          style={{ animation: 'scan 8s linear infinite' }}
-        />
+    <section className="relative min-h-screen flex items-center justify-center overflow-hidden pt-20">
+      {/* Visual coordinates tracking in background */}
+      <div className="absolute top-24 left-8 font-mono-tech text-[10px] text-gray-700 tracking-wider hidden sm:block">
+        SYS_LOC: Manipal, IN // 13.3444° N, 74.7944° E
+      </div>
+      <div className="absolute bottom-24 right-8 font-mono-tech text-[10px] text-gray-700 tracking-wider hidden sm:block">
+        ALT_LOC: Sikkim, IN // 27.7800° N, 88.6300° E
       </div>
 
-      {/* ── Ambient glow orbs (CSS only) ─────────────────────────── */}
-      <div className="pointer-events-none absolute inset-0 overflow-hidden">
-        <div
-          className="absolute -top-32 -left-32 w-96 h-96 rounded-full opacity-5"
-          style={{ background: 'radial-gradient(circle, #00e5ff, transparent 70%)' }}
-        />
-        <div
-          className="absolute -bottom-32 -right-32 w-96 h-96 rounded-full opacity-5"
-          style={{ background: 'radial-gradient(circle, #a855f7, transparent 70%)' }}
-        />
-      </div>
-
-      {/* ── Content ──────────────────────────────────────────────── */}
-      <div className="section-container w-full pt-24 pb-16">
-        <div className="max-w-3xl">
-          {/* Mono label */}
-          <motion.div
-            initial={{ opacity: 0, x: -20 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.5 }}
-            className="flex items-center gap-3 mb-6"
-          >
-            <span className="mono-label">Portfolio</span>
-            {siteConfig.available && (
-              <span className="flex items-center gap-1.5 font-mono text-xs text-green-400 border border-green-400/30 px-2 py-0.5 rounded">
-                <span className="w-1.5 h-1.5 bg-green-400 rounded-full animate-pulse-slow" />
-                OPEN TO WORK
-              </span>
-            )}
-          </motion.div>
-
-          {/* Main headline */}
-          <motion.h1
-            initial={{ opacity: 0, y: 24 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.1 }}
-            className="font-display font-bold text-4xl sm:text-5xl lg:text-6xl text-lab-text leading-tight mb-4"
-          >
-            {siteConfig.headline.split(' ').map((word, i) => (
-              <span key={i}>
-                {/* Highlight "Solutions" and "Curiosity" */}
-                {['Solutions', 'Curiosity'].includes(word) ? (
-                  <span className="text-neon-cyan">{word} </span>
-                ) : (
-                  <span>{word} </span>
-                )}
-              </span>
-            ))}
-          </motion.h1>
-
-          {/* Sub-roles */}
-          <motion.p
-            initial={{ opacity: 0, y: 16 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.25 }}
-            className="font-mono text-lab-muted text-sm sm:text-base tracking-widest mb-8"
-          >
-            {siteConfig.subheadline}
-          </motion.p>
-
-          {/* CTAs */}
-          <motion.div
-            initial={{ opacity: 0, y: 16 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.4 }}
-            className="flex flex-wrap gap-4 items-center"
-          >
-            <a
-              href="#lab"
-              className="font-mono text-sm bg-lab-cyan text-lab-bg px-6 py-3 rounded hover:bg-lab-cyan/90 transition-all duration-200 hover:shadow-neon-cyan"
+      <div className="section-container w-full max-w-4xl mx-auto text-center z-10 space-y-12">
+        {/* Multilingual greeting */}
+        <div className="h-8 flex items-center justify-center">
+          <AnimatePresence mode="wait">
+            <motion.span
+              key={greetIndex}
+              initial={{ opacity: 0, y: 5 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -5 }}
+              transition={{ duration: 0.3 }}
+              className="font-mono-tech text-xs uppercase tracking-[0.2em] text-teal-400 font-medium"
             >
-              My works →
-            </a>
-            <a
-              href="#profile"
-              className="font-mono text-sm border border-lab-line text-lab-muted px-6 py-3 rounded hover:border-lab-cyan hover:text-lab-cyan transition-all duration-200"
-            >
-              ABOUT ME
-            </a>
-          </motion.div>
-
-          {/* Stats row */}
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.5, delay: 0.6 }}
-            className="flex flex-wrap gap-8 mt-16 pt-8 border-t border-lab-line"
-          >
-            {[
-              { value: '5+', label: 'Real-world Projects' },
-              { value: '2', label: 'Internships' },
-              // { value: '500+', label: 'App Users' },
-              { value: '2 years', label: 'Since working' },
-            ].map(({ value, label }) => (
-              <div key={label}>
-                <div className="font-display font-bold text-2xl text-lab-cyan">{value}</div>
-                <div className="font-mono text-xs text-lab-muted mt-0.5">{label}</div>
-              </div>
-            ))}
-          </motion.div>
+              {GREETINGS[greetIndex]} // WELCOME_STREAM
+            </motion.span>
+          </AnimatePresence>
         </div>
 
-        {/* Scroll hint */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 1.2, duration: 0.6 }}
-          className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2"
-        >
-          <span className="mono-label text-lab-muted/50">SCROLL</span>
-          <div className="scroll-mouse">
-            <span className="scroll-mouse-wheel" />
-          </div>
-        </motion.div>
+        {/* Main headline and name */}
+        <div className="space-y-4">
+          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-light tracking-tight text-gray-100 leading-tight">
+            {siteConfig.name}
+          </h1>
+          <p className="text-sm sm:text-base font-mono-tech text-gray-400 tracking-wider max-w-xl mx-auto">
+            {siteConfig.headline}
+          </p>
+        </div>
+
+        {/* Cinematic Invitations (Explore Links) */}
+        <div className="flex flex-col sm:flex-row items-center justify-center gap-8 sm:gap-16 pt-8">
+          <button
+            onClick={() => handleLinkClick('developer', 'ecosystem-section')}
+            className="group flex flex-col items-center focus:outline-none"
+          >
+            <span className="cinematic-link text-xs tracking-[0.2em] font-medium text-gray-400 group-hover:text-teal-400">
+              Explore My Systems
+            </span>
+            <span className="font-mono-tech text-[9px] text-gray-650 opacity-0 group-hover:opacity-100 transition-opacity duration-300 mt-2">
+              BUILDER // DEV_MODE
+            </span>
+          </button>
+
+          <span className="hidden sm:inline-block w-1.5 h-1.5 rounded-full bg-gray-800" />
+
+          <button
+            onClick={() => handleLinkClick('researcher', 'research-section')}
+            className="group flex flex-col items-center focus:outline-none"
+          >
+            <span className="cinematic-link text-xs tracking-[0.2em] font-medium text-gray-400 group-hover:text-lime-500">
+              Enter Research Space
+            </span>
+            <span className="font-mono-tech text-[9px] text-gray-650 opacity-0 group-hover:opacity-100 transition-opacity duration-300 mt-2">
+              ANALYST // GIS_MODE
+            </span>
+          </button>
+        </div>
+
+        {/* Ambient status indicator */}
+        <div className="pt-12 flex justify-center">
+          {siteConfig.available && (
+            <div className="flex items-center gap-2 px-3 py-1 rounded border border-gray-900 bg-gray-950/20">
+              <span className="w-1.5 h-1.5 bg-green-500 rounded-full animate-pulse" />
+              <span className="font-mono-tech text-[10px] text-gray-500 tracking-wider">
+                CORE SYSTEM ONLINE · LOC: {siteConfig.location}
+              </span>
+            </div>
+          )}
+        </div>
       </div>
     </section>
   );

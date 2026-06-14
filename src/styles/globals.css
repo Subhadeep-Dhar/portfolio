@@ -1,158 +1,242 @@
 /* ─── Font imports ──────────────────────────────────────────────
    Google Fonts: Geist Sans (body & display), JetBrains Mono (code)
    ─────────────────────────────────────────────────────────────── */
-@import url('https://fonts.googleapis.com/css2?family=Geist+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Geist+Sans:wght@200;300;400;500;600;700&family=JetBrains+Mono:wght@300;400;500&display=swap');
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-/* ─── Base reset & root ─────────────────────────────────────────── */
+/* ─── Base design tokens ─────────────────────────────────────────── */
 :root {
-  --lab-bg:      #050810;
-  --lab-surface: #0a0f1e;
-  --lab-cyan:    #00e5ff;
-  --lab-purple:  #a855f7;
-  --lab-text:    #e2e8f0;
-  --lab-muted:   #64748b;
+  /* Core Base Colors */
+  --color-bg: #030712;
+  --color-surface: #0b0f19;
+  --color-border: #1f2937;
+  --color-text-main: #f3f4f6;
+  --color-text-muted: #9ca3af;
+  --color-text-dim: #4b5563;
+
+  /* Developer Theme Accents */
+  --dev-navy: #0f172a;
+  --dev-indigo: #4f46e5;
+  --dev-steel: #3b82f6;
+  --dev-teal: #0d9488;
+
+  /* Researcher & GIS Theme Accents */
+  --res-neutral: #d1d5db;
+  --res-grey: #6b7280;
+  --gis-green: #3f6212;
+  --gis-olive: #65a30d;
+  --gis-glacier: #0891b2;
+  --gis-earth: #78350f;
+
+  /* Active Colors (Dynamic) */
+  --active-accent: var(--dev-teal);
+  --active-accent-rgb: 13, 148, 136;
 }
 
+/* ─── Custom Layout Rules ───────────────────────────────────────── */
 * {
   box-sizing: border-box;
 }
 
 html {
   scroll-behavior: smooth;
-  /* Offset for fixed nav */
   scroll-padding-top: 80px;
 }
 
 body {
-  background-color: var(--lab-bg);
-  color: var(--lab-text);
-  font-family: 'Geist Sans', sans-serif;
-  line-height: 1.6;
+  background-color: var(--color-bg);
+  color: var(--color-text-main);
+  font-family: 'Geist Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+  line-height: 1.7;
   overflow-x: hidden;
-  /* Animated grid background — subtle, CSS only */
-  background-image:
-    linear-gradient(rgba(0, 229, 255, 0.03) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(0, 229, 255, 0.03) 1px, transparent 1px);
-  background-size: 60px 60px;
-  animation: gridMove 20s linear infinite;
+  letter-spacing: -0.01em;
+  -webkit-font-smoothing: antialiased;
 }
 
-@keyframes gridMove {
-  0%   { background-position: 0 0; }
-  100% { background-position: 60px 60px; }
+/* Subtle, technical grid background (minimalistic and premium) */
+.spatial-grid {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  background-image: 
+    linear-gradient(rgba(255, 255, 255, 0.007) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.007) 1px, transparent 1px);
+  background-size: 80px 80px;
+  background-position: center center;
+  z-index: 1;
 }
 
 /* ─── Scrollbar ─────────────────────────────────────────────────── */
-::-webkit-scrollbar       { width: 4px; }
-::-webkit-scrollbar-track { background: var(--lab-bg); }
-::-webkit-scrollbar-thumb { background: rgba(0, 229, 255, 0.3); border-radius: 2px; }
-::-webkit-scrollbar-thumb:hover { background: rgba(0, 229, 255, 0.5); }
-
-/* ─── Selection ─────────────────────────────────────────────────── */
-::selection {
-  background: rgba(0, 229, 255, 0.2);
-  color: var(--lab-cyan);
+::-webkit-scrollbar {
+  width: 5px;
+}
+::-webkit-scrollbar-track {
+  background: var(--color-bg);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--color-border);
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-text-dim);
 }
 
-/* ─── Utility: neon glow text ───────────────────────────────────── */
-.text-neon-cyan {
-  color: var(--lab-cyan);
-  text-shadow: 0 0 20px rgba(0, 229, 255, 0.5);
+/* ─── Typography & Accents ──────────────────────────────────────── */
+.font-mono-tech {
+  font-family: 'JetBrains Mono', monospace;
+  font-weight: 300;
 }
 
-.text-neon-purple {
-  color: var(--lab-purple);
-  text-shadow: 0 0 20px rgba(168, 85, 247, 0.5);
-}
-
-/* ─── Glassmorphism card ────────────────────────────────────────── */
-.glass-card {
-  background: rgba(10, 15, 30, 0.7);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(0, 229, 255, 0.08);
-  border-radius: 12px;
-}
-
-.glass-card:hover {
-  border-color: rgba(0, 229, 255, 0.18);
-}
-
-/* ─── Section utility ───────────────────────────────────────────── */
-.section-container {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 1.5rem;
-}
-
-.scroll-mouse {
-  width: 22px;
-  height: 40px;
-  border: 1px solid rgba(226, 232, 240, 0.24);
-  border-radius: 16px;
-  display: flex;
-  align-items: flex-start;
-  justify-content: center;
-  padding-top: 6px;
-  background: rgba(255, 255, 255, 0.03);
-}
-
-.scroll-mouse-wheel {
-  width: 4px;
-  height: 8px;
-  border-radius: 999px;
-  background: rgba(0, 229, 255, 0.95);
-  animation: scroll-wheel 1.4s ease-in-out infinite;
-  box-shadow: 0 0 10px rgba(0, 229, 255, 0.35);
-}
-
-@keyframes scroll-wheel {
-  0%, 100% {
-    opacity: 1;
-    transform: translateY(0);
-  }
-  50% {
-    opacity: 0.35;
-    transform: translateY(10px);
-  }
-}
-
-/* ─── Mono label (for "EXPERIMENT_01" style labels) ─────────────── */
 .mono-label {
   font-family: 'JetBrains Mono', monospace;
+  font-size: 0.65rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+}
+
+.mono-highlight {
+  font-family: 'JetBrains Mono', monospace;
+  color: var(--active-accent);
+}
+
+/* Clean, non-glassmorphic structured layout */
+.handcrafted-border {
+  border: 1px solid var(--color-border);
+  position: relative;
+  transition: border-color 0.35s ease;
+}
+
+.handcrafted-border:hover {
+  border-color: var(--color-text-dim);
+}
+
+/* Section breathing container */
+.section-container {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+
+/* ─── Loading Screen Scans ──────────────────────────────────────── */
+.boot-scanline {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--dev-teal), transparent);
+  animation: scanLoop 4s linear infinite;
+  opacity: 0.25;
+}
+
+@keyframes scanLoop {
+  0% { transform: translateY(0vh); }
+  100% { transform: translateY(100vh); }
+}
+
+/* ─── Status indicators ────────────────────────────────────────── */
+.status-tag {
+  font-family: 'JetBrains Mono', monospace;
   font-size: 0.7rem;
+  padding: 0.15rem 0.5rem;
+  border-radius: 2px;
+  border: 1px solid transparent;
+}
+.status-completed {
+  color: #34d399;
+  background: rgba(52, 211, 153, 0.05);
+  border-color: rgba(52, 211, 153, 0.15);
+}
+.status-in-progress {
+  color: #fbbf24;
+  background: rgba(251, 191, 36, 0.05);
+  border-color: rgba(251, 191, 36, 0.15);
+}
+.status-archived {
+  color: #9ca3af;
+  background: rgba(156, 163, 175, 0.05);
+  border-color: rgba(156, 163, 175, 0.15);
+}
+
+/* ─── Immersive Invitation link aesthetics ───────────────────────── */
+.cinematic-link {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.875rem;
   letter-spacing: 0.15em;
   text-transform: uppercase;
-  color: var(--lab-cyan);
-  opacity: 0.8;
-}
-
-/* ─── Gradient border utility ───────────────────────────────────── */
-.border-gradient {
-  border: 1px solid transparent;
-  background-clip: padding-box;
+  color: var(--color-text-muted);
   position: relative;
+  padding-bottom: 0.25rem;
+  transition: color 0.3s ease;
+  cursor: pointer;
 }
 
-.border-gradient::before {
+.cinematic-link::after {
   content: '';
   position: absolute;
-  inset: -1px;
+  bottom: 0;
+  left: 0;
+  width: 0;
+  height: 1px;
+  background-color: var(--active-accent);
+  transition: width 0.3s ease;
+}
+
+.cinematic-link:hover {
+  color: var(--color-text-main);
+}
+
+.cinematic-link:hover::after {
+  width: 100%;
+}
+
+/* Coordinate indicator marker styling */
+.coordinate-anchor {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.7rem;
+  color: var(--color-text-dim);
+  letter-spacing: 0.05em;
+  transition: color 0.3s ease;
+}
+
+.coordinate-anchor:hover {
+  color: var(--color-text-muted);
+}
+
+/* SVG Line Animations */
+.svg-connection-path {
+  fill: none;
+  stroke-width: 1.5;
+  stroke-dasharray: 8 4;
+  animation: lineDashFlow 30s linear infinite;
+  transition: stroke 0.4s ease, stroke-width 0.4s ease, opacity 0.4s ease;
+}
+
+@keyframes lineDashFlow {
+  to {
+    stroke-dashoffset: -120;
+  }
+}
+
+/* Single focus animation configuration */
+.focus-glow-effect {
+  position: relative;
+}
+.focus-glow-effect::before {
+  content: '';
+  position: absolute;
+  inset: 0;
   border-radius: inherit;
-  background: linear-gradient(135deg, rgba(0, 229, 255, 0.2), rgba(168, 85, 247, 0.2));
+  box-shadow: 0 0 40px rgba(var(--active-accent-rgb), 0.03);
+  pointer-events: none;
   z-index: -1;
 }
 
-/* ─── Status badge colors ───────────────────────────────────────── */
-.status-completed   { color: #4ade80; background: rgba(74, 222, 128, 0.1); }
-.status-in-progress { color: #facc15; background: rgba(250, 204, 21, 0.1); }
-.status-archived    { color: #94a3b8; background: rgba(148, 163, 184, 0.1); }
-
-/* ─── Reduce motion preference ──────────────────────────────────── */
+/* Reduced motion support */
 @media (prefers-reduced-motion: reduce) {
   *, ::before, ::after {
     animation-duration: 0.01ms !important;
@@ -160,5 +244,7 @@ body {
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
   }
-  body { animation: none; }
+  body, .svg-connection-path, .boot-scanline {
+    animation: none !important;
+  }
 }

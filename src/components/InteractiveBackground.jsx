@@ -134,15 +134,24 @@ export default function InteractiveBackground({ focus = 'home' }) {
     }
 
     // Procedural multi-peak height function for Kanchenjungha Massif
+    // Responsive: fewer, wider, gentler peaks on small screens
     const getKanchenjunghaHeight = (x, w, h, baseHeight, scale, seedOffset) => {
-      // Yalung Kang (~0.41), Main Peak (~0.52), Central/South Peak (~0.63)
-      const peaks = [
-        { pos: 0.28, ht: 0.18, wd: 0.15 }, // Kangbachen
-        { pos: 0.41, ht: 0.28, wd: 0.12 }, // Yalung Kang
-        { pos: 0.52, ht: 0.38, wd: 0.18 }, // Main Peak (highest)
-        { pos: 0.63, ht: 0.30, wd: 0.14 }, // Central/South Peak
-        { pos: 0.74, ht: 0.22, wd: 0.16 }, // South Ridge
-      ];
+      const isSmall = w < 768;
+      const peaks = isSmall
+        ? [
+            // Small screens: only 3 broad, gentle peaks
+            { pos: 0.3, ht: 0.22, wd: 0.28 },  // Left peak (wide)
+            { pos: 0.52, ht: 0.32, wd: 0.30 }, // Main Peak (widest, dominant)
+            { pos: 0.75, ht: 0.24, wd: 0.26 }, // Right peak (wide)
+          ]
+        : [
+            // Desktop: full 5-peak Kanchenjungha massif
+            { pos: 0.28, ht: 0.18, wd: 0.15 }, // Kangbachen
+            { pos: 0.41, ht: 0.28, wd: 0.12 }, // Yalung Kang
+            { pos: 0.52, ht: 0.38, wd: 0.18 }, // Main Peak (highest)
+            { pos: 0.63, ht: 0.30, wd: 0.14 }, // Central/South Peak
+            { pos: 0.74, ht: 0.22, wd: 0.16 }, // South Ridge
+          ];
       
       let maxVal = 0;
       for (let i = 0; i < peaks.length; i++) {
@@ -152,15 +161,20 @@ export default function InteractiveBackground({ focus = 'home' }) {
         const pw = p.wd * w;
         const dx = Math.abs(x - px);
         if (dx < pw) {
-          const val = ph * (1 - dx / pw);
+          // Use smoother cosine interpolation on small screens for rounder peaks
+          const t = dx / pw;
+          const val = isSmall
+            ? ph * (1 + Math.cos(Math.PI * t)) / 2  // Cosine curve (rounded)
+            : ph * (1 - t);                          // Linear (angular)
           if (val > maxVal) maxVal = val;
         }
       }
       
-      // Rugged ridge detail (fractal sin/cos waves)
-      const roughness = Math.sin(x * 0.04 + seedOffset) * 4 
+      // Rugged ridge detail (less on small screens for cleaner look)
+      const roughScale = isSmall ? 0.5 : 1.0;
+      const roughness = (Math.sin(x * 0.04 + seedOffset) * 4 
                       + Math.sin(x * 0.15 + seedOffset * 1.5) * 2 
-                      + Math.cos(x * 0.006) * 6;
+                      + Math.cos(x * 0.006) * 6) * roughScale;
       
       return maxVal > 0 ? baseHeight - (maxVal + roughness) : baseHeight;
     };
@@ -558,7 +572,10 @@ export default function InteractiveBackground({ focus = 'home' }) {
         // 7. Core positions setup for lakes and river meanders
         const lakeWorldY = height * 0.82;
         const lakeScreenY = getScreenY(lakeWorldY);
-        const lakeX = width * 0.57 + Math.sin(lakeWorldY * 0.05) * 6;
+        // Lake X: center between main peak and right peak on small screens, valley on desktop
+        const lakeX = width < 768
+          ? width * 0.52 + Math.sin(lakeWorldY * 0.05) * 4
+          : width * 0.57 + Math.sin(lakeWorldY * 0.05) * 6;
 
         const fhLakeWorldY = height * 1.2;
         const fhLakeScreenY = getScreenY(fhLakeWorldY);
@@ -697,7 +714,7 @@ export default function InteractiveBackground({ focus = 'home' }) {
           ctx.strokeStyle = 'rgba(255, 255, 255, 0.4)';
           ctx.lineWidth = 1.5;
           ctx.beginPath();
-          ctx.ellipse(lakeX, lakeScreenY, 32 * (width / 1440), 12 * (height / 900), 0, 0, Math.PI * 2);
+          ctx.ellipse(lakeX, lakeScreenY, Math.max(18, 32 * (width / 1440)), Math.max(8, 12 * (height / 900)), 0, 0, Math.PI * 2);
           ctx.fill();
           ctx.stroke();
         }

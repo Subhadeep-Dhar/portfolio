@@ -88,7 +88,7 @@ export default function ExperienceLayer() {
   }
 
   return (
-    <div ref={containerRef} className="relative h-[300vh] w-full bg-transparent select-none z-20">
+    <div ref={containerRef} className="relative h-[450vh] w-full bg-transparent select-none z-20">
       {/* Sticky Scroll Lock Window */}
       <div className="sticky top-0 h-screen w-full overflow-hidden flex items-center bg-transparent">
         

@@ -85,17 +85,9 @@ h1, h2, h3, h4, .font-display {
   }
 }
 
-/* Subtle architectural spatial grid background */
+/* Subtle architectural spatial grid background (Removed) */
 .spatial-grid {
-  position: fixed;
-  inset: 0;
-  pointer-events: none;
-  background-image: 
-    linear-gradient(rgba(255, 255, 255, 0.003) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255, 255, 255, 0.003) 1px, transparent 1px);
-  background-size: 120px 120px;
-  background-position: center center;
-  z-index: 1;
+  display: none;
 }
 
 /* ─── Scrollbar ─────────────────────────────────────────────────── */
@@ -115,23 +107,25 @@ h1, h2, h3, h4, .font-display {
 
 /* ─── Typography & Utilities ────────────────────────────────────── */
 .font-mono-tech {
-  font-family: 'IBM Plex Mono', monospace;
-  font-weight: 300;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-weight: 400;
 }
 
 .mono-label {
-  font-family: 'IBM Plex Mono', monospace;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
   font-size: 0.75rem;
-  letter-spacing: 0.2em;
+  font-weight: 600;
+  letter-spacing: 0.15em;
   text-transform: uppercase;
   color: var(--color-text-muted);
 }
 
 /* Immersive Link Aesthetic */
 .cinematic-link {
-  font-family: 'IBM Plex Mono', monospace;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
   font-size: 0.875rem;
-  letter-spacing: 0.15em;
+  font-weight: 500;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
   color: var(--color-text-muted);
   position: relative;
@@ -168,19 +162,12 @@ h1, h2, h3, h4, .font-display {
   will-change: transform;
 }
 
-/* SVG Line Animations */
+/* SVG Line Animations (Static premium dashed lines to avoid performance repaints & hacker vibe) */
 .svg-connection-path {
   fill: none;
   stroke-width: 1.2;
   stroke-dasharray: 6 3;
-  animation: lineDashFlow 25s linear infinite;
   transition: stroke 0.4s ease, stroke-width 0.4s ease, opacity 0.4s ease;
-}
-
-@keyframes lineDashFlow {
-  to {
-    stroke-dashoffset: -100;
-  }
 }
 
 /* Reduced motion fallback */

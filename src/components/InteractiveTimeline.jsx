@@ -83,7 +83,7 @@ export default function InteractiveTimeline() {
   });
 
   // Translate vertical scroll to horizontal shift of items
-  const xTranslation = useTransform(scrollYProgress, [0, 1], ['0%', '-76%']);
+  const xTranslation = useTransform(scrollYProgress, [0, 1], ['0%', '-65%']);
 
   // Map progress to coordinate indexes for DOM updates
   const progressIndex = useTransform(scrollYProgress, [0, 0.6, 0.78, 1], [0, 1, 2, 3]);
@@ -141,7 +141,7 @@ export default function InteractiveTimeline() {
   }
 
   return (
-    <div ref={scrollContainerRef} className="relative h-[350vh] w-full bg-transparent select-none z-20">
+    <div ref={scrollContainerRef} className="relative h-[450vh] w-full bg-transparent select-none z-20">
       <div className="sticky top-0 h-screen overflow-hidden flex flex-col justify-center bg-transparent">
         
         {/* Horizontal scroll grid */}
@@ -179,7 +179,7 @@ export default function InteractiveTimeline() {
           {/* Right Column: Horizontal track */}
           <div className="lg:col-span-8 overflow-hidden h-[420px] flex items-center relative">
             <motion.div
-              className="horizontal-scroll-container w-[350vw] gap-6 items-center"
+              className="horizontal-scroll-container w-max gap-6 items-center"
               style={{ x: xTranslation }}
             >
               {TIMELINE_DATA.map((item, index) => (

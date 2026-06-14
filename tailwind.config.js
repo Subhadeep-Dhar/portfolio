@@ -26,7 +26,7 @@ module.exports = {
       },
       fontFamily: {
         // Cohesive Google Fonts system
-        mono:    ['IBM Plex Mono', 'monospace'],
+        mono:    ['Inter', 'sans-serif'],
         display: ['Manrope', 'sans-serif'],
         body:    ['Inter', 'sans-serif'],
       },

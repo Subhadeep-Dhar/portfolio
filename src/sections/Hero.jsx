@@ -5,16 +5,33 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { siteConfig } from '@/data/siteConfig';
 
 const GREETINGS = [
-  'Hello',
-  'Namaste',
-  'Nomoskar',
-  'Bonjour',
-  'Hola',
-  'こんにちは',
-  'Welcome'
+  { text: 'Welcome', lang: 'en' },
+  { text: 'नमस्ते', lang: 'hi' },
+  { text: 'নমস্কার', lang: 'bn' },
+  { text: 'Bonjour', lang: 'fr' },
+  { text: 'Hola', lang: 'es' },
+  { text: 'こんにちは', lang: 'ja' },
+  { text: 'Hallo', lang: 'de' },
+  { text: '안녕하세요', lang: 'ko' },
+  { text: 'Ciao', lang: 'it' },
+  { text: 'مرحبا', lang: 'ar' },
+  { text: 'Olá', lang: 'pt' },
+  { text: 'Привет', lang: 'ru' },
+  { text: 'สวัสดี', lang: 'th' },
+  { text: 'Merhaba', lang: 'tr' },
+  { text: 'Xin chào', lang: 'vi' },
 ];
 
 export default function Hero({ onFocusChange }) {
+  const [greetingIdx, setGreetingIdx] = useState(0);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setGreetingIdx((prev) => (prev + 1) % GREETINGS.length);
+    }, 2500);
+    return () => clearInterval(interval);
+  }, []);
+
   const handleLinkClick = (focusType, elementId) => {
     if (onFocusChange) {
       onFocusChange(focusType);
@@ -36,11 +53,20 @@ export default function Hero({ onFocusChange }) {
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden pt-20 select-none">
       <div className="section-container w-full max-w-3xl mx-auto text-center z-10 space-y-10">
-        {/* Professional greeting */}
-        <div className="h-6 flex items-center justify-center">
-          <span className="font-mono-tech text-xs uppercase tracking-[0.3em] text-[var(--active-accent)]/80 font-medium">
-            Welcome
-          </span>
+        {/* Multilingual cycling greeting */}
+        <div className="h-6 flex items-center justify-center overflow-hidden">
+          <AnimatePresence mode="wait">
+            <motion.span
+              key={greetingIdx}
+              initial={{ opacity: 0, y: 12 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -12 }}
+              transition={{ duration: 0.35, ease: 'easeInOut' }}
+              className="font-mono-tech text-xs uppercase tracking-[0.3em] text-[var(--active-accent)]/80 font-medium inline-block"
+            >
+              {GREETINGS[greetingIdx].text}
+            </motion.span>
+          </AnimatePresence>
         </div>
 
         {/* Main headline and name */}

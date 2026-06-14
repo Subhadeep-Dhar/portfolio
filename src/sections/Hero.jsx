@@ -6,8 +6,8 @@ import { siteConfig } from '@/data/siteConfig';
 
 const GREETINGS = [
   { text: 'Welcome', lang: 'en' },
-  { text: 'नमस्ते', lang: 'hi' },
   { text: 'নমস্কার', lang: 'bn' },
+  { text: 'नमस्ते', lang: 'hi' },
   { text: 'Bonjour', lang: 'fr' },
   { text: 'Hola', lang: 'es' },
   { text: 'こんにちは', lang: 'ja' },

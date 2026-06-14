@@ -7,23 +7,23 @@ const SLIDES_DATA = [
   {
     num: '01',
     title: 'Curiosity & Observation',
-    subtitle: 'FIELDWORK // GIS SENSING',
+    subtitle: 'Fieldwork & Geospatial Sensing',
     desc: 'Standing at the boundary where physical geography meets systemic data. Observing glacier flow rates in high-altitude catchments, precipitation spikes, and vegetation indices. Curiosity begins by inspecting anomalies on the terrain.',
-    details: 'Anchor: South Lhonak Glacier, Sikkim [27.7800° N, 88.6300° E]'
+    details: 'Location: South Lhonak Glacier, Sikkim'
   },
   {
     num: '02',
     title: 'Hypotheses & Analysis',
-    subtitle: 'DATA SYNTHESIS // INTELLECTUAL PATTERNS',
+    subtitle: 'Data Synthesis & Spatial Analysis',
     desc: 'Formulating parameters to test environmental dynamics. We process multi-spectral Landsat tiles in Google Earth Engine and apply K-Means velocity classifications to filter spatial noise and extract the primary signal.',
-    details: 'Process: Landsat 8 Composites, NDVI temporal regressions'
+    details: 'Methodology: Landsat 8 Composites & NDVI temporal regressions'
   },
   {
     num: '03',
     title: 'Building Solutions',
-    subtitle: 'SYSTEM CORE // PRODUCTION IMPLEMENTATIONS',
+    subtitle: 'Software Architecture & Implementation',
     desc: 'Translating verified models into high-fidelity code. Deploying geofenced routine challenges, database caching, and custom Express frameworks. The engineering loop closes when data transforms into active software.',
-    details: 'Anchor: Manipal Campus Accountability systems [13.3444° N, 74.7944° E]'
+    details: 'Location: Manipal, Karnataka'
   }
 ];
 
@@ -45,14 +45,21 @@ export default function ExperienceLayer() {
     offset: ["start start", "end end"]
   });
 
-  // Vertical scroll to horizontal translate transform
-  const xTranslate = useTransform(scrollYProgress, [0, 1], ['0%', '-66.6%']);
+  // Vertical scroll to horizontal translate transform (with 10% padding at start/end)
+  const xTranslate = useTransform(scrollYProgress, [0.1, 0.9], ['0%', '-66.6%']);
   
   // Parallax elements translations
-  const labelX = useTransform(scrollYProgress, [0, 1], ['0px', '-100px']);
+  const labelX = useTransform(scrollYProgress, [0.1, 0.9], ['0px', '-100px']);
 
   // Unconditional hook for scrollbar progress
-  const progressWidth = useTransform(scrollYProgress, [0, 1], ['0%', '100%']);
+  const progressWidth = useTransform(scrollYProgress, [0.1, 0.9], ['0%', '100%']);
+
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  if (!mounted) return null;
 
   const isDesktop = windowWidth >= 768;
 
@@ -88,7 +95,7 @@ export default function ExperienceLayer() {
   }
 
   return (
-    <div ref={containerRef} className="relative h-[450vh] w-full bg-transparent select-none z-20">
+    <div ref={containerRef} className="relative h-[550vh] w-full bg-transparent select-none z-20">
       {/* Sticky Scroll Lock Window */}
       <div className="sticky top-0 h-screen w-full overflow-hidden flex items-center bg-transparent">
         
@@ -144,7 +151,7 @@ export default function ExperienceLayer() {
 
         {/* Scroll Progress line */}
         <div className="absolute bottom-16 left-1/2 -translate-x-1/2 flex items-center gap-4 z-20">
-          <span className="font-mono-tech text-xs text-gray-650">01 // START</span>
+          <span className="font-mono-tech text-xs text-gray-650">01 — Start</span>
           <div className="w-40 h-px bg-neutral-900 relative">
             <motion.div 
               className="absolute top-0 bottom-0 left-0 bg-[var(--active-accent)]/60" 
@@ -153,7 +160,7 @@ export default function ExperienceLayer() {
               }}
             />
           </div>
-          <span className="font-mono-tech text-xs text-gray-650">03 // MERGE</span>
+          <span className="font-mono-tech text-xs text-gray-650">03 — Merge</span>
         </div>
       </div>
     </div>

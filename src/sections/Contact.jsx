@@ -9,19 +9,19 @@ export default function Contact() {
       label: 'EMAIL',
       value: siteConfig.links.email,
       href: `mailto:${siteConfig.links.email}`,
-      code: 'MAIL_STREAM'
+      code: ''
     },
     siteConfig.links.github && {
       label: 'GITHUB',
       value: siteConfig.links.github.replace('https://', ''),
       href: siteConfig.links.github,
-      code: 'REPOS_STREAM'
+      code: ''
     },
     siteConfig.links.linkedin && {
       label: 'LINKEDIN',
       value: siteConfig.links.linkedin.replace('https://', ''),
       href: siteConfig.links.linkedin,
-      code: 'LINK_STREAM'
+      code: ''
     }
   ].filter(Boolean);
 
@@ -40,17 +40,17 @@ export default function Contact() {
           {/* Signal Indicator & Heading */}
           <div className="text-center space-y-4">
             <div className="flex justify-center items-center gap-2 mb-2">
-              <span className="w-1.5 h-1.5 rounded-full bg-[var(--active-accent)] animate-ping" />
+              <span className="w-1.5 h-1.5 rounded-full bg-[var(--active-accent)]" />
               <span className="font-mono-tech text-xs text-[var(--active-accent)] uppercase tracking-[0.25em]">
-                TRANSMITTING BEACON // STABLE
+                Get In Touch
               </span>
             </div>
             
             <h2 className="text-3xl font-light text-neutral-100 tracking-tight leading-tight">
               Let's build something meaningful.
             </h2>
-            <p className="text-sm text-neutral-400 max-w-sm mx-auto leading-relaxed">
-              Open to collaborating on geospatial indices, cached database structures, or custom API channels.
+            <p className="text-sm text-neutral-450 max-w-sm mx-auto leading-relaxed">
+              Open to collaborating on spatial data analysis, database systems, or software architectures.
             </p>
           </div>
 
@@ -81,7 +81,7 @@ export default function Contact() {
             ))}
           </div>
 
-          {/* PDF spec sheet download */}
+          {/* Resume download */}
           {siteConfig.links.resume && (
             <div className="text-center pt-4">
               <a
@@ -89,18 +89,18 @@ export default function Contact() {
                 download
                 className="inline-block font-mono-tech text-xs border border-neutral-900 text-neutral-400 px-6 py-3 rounded hover:border-[var(--active-accent)] hover:text-neutral-200 transition-all duration-300"
               >
-                DOWNLOAD SPEC SHEET [RESUME.PDF]
+                Download Resume (PDF)
               </a>
             </div>
           )}
 
-          {/* Immersive Footer */}
+          {/* Professional Footer */}
           <div className="border-t border-neutral-950 pt-12 mt-16 text-center space-y-3">
             <p className="font-mono-tech text-xs text-neutral-500">
-              BUILD // Next.js · CSS-in-JS · Canvas 2D · Framer Motion
+              Built with Next.js, CSS, Canvas 2D & Framer Motion
             </p>
             <p className="font-mono-tech text-xs text-neutral-600">
-              {siteConfig.name} © {new Date().getFullYear()} · MANIPAL & SIKKIM
+              {siteConfig.name} © {new Date().getFullYear()} · Manipal & Sikkim, India
             </p>
             
             {/* Replay action */}
@@ -109,7 +109,7 @@ export default function Contact() {
                 onClick={handleReplayBoot}
                 className="font-mono-tech text-xs text-neutral-600 hover:text-[var(--active-accent)] focus:outline-none bg-transparent border-0 transition-colors duration-250 cursor-pointer"
               >
-                [ RESET EXPERIENCE SESSION ]
+                Replay Welcome Animation
               </button>
             </div>
           </div>

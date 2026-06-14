@@ -48,20 +48,13 @@ export default function Navbar({ mode = 'home', onExitMode }) {
     >
       <div className="section-container">
         <div className="flex items-center justify-between h-16">
-          {/* Logo / Reset Path Action */}
+          {/* Logo / Brand Name Trigger (Reset Path) */}
           <a
             href="#"
             onClick={handleBrandClick}
-            className="font-mono-tech text-xs text-[var(--active-accent)] hover:text-gray-100 transition-colors uppercase tracking-[0.2em] font-semibold"
+            className="font-body text-base text-[var(--active-accent)] hover:text-gray-100 transition-colors tracking-normal font-semibold"
           >
-            {mode === 'home' ? (
-              <>
-                {siteConfig.handle}
-                <span className="animate-pulse">_</span>
-              </>
-            ) : (
-              '← Return to Origin'
-            )}
+            Subhadeep Dhar
           </a>
 
           {/* Dynamic Path Navigation */}
@@ -71,7 +64,7 @@ export default function Navbar({ mode = 'home', onExitMode }) {
                 <a
                   key={link.href}
                   href={link.href}
-                  className="font-mono-tech text-xs text-gray-400 hover:text-[var(--active-accent)] transition-colors tracking-widest uppercase"
+                  className="font-body text-[14px] text-gray-300 hover:text-[var(--active-accent)] transition-colors tracking-normal font-medium"
                 >
                   {link.label}
                 </a>
@@ -80,9 +73,9 @@ export default function Navbar({ mode = 'home', onExitMode }) {
                 <a
                   href={siteConfig.links.resume}
                   download
-                  className="font-mono-tech text-xs border border-[var(--active-accent)]/30 text-[var(--active-accent)] px-3 py-1 rounded hover:bg-[var(--active-accent)]/10 transition-all duration-200"
+                  className="font-body text-xs border border-[var(--active-accent)]/30 text-[var(--active-accent)] px-3 py-1 rounded hover:bg-[var(--active-accent)]/10 transition-all duration-200 tracking-normal font-medium"
                 >
-                  RESUME
+                  Resume
                 </a>
               )}
             </nav>
@@ -91,11 +84,11 @@ export default function Navbar({ mode = 'home', onExitMode }) {
           {/* Mobile menu trigger */}
           {mode !== 'home' && (
             <button
-              className="md:hidden font-mono-tech text-[var(--active-accent)] text-sm focus:outline-none"
+              className="md:hidden font-body text-[var(--active-accent)] text-sm focus:outline-none font-medium"
               onClick={() => setMenuOpen(!menuOpen)}
               aria-label="Toggle menu"
             >
-              {menuOpen ? '[ CLOSE ]' : '[ MENU ]'}
+              {menuOpen ? 'Close' : 'Menu'}
             </button>
           )}
         </div>
@@ -117,7 +110,7 @@ export default function Navbar({ mode = 'home', onExitMode }) {
                   key={link.href}
                   href={link.href}
                   onClick={() => setMenuOpen(false)}
-                  className="font-mono-tech text-sm text-gray-400 hover:text-[var(--active-accent)] transition-colors uppercase tracking-wider"
+                  className="font-body text-sm text-gray-400 hover:text-[var(--active-accent)] transition-colors tracking-normal font-medium"
                 >
                   {link.label}
                 </a>
@@ -126,9 +119,9 @@ export default function Navbar({ mode = 'home', onExitMode }) {
                 <a
                   href={siteConfig.links.resume}
                   download
-                  className="font-mono-tech text-sm border border-[var(--active-accent)]/50 text-[var(--active-accent)] py-2 rounded text-center"
+                  className="font-body text-sm border border-[var(--active-accent)]/50 text-[var(--active-accent)] py-2 rounded text-center font-medium"
                 >
-                  DOWNLOAD RESUME
+                  Download Resume
                 </a>
               )}
             </div>

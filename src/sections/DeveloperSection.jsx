@@ -18,7 +18,7 @@ export default function DeveloperSection() {
       <div className="section-container">
         {/* Section Header */}
         <div className="max-w-3xl mb-16">
-          <span className="mono-label block mb-2 text-neutral-500">Section 02 // Engineering Space</span>
+          <span className="mono-label block mb-2 text-neutral-500">Section 02 — Software Engineering</span>
           <h2 className="text-3xl sm:text-4xl font-light text-neutral-100 tracking-tight leading-tight">
             Developer & Builder
           </h2>
@@ -56,10 +56,10 @@ export default function DeveloperSection() {
                     <div className="space-y-1">
                       <div className="flex items-center gap-2.5">
                         <span className="font-mono-tech text-xs text-neutral-500">
-                          SPEC_{String(idx + 1).padStart(2, '0')}
+                          Project {String(idx + 1).padStart(2, '0')}
                         </span>
                         <span className="font-mono-tech text-xs text-neutral-600">
-                          // {project.year}
+                          · {project.year}
                         </span>
                       </div>
                       <h4 className="font-semibold text-sm text-neutral-200">
@@ -84,7 +84,7 @@ export default function DeveloperSection() {
                       </div>
 
                       <span className="font-mono-tech text-xs text-neutral-500 uppercase tracking-widest pl-2">
-                        {isOpen ? '[ CLOSE ]' : '[ OPEN SPEC ]'}
+                        {isOpen ? 'Close' : 'View Details'}
                       </span>
                     </div>
                   </div>
@@ -103,27 +103,27 @@ export default function DeveloperSection() {
                           {/* Details parameters */}
                           <div className="md:col-span-8 space-y-5">
                             <div>
-                              <span className="mono-label text-neutral-600 block mb-1">THE PROBLEM</span>
+                              <span className="mono-label text-neutral-600 block mb-1">Challenge</span>
                               <p className="text-neutral-300">{project.problem}</p>
                             </div>
                             
                             <div>
-                              <span className="mono-label text-neutral-600 block mb-1">HYPOTHESIS FRAMEWORK</span>
+                              <span className="mono-label text-neutral-600 block mb-1">Hypothesis</span>
                               <p className="text-neutral-300">{project.hypothesis}</p>
                             </div>
 
                             <div>
-                              <span className="mono-label text-neutral-600 block mb-1">IMPLEMENTATION PATH</span>
+                              <span className="mono-label text-neutral-600 block mb-1">Implementation</span>
                               <p className="text-neutral-300">{project.approach}</p>
                             </div>
 
                             <div>
-                              <span className="mono-label text-neutral-500 block mb-1">VALIDATION METRICS & OUTCOMES</span>
+                              <span className="mono-label text-neutral-500 block mb-1">Results & Outcomes</span>
                               <p className="text-neutral-200 font-normal">{project.result}</p>
                             </div>
 
                             <div>
-                              <span className="mono-label text-neutral-600 block mb-1">FUTURE ITERATIONS</span>
+                              <span className="mono-label text-neutral-600 block mb-1">Future Plans</span>
                               <p className="text-neutral-400">{project.future}</p>
                             </div>
                           </div>
@@ -131,12 +131,12 @@ export default function DeveloperSection() {
                           {/* Tech Meta parameters */}
                           <div className="md:col-span-4 border-t md:border-t-0 md:border-l border-neutral-900 pt-6 md:pt-0 md:pl-6 space-y-4">
                             <div>
-                              <span className="mono-label text-neutral-600 block mb-1">FULL TECH STACK</span>
+                              <span className="mono-label text-neutral-600 block mb-1">Technologies</span>
                               <div className="flex flex-wrap gap-1.5">
                                 {project.tech.map((t) => (
                                   <span
                                     key={t}
-                                    className="font-mono-tech text-xs px-2 py-0.5 border border-neutral-900 text-neutral-400 rounded bg-[#171411]/50"
+                                    className="font-mono-tech text-xs px-2 py-0.5 border border-neutral-900 text-neutral-450 rounded bg-[#171411]/50"
                                   >
                                     {t}
                                   </span>
@@ -145,7 +145,7 @@ export default function DeveloperSection() {
                             </div>
 
                             <div>
-                              <span className="mono-label text-neutral-650 block mb-1">STATUS INDEX</span>
+                              <span className="mono-label text-neutral-650 block mb-1">Project Status</span>
                               <span
                                 className={`status-tag text-xs inline-block ${
                                   project.status === 'completed'
@@ -157,18 +157,18 @@ export default function DeveloperSection() {
                               </span>
                             </div>
 
-                            {/* Verification channels */}
+                            {/* Project links */}
                             {(project.links?.demo || project.links?.github) && (
                               <div className="pt-4 border-t border-neutral-900 space-y-2">
-                                <span className="mono-label text-neutral-650 block mb-2">VERIFICATION CHANNELS</span>
+                                <span className="mono-label text-neutral-650 block mb-2">Project Links</span>
                                 {project.links.github && (
                                   <a
                                     href={project.links.github}
                                     target="_blank"
                                     rel="noopener noreferrer"
-                                    className="block font-mono-tech text-sm border border-neutral-900 text-neutral-400 hover:border-neutral-500 hover:text-neutral-200 text-center py-2 rounded transition-colors duration-200"
+                                    className="block font-mono-tech text-sm border border-neutral-900 text-neutral-450 hover:border-neutral-500 hover:text-neutral-250 text-center py-2 rounded transition-colors duration-200"
                                   >
-                                    VIEW SOURCE CODE →
+                                    View Source Code
                                   </a>
                                 )}
                                 {project.links.demo && (
@@ -176,9 +176,9 @@ export default function DeveloperSection() {
                                     href={project.links.demo}
                                     target="_blank"
                                     rel="noopener noreferrer"
-                                    className="block font-mono-tech text-sm bg-neutral-900/10 border border-neutral-850 text-neutral-400 hover:bg-neutral-900/20 text-center py-2 rounded transition-colors duration-200"
+                                    className="block font-mono-tech text-sm bg-neutral-900/10 border border-neutral-850 text-neutral-450 hover:bg-neutral-900/20 text-center py-2 rounded transition-colors duration-200"
                                   >
-                                    DEPLOYED LIVE DEMO →
+                                    Live Demo
                                   </a>
                                 )}
                               </div>

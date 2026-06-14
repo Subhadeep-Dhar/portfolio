@@ -4,15 +4,12 @@ import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 
 const BOOT_LOGS = [
-  { text: 'SYSTEM: Initialize portfolio audit sequence...', delay: 100 },
-  { text: 'SYSTEM: Loading configuration profiles... OK', delay: 400 },
-  { text: 'GEODETIC: Resolving coordinate registers...', delay: 700 },
-  { text: 'GEODETIC: Resolved Sikkim Lake benchmark [27.7800° N, 88.6300° E]', delay: 1000 },
-  { text: 'SYSTEM: Calibrating developer engine compiling... OK', delay: 1300 },
-  { text: 'GEODETIC: Resolved Manipal Campus benchmark [13.3444° N, 74.7944° E]', delay: 1600 },
-  { text: 'SYSTEM: Calibrating GIS spectral bands... OK', delay: 1900 },
-  { text: 'SYSTEM: Aligning research paper index trees... OK', delay: 2100 },
-  { text: 'SYSTEM: Audit completed. Boot sequence resolved.', delay: 2300 }
+  { text: 'Initializing portfolio...', delay: 100 },
+  { text: 'Loading configuration profiles... Done', delay: 400 },
+  { text: 'Resolving regional settings...', delay: 800 },
+  { text: 'Preparing developer space... Done', delay: 1300 },
+  { text: 'Preparing research records... Done', delay: 1800 },
+  { text: 'System ready.', delay: 2300 }
 ];
 
 export default function BootLoader({ onComplete }) {
@@ -79,9 +76,7 @@ export default function BootLoader({ onComplete }) {
               </div>
             );
           })}
-          {logs.length < BOOT_LOGS.length && (
-            <span className="inline-block w-1.5 h-3 bg-[var(--active-accent)]/80 ml-1 animate-pulse" />
-          )}
+          {/* Blinking loader block removed to maintain professional loading state */}
         </div>
 
         {/* Panel Footer */}

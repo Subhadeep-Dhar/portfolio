@@ -15,15 +15,6 @@ const GREETINGS = [
 ];
 
 export default function Hero({ onFocusChange }) {
-  const [greetIndex, setGreetIndex] = useState(0);
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setGreetIndex((prev) => (prev + 1) % GREETINGS.length);
-    }, 2500);
-    return () => clearInterval(interval);
-  }, []);
-
   const handleLinkClick = (focusType, elementId) => {
     if (onFocusChange) {
       onFocusChange(focusType);
@@ -44,29 +35,12 @@ export default function Hero({ onFocusChange }) {
 
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden pt-20 select-none">
-      {/* Visual coordinates tracking in background */}
-      <div className="absolute top-24 left-8 font-mono-tech text-xs text-gray-700 tracking-[0.2em] hidden sm:block">
-        SYS_ANCHOR // 13.3444° N, 74.7944° E
-      </div>
-      <div className="absolute bottom-24 right-8 font-mono-tech text-xs text-gray-700 tracking-[0.2em] hidden sm:block">
-        ALT_ANCHOR // 27.7800° N, 88.6300° E
-      </div>
-
       <div className="section-container w-full max-w-3xl mx-auto text-center z-10 space-y-10">
-        {/* Multilingual greeting */}
+        {/* Professional greeting */}
         <div className="h-6 flex items-center justify-center">
-          <AnimatePresence mode="wait">
-            <motion.span
-              key={greetIndex}
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 0.25 }}
-              className="font-mono-tech text-xs uppercase tracking-[0.3em] text-[var(--active-accent)]/80"
-            >
-              {GREETINGS[greetIndex]} // STREAM
-            </motion.span>
-          </AnimatePresence>
+          <span className="font-mono-tech text-xs uppercase tracking-[0.3em] text-[var(--active-accent)]/80 font-medium">
+            Welcome
+          </span>
         </div>
 
         {/* Main headline and name */}
@@ -79,17 +53,14 @@ export default function Hero({ onFocusChange }) {
           </p>
         </div>
 
-        {/* Immersive Entry Invitations (Coordinates Typographical Links) */}
+        {/* Professional Entry Invitations */}
         <div className="flex flex-col sm:flex-row items-center justify-center gap-6 sm:gap-12 pt-8">
           <button
             onClick={() => handleLinkClick('developer', 'ecosystem-section')}
             className="group flex flex-col items-center bg-transparent border-0 focus:outline-none"
           >
-            <span className="font-mono-tech text-xs sm:text-sm tracking-[0.25em] text-gray-400 group-hover:text-[#9B6B4E] transition-colors uppercase">
-              [ 13.34° N // Explore My Systems ]
-            </span>
-            <span className="font-mono-tech text-[10px] text-neutral-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300 mt-1">
-              BUILDER MODE ACTIVE ON SELECTION
+            <span className="font-mono-tech text-xs sm:text-sm tracking-[0.2em] text-gray-400 group-hover:text-[#9B6B4E] transition-colors uppercase border-b border-transparent group-hover:border-[#9B6B4E] pb-1 duration-200">
+              Software Engineering
             </span>
           </button>
 
@@ -99,11 +70,8 @@ export default function Hero({ onFocusChange }) {
             onClick={() => handleLinkClick('researcher', 'research-section')}
             className="group flex flex-col items-center bg-transparent border-0 focus:outline-none"
           >
-            <span className="font-mono-tech text-xs sm:text-sm tracking-[0.25em] text-gray-400 group-hover:text-[#6F8167] transition-colors uppercase">
-              [ 27.78° N // Enter Research Space ]
-            </span>
-            <span className="font-mono-tech text-[10px] text-neutral-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300 mt-1">
-              SPATIAL MODE ACTIVE ON SELECTION
+            <span className="font-mono-tech text-xs sm:text-sm tracking-[0.2em] text-gray-400 group-hover:text-[#6F8167] transition-colors uppercase border-b border-transparent group-hover:border-[#6F8167] pb-1 duration-200">
+              Research & Location Intelligence
             </span>
           </button>
         </div>
@@ -112,9 +80,9 @@ export default function Hero({ onFocusChange }) {
         <div className="pt-8 flex justify-center">
           {siteConfig.available && (
             <div className="flex items-center gap-2 px-3 py-1 rounded border border-gray-900/60 bg-gray-950/10">
-              <span className="w-1.5 h-1.5 bg-[var(--active-accent)] rounded-full animate-ping" />
+              <span className="w-1.5 h-1.5 bg-[var(--active-accent)] rounded-full" />
               <span className="font-mono-tech text-xs text-gray-500 tracking-wider uppercase">
-                Systems online · {siteConfig.location}
+                Based in {siteConfig.location}
               </span>
             </div>
           )}

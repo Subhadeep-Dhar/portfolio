@@ -121,6 +121,13 @@ export default function TechEcosystem() {
     return false;
   };
 
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  if (!mounted) return null;
+
   return (
     <div ref={containerRef} className="relative w-full py-8 select-none">
       {/* SVG Canvas for drawing paths (Desktop only) */}

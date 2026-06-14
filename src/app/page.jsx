@@ -78,10 +78,7 @@ export default function Home() {
                   {/* SVG-linked tech ecosystem and specs */}
                   <DeveloperSection />
 
-                  {/* Horizontal visual storytelling panels */}
-                  <ExperienceLayer />
-
-                  {/* Horizontal scroll timeline log */}
+                  {/* Vertical scroll timeline log */}
                   <InteractiveTimeline />
 
                   {/* Narrative bridge block */}

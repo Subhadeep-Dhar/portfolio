@@ -104,7 +104,7 @@ export default function HowIThink() {
           >
             <div>
               <span className="font-mono-tech text-xs text-neutral-500 block mb-0.5">
-                STAGE_{THINK_STEPS[activeStep].phase} // PIPELINE
+                Stage {THINK_STEPS[activeStep].phase}
               </span>
               <h4 className="text-sm font-semibold text-neutral-200">
                 {THINK_STEPS[activeStep].title} — <span className="text-[var(--active-accent)] text-sm font-mono-tech font-medium">{THINK_STEPS[activeStep].subtitle}</span>

@@ -45,16 +45,15 @@ export default function HowIThink() {
   const [activeStep, setActiveStep] = useState(0);
 
   return (
-    <div className="w-full border border-gray-900 bg-[#070b15]/40 p-6 sm:p-8 rounded-lg select-none">
+    <div className="w-full border border-neutral-900 bg-[#1a211d]/5 p-6 sm:p-8 rounded select-none">
       <div className="flex flex-col gap-1 mb-8">
-        <span className="mono-label">Cognitive Pipeline</span>
-        <h3 className="font-semibold text-lg text-gray-200">How I approach complex tasks</h3>
+        <span className="mono-label text-[9px] text-neutral-500">Cognitive Pipeline</span>
+        <h3 className="font-semibold text-lg text-neutral-200">How I approach complex tasks</h3>
       </div>
 
       {/* Horizontal step indicator */}
       <div className="grid grid-cols-5 gap-2 relative mb-8">
-        {/* Progress line */}
-        <div className="absolute top-1/2 left-0 right-0 h-px bg-gray-900 -translate-y-1/2 z-0" />
+        <div className="absolute top-1/2 left-0 right-0 h-px bg-neutral-900 -translate-y-1/2 z-0" />
         
         {THINK_STEPS.map((step, index) => {
           const isActive = index === activeStep;
@@ -64,26 +63,25 @@ export default function HowIThink() {
             <button
               key={step.title}
               onClick={() => setActiveStep(index)}
-              className="flex flex-col items-center relative z-10 group"
+              className="flex flex-col items-center relative z-10 group focus:outline-none"
             >
               {/* Dot indicator */}
               <motion.div
                 animate={{
-                  scale: isActive ? 1.2 : 1,
-                  borderColor: isActive ? 'var(--dev-teal)' : isPassed ? 'var(--gis-olive)' : 'rgba(75, 85, 99, 0.4)',
+                  scale: isActive ? 1.15 : 1,
+                  borderColor: isActive ? 'var(--active-accent)' : isPassed ? 'var(--color-text-dim)' : 'rgba(210, 193, 168, 0.05)',
                 }}
-                className={`w-7 h-7 rounded-full bg-[#030712] border-2 flex items-center justify-center text-[10px] font-mono-tech transition-colors duration-300`}
+                className={`w-7 h-7 rounded-full bg-[#111614] border-2 flex items-center justify-center text-[10px] font-mono-tech transition-colors duration-300`}
                 style={{
-                  color: isActive ? 'var(--dev-teal)' : 'var(--color-text-dim)',
+                  color: isActive ? 'var(--active-accent)' : 'rgba(210, 193, 168, 0.2)',
                 }}
               >
                 {step.phase}
               </motion.div>
               
-              {/* Label */}
               <span
-                className={`text-[10px] font-mono-tech mt-2 tracking-wide hidden sm:inline-block transition-colors duration-300 ${
-                  isActive ? 'text-gray-300' : 'text-gray-600'
+                className={`text-[9px] font-mono-tech mt-2 tracking-wide hidden sm:inline-block transition-colors duration-300 ${
+                  isActive ? 'text-neutral-300' : 'text-neutral-600'
                 }`}
               >
                 {step.title}
@@ -93,8 +91,8 @@ export default function HowIThink() {
         })}
       </div>
 
-      {/* Active step description panel */}
-      <div className="min-h-56 bg-[#030712]/50 border border-gray-900/60 p-5 rounded relative overflow-hidden">
+      {/* Description panel */}
+      <div className="min-h-56 bg-[#1a211d]/10 border border-neutral-900/60 p-5 rounded relative overflow-hidden">
         <AnimatePresence mode="wait">
           <motion.div
             key={activeStep}
@@ -105,21 +103,21 @@ export default function HowIThink() {
             className="space-y-4"
           >
             <div>
-              <span className="font-mono text-xs text-gray-500 block mb-0.5">
-                STAGE_{THINK_STEPS[activeStep].phase} // METHODOLOGY
+              <span className="font-mono-tech text-[9px] text-neutral-500 block mb-0.5">
+                STAGE_{THINK_STEPS[activeStep].phase} // PIPELINE
               </span>
-              <h4 className="text-base font-semibold text-gray-200">
-                {THINK_STEPS[activeStep].title} — <span className="text-teal-500 text-sm font-medium">{THINK_STEPS[activeStep].subtitle}</span>
+              <h4 className="text-sm font-semibold text-neutral-200">
+                {THINK_STEPS[activeStep].title} — <span className="text-[var(--active-accent)] text-xs font-mono-tech font-medium">{THINK_STEPS[activeStep].subtitle}</span>
               </h4>
             </div>
 
-            <p className="text-xs sm:text-sm text-gray-400 leading-relaxed max-w-2xl">
+            <p className="text-xs sm:text-sm text-neutral-400 leading-relaxed max-w-2xl font-light">
               {THINK_STEPS[activeStep].desc}
             </p>
 
-            <div className="border-t border-gray-950 pt-3 flex gap-2 items-start">
-              <span className="font-mono text-[9px] text-gray-600 shrink-0 mt-0.5">EXECUTION:</span>
-              <span className="font-mono text-[10px] text-lime-600/90 leading-snug">
+            <div className="border-t border-neutral-900/40 pt-3 flex gap-2 items-start text-[10px]">
+              <span className="font-mono-tech text-[9px] text-neutral-600 shrink-0 mt-0.5">APPLICATION:</span>
+              <span className="font-mono-tech text-[10px] text-[var(--color-text-dim)] leading-snug">
                 {THINK_STEPS[activeStep].application}
               </span>
             </div>

@@ -1,7 +1,7 @@
 /* ─── Font imports ──────────────────────────────────────────────
-   Google Fonts: Geist Sans (body & display), JetBrains Mono (code)
+   Google Fonts: Manrope (Display), Inter (Body UI), IBM Plex Mono (Technical)
    ─────────────────────────────────────────────────────────────── */
-@import url('https://fonts.googleapis.com/css2?family=Geist+Sans:wght@200;300;400;500;600;700&family=JetBrains+Mono:wght@300;400;500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@200;300;400;500;600;700;800&family=Inter:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@300;400;500;600&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -9,34 +9,42 @@
 
 /* ─── Base design tokens ─────────────────────────────────────────── */
 :root {
-  /* Core Base Colors */
-  --color-bg: #030712;
-  --color-surface: #0b0f19;
-  --color-border: #1f2937;
-  --color-text-main: #f3f4f6;
-  --color-text-muted: #9ca3af;
-  --color-text-dim: #4b5563;
-
-  /* Developer Theme Accents */
-  --dev-navy: #0f172a;
-  --dev-indigo: #4f46e5;
-  --dev-steel: #3b82f6;
-  --dev-teal: #0d9488;
-
-  /* Researcher & GIS Theme Accents */
-  --res-neutral: #d1d5db;
-  --res-grey: #6b7280;
-  --gis-green: #3f6212;
-  --gis-olive: #65a30d;
-  --gis-glacier: #0891b2;
-  --gis-earth: #78350f;
-
-  /* Active Colors (Dynamic) */
-  --active-accent: var(--dev-teal);
-  --active-accent-rgb: 13, 148, 136;
+  /* Default State (Home Landing) */
+  --color-bg: #111111;
+  --color-surface: #1a1a1a;
+  --color-border: #282828;
+  --color-text-main: #f3eee7;
+  --color-text-muted: #a3a3a3;
+  --color-text-dim: #5c5c5c;
+  --active-accent: #9b6b4e;
+  --active-accent-rgb: 155, 107, 78;
 }
 
-/* ─── Custom Layout Rules ───────────────────────────────────────── */
+/* Theme: Developer (Warm Charcoal, Surface, Burnished Copper, Sage, Stone) */
+.theme-developer {
+  --color-bg: #171411;
+  --color-surface: #24201c;
+  --color-border: #332d27;
+  --color-text-main: #f3eee7;
+  --color-text-muted: #d2c1a8;
+  --color-text-dim: #7b8570; /* Sage */
+  --active-accent: #9b6b4e;  /* Copper */
+  --active-accent-rgb: 155, 107, 78;
+}
+
+/* Theme: Researcher / GIS (Terrain Forest, Surface, Green, Earth, Glacier) */
+.theme-researcher {
+  --color-bg: #111614;
+  --color-surface: #1a211d;
+  --color-border: #26302a;
+  --color-text-main: #edf0ea;
+  --color-text-muted: #b8c7c2; /* Glacier fog */
+  --color-text-dim: #a68a6d;  /* Weathered earth */
+  --active-accent: #6f8167;  /* Terrain green */
+  --active-accent-rgb: 111, 129, 103;
+}
+
+/* ─── Base Styles ───────────────────────────────────────────────── */
 * {
   box-sizing: border-box;
 }
@@ -49,130 +57,82 @@ html {
 body {
   background-color: var(--color-bg);
   color: var(--color-text-main);
-  font-family: 'Geist Sans', -apple-system, BlinkMacSystemFont, sans-serif;
-  line-height: 1.7;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  line-height: 1.75;
   overflow-x: hidden;
   letter-spacing: -0.01em;
   -webkit-font-smoothing: antialiased;
+  transition: background-color 0.8s cubic-bezier(0.16, 1, 0.3, 1), color 0.8s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-/* Subtle, technical grid background (minimalistic and premium) */
+h1, h2, h3, h4, .font-display {
+  font-family: 'Manrope', sans-serif;
+  letter-spacing: -0.025em;
+  font-weight: 300;
+}
+
+/* Hide native cursor for custom cursor implementation on desktops */
+@media (hover: hover) and (pointer: fine) {
+  body, a, button, select, input, [role="button"], .interactive-node {
+    cursor: none !important;
+  }
+}
+
+/* Subtle architectural spatial grid background */
 .spatial-grid {
   position: fixed;
   inset: 0;
   pointer-events: none;
   background-image: 
-    linear-gradient(rgba(255, 255, 255, 0.007) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255, 255, 255, 0.007) 1px, transparent 1px);
-  background-size: 80px 80px;
+    linear-gradient(rgba(255, 255, 255, 0.003) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.003) 1px, transparent 1px);
+  background-size: 120px 120px;
   background-position: center center;
   z-index: 1;
 }
 
 /* ─── Scrollbar ─────────────────────────────────────────────────── */
 ::-webkit-scrollbar {
-  width: 5px;
+  width: 4px;
 }
 ::-webkit-scrollbar-track {
   background: var(--color-bg);
 }
 ::-webkit-scrollbar-thumb {
   background: var(--color-border);
-  border-radius: 3px;
+  border-radius: 2px;
 }
 ::-webkit-scrollbar-thumb:hover {
   background: var(--color-text-dim);
 }
 
-/* ─── Typography & Accents ──────────────────────────────────────── */
+/* ─── Typography & Utilities ────────────────────────────────────── */
 .font-mono-tech {
-  font-family: 'JetBrains Mono', monospace;
+  font-family: 'IBM Plex Mono', monospace;
   font-weight: 300;
 }
 
 .mono-label {
-  font-family: 'JetBrains Mono', monospace;
+  font-family: 'IBM Plex Mono', monospace;
   font-size: 0.65rem;
-  letter-spacing: 0.2em;
+  letter-spacing: 0.25em;
   text-transform: uppercase;
   color: var(--color-text-muted);
 }
 
-.mono-highlight {
-  font-family: 'JetBrains Mono', monospace;
-  color: var(--active-accent);
-}
-
-/* Clean, non-glassmorphic structured layout */
-.handcrafted-border {
-  border: 1px solid var(--color-border);
-  position: relative;
-  transition: border-color 0.35s ease;
-}
-
-.handcrafted-border:hover {
-  border-color: var(--color-text-dim);
-}
-
-/* Section breathing container */
-.section-container {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 0 2rem;
-}
-
-/* ─── Loading Screen Scans ──────────────────────────────────────── */
-.boot-scanline {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 2px;
-  background: linear-gradient(90deg, transparent, var(--dev-teal), transparent);
-  animation: scanLoop 4s linear infinite;
-  opacity: 0.25;
-}
-
-@keyframes scanLoop {
-  0% { transform: translateY(0vh); }
-  100% { transform: translateY(100vh); }
-}
-
-/* ─── Status indicators ────────────────────────────────────────── */
-.status-tag {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 0.7rem;
-  padding: 0.15rem 0.5rem;
-  border-radius: 2px;
-  border: 1px solid transparent;
-}
-.status-completed {
-  color: #34d399;
-  background: rgba(52, 211, 153, 0.05);
-  border-color: rgba(52, 211, 153, 0.15);
-}
-.status-in-progress {
-  color: #fbbf24;
-  background: rgba(251, 191, 36, 0.05);
-  border-color: rgba(251, 191, 36, 0.15);
-}
-.status-archived {
-  color: #9ca3af;
-  background: rgba(156, 163, 175, 0.05);
-  border-color: rgba(156, 163, 175, 0.15);
-}
-
-/* ─── Immersive Invitation link aesthetics ───────────────────────── */
+/* Immersive Link Aesthetic */
 .cinematic-link {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 0.875rem;
-  letter-spacing: 0.15em;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.8rem;
+  letter-spacing: 0.2em;
   text-transform: uppercase;
   color: var(--color-text-muted);
   position: relative;
   padding-bottom: 0.25rem;
   transition: color 0.3s ease;
   cursor: pointer;
+  background: transparent;
+  border: none;
 }
 
 .cinematic-link::after {
@@ -194,49 +154,29 @@ body {
   width: 100%;
 }
 
-/* Coordinate indicator marker styling */
-.coordinate-anchor {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 0.7rem;
-  color: var(--color-text-dim);
-  letter-spacing: 0.05em;
-  transition: color 0.3s ease;
-}
-
-.coordinate-anchor:hover {
-  color: var(--color-text-muted);
+/* Custom Horizontal Scrolling Container Utilities */
+.horizontal-scroll-container {
+  display: flex;
+  flex-wrap: nowrap;
+  will-change: transform;
 }
 
 /* SVG Line Animations */
 .svg-connection-path {
   fill: none;
-  stroke-width: 1.5;
-  stroke-dasharray: 8 4;
-  animation: lineDashFlow 30s linear infinite;
+  stroke-width: 1.2;
+  stroke-dasharray: 6 3;
+  animation: lineDashFlow 25s linear infinite;
   transition: stroke 0.4s ease, stroke-width 0.4s ease, opacity 0.4s ease;
 }
 
 @keyframes lineDashFlow {
   to {
-    stroke-dashoffset: -120;
+    stroke-dashoffset: -100;
   }
 }
 
-/* Single focus animation configuration */
-.focus-glow-effect {
-  position: relative;
-}
-.focus-glow-effect::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  border-radius: inherit;
-  box-shadow: 0 0 40px rgba(var(--active-accent-rgb), 0.03);
-  pointer-events: none;
-  z-index: -1;
-}
-
-/* Reduced motion support */
+/* Reduced motion fallback */
 @media (prefers-reduced-motion: reduce) {
   *, ::before, ::after {
     animation-duration: 0.01ms !important;
@@ -244,7 +184,20 @@ body {
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
   }
-  body, .svg-connection-path, .boot-scanline {
+  body, .svg-connection-path {
     animation: none !important;
+  }
+}
+
+/* Section breathing container - generous negative space */
+.section-container {
+  max-width: 1340px;
+  margin: 0 auto;
+  padding: 0 4rem;
+}
+
+@media (max-width: 768px) {
+  .section-container {
+    padding: 0 2rem;
   }
 }

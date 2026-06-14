@@ -1,205 +1,221 @@
 'use client';
 
-import { useState, useEffect, useRef } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { timeline } from '@/data/timeline';
+import { useRef, useEffect, useState } from 'react';
+import { motion, useScroll, useTransform } from 'framer-motion';
 
-// Map milestones to coordinates for spatial storytelling
-const MILESTONE_COORDS = {
-  '2025': { coords: '13.34° N, 74.79° E', location: 'Manipal Campus, Karnataka' },
-  '2024': { coords: '27.78° N, 88.63° E', location: 'Gangtok, Sikkim' },
-  '2022': { coords: '27.78° N, 88.63° E', location: 'Sikkim Manipal Institute' },
-  'default': { coords: '27.78° N, 88.63° E', location: 'Sikkim / Manipal Journey' }
-};
+const TIMELINE_DATA = [
+  {
+    year: '2022',
+    type: 'EDU',
+    title: 'Bachelor of Computer Applications',
+    desc: 'Graduated with distinction from Sikkim Manipal Institute of Technology. Researched network parameters, compiled relational databases, and built local algorithms.',
+    coords: '27.7800° N, 88.6300° E',
+    location: 'Sikkim, India'
+  },
+  {
+    year: '2024',
+    type: 'WORK',
+    title: 'SH1ELD Tech — InfoSec Intern',
+    desc: 'Joined SH1ELD Tech Sikkim. Conducted system log audits, analyzed vulnerability metrics, and mapped early local security configurations.',
+    coords: '27.7800° N, 88.6300° E',
+    location: 'Gangtok, Sikkim'
+  },
+  {
+    year: '2024',
+    type: 'GIS',
+    title: 'South Lhonak Glacier Health',
+    desc: 'Assessed glacier velocity post-flood disaster. Processed remote sensing imagery in SNAP and Google Earth Engine, classifying anomalies via K-Means.',
+    coords: '27.7800° N, 88.6300° E',
+    location: 'Lhonak Lake, Sikkim'
+  },
+  {
+    year: '2024',
+    type: 'RSCH',
+    title: 'ADRI — Research Intern',
+    desc: 'Contributed to regional health surveillance mapping (IHIP-IDSP Bihar project). Modeled spatial trends to optimize department reporting indices.',
+    coords: '25.5948° N, 85.1376° E',
+    location: 'ADRI Department'
+  },
+  {
+    year: '2024',
+    type: 'WORK',
+    title: 'SH1ELD Tech — Web Developer',
+    desc: 'Built tailored tourism portals and local data workflows for regional agencies. Integrated API routes and optimized database access pipelines.',
+    coords: '27.7800° N, 88.6300° E',
+    location: 'Gangtok, Sikkim'
+  },
+  {
+    year: '2025',
+    type: 'EDU',
+    title: 'Master of Computer Applications',
+    desc: 'Began postgraduate studies at Manipal Institute of Technology. Focus on location analytics, systems caching, and responsive product structures.',
+    coords: '13.3444° N, 74.7944° E',
+    location: 'Manipal Campus, Karnataka'
+  },
+  {
+    year: '2026',
+    type: 'SYS',
+    title: 'Grounded App & Location Systems',
+    desc: 'Built a consistency challenge application utilizing geofencing trackers and weather indicators to audit user accountability.',
+    coords: '13.3444° N, 74.7944° E',
+    location: 'Manipal Campus, Karnataka'
+  }
+];
 
 export default function InteractiveTimeline() {
-  const [activeCoords, setActiveCoords] = useState(MILESTONE_COORDS['2025']);
-  const [expandedItem, setExpandedItem] = useState(null);
-  const containerRef = useRef(null);
-  const itemRefs = useRef({});
+  const scrollContainerRef = useRef(null);
+  const coordsRef = useRef(null);
+  const locationRef = useRef(null);
+  const [windowWidth, setWindowWidth] = useState(0);
 
   useEffect(() => {
-    const observerOptions = {
-      root: null,
-      rootMargin: '-30% 0px -40% 0px', // Trigger when item is centered in viewport
-      threshold: 0.1,
-    };
-
-    const observerCallback = (entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          const year = entry.target.getAttribute('data-year');
-          const config = MILESTONE_COORDS[year] || MILESTONE_COORDS['2024'];
-          setActiveCoords(config);
-        }
-      });
-    };
-
-    const observer = new IntersectionObserver(observerCallback, observerOptions);
-    
-    // Copy current refs for cleanup closure
-    const currentRefs = itemRefs.current;
-    
-    Object.values(currentRefs).forEach((el) => {
-      if (el) observer.observe(el);
-    });
-
-    return () => {
-      Object.values(currentRefs).forEach((el) => {
-        if (el) observer.unobserve(el);
-      });
-    };
+    if (typeof window !== 'undefined') {
+      setWindowWidth(window.innerWidth);
+      const handleResize = () => setWindowWidth(window.innerWidth);
+      window.addEventListener('resize', handleResize);
+      return () => window.removeEventListener('resize', handleResize);
+    }
   }, []);
 
-  const toggleExpand = (index) => {
-    if (expandedItem === index) {
-      setExpandedItem(null);
-    } else {
-      setExpandedItem(index);
-    }
-  };
+  const { scrollYProgress } = useScroll({
+    target: scrollContainerRef
+  });
+
+  // Translate vertical scroll to horizontal shift of items
+  const xTranslation = useTransform(scrollYProgress, [0, 1], ['0%', '-76%']);
+
+  // Map progress to coordinate indexes for DOM updates
+  const progressIndex = useTransform(scrollYProgress, [0, 0.6, 0.78, 1], [0, 1, 2, 3]);
+
+  useEffect(() => {
+    if (windowWidth < 768) return; // Disable DOM updates on mobile
+
+    return progressIndex.onChange((latest) => {
+      if (!coordsRef.current || !locationRef.current) return;
+      
+      if (latest < 1.4) {
+        coordsRef.current.innerText = '27.7800° N, 88.6300° E';
+        locationRef.current.innerText = 'Gangtok, Sikkim';
+      } else if (latest < 2.5) {
+        coordsRef.current.innerText = '25.5948° N, 85.1376° E';
+        locationRef.current.innerText = 'ADRI Department';
+      } else {
+        coordsRef.current.innerText = '13.3444° N, 74.7944° E';
+        locationRef.current.innerText = 'Manipal Campus, Karnataka';
+      }
+    });
+  }, [progressIndex, windowWidth]);
+
+  const isDesktop = windowWidth >= 768;
+
+  if (!isDesktop) {
+    // Mobile fallback: clean vertical stack
+    return (
+      <div className="py-20 px-6 bg-transparent space-y-12 relative z-20">
+        <div className="flex flex-col gap-1 mb-8">
+          <span className="mono-label text-[10px] text-gray-500">EVOLUTION LOG</span>
+          <h3 className="text-2xl font-light text-gray-100 tracking-tight">How I Got Here</h3>
+        </div>
+
+        <div className="space-y-6">
+          {TIMELINE_DATA.map((item, index) => (
+            <div
+              key={index}
+              className="p-5 border border-neutral-900 bg-[#1a211d]/10 rounded space-y-3"
+            >
+              <div className="flex items-center justify-between border-b border-gray-950 pb-2">
+                <span className="font-mono-tech text-xs text-neutral-500">{item.year}</span>
+                <span className="font-mono-tech text-[8px] text-teal-400 border border-teal-950 px-1.5 py-0.5 rounded">
+                  {item.type}
+                </span>
+              </div>
+              <h4 className="text-sm font-semibold text-neutral-200">{item.title}</h4>
+              <p className="text-xs text-neutral-400 font-light leading-relaxed">{item.desc}</p>
+              <span className="font-mono-tech text-[9px] text-neutral-600 block">{item.coords} // {item.location}</span>
+            </div>
+          ))}
+        </div>
+      </div>
+    );
+  }
 
   return (
-    <section id="evolution" className="py-24 relative">
-      <div className="section-container" ref={containerRef}>
-        {/* Subtle separator */}
-        <div className="h-px w-full bg-gradient-to-r from-transparent via-gray-900 to-transparent mb-24" />
-
-        <div className="grid lg:grid-cols-12 gap-12 items-start">
-          {/* Left: Sticky Coordinates & Narrative */}
-          <div className="lg:col-span-4 lg:sticky lg:top-28 space-y-6">
+    <div ref={scrollContainerRef} className="relative h-[250vh] w-full bg-transparent select-none z-20">
+      <div className="sticky top-0 h-screen overflow-hidden flex flex-col justify-center bg-transparent">
+        
+        {/* Horizontal scroll grid */}
+        <div className="section-container w-full grid lg:grid-cols-12 gap-12 items-center relative z-10">
+          
+          {/* Left Column: Sticky Title + Coordinate updates */}
+          <div className="lg:col-span-4 space-y-6 sticky left-0 z-20 bg-transparent pr-4">
             <div>
-              <span className="mono-label block mb-2 text-lime-500">Education & Evolution</span>
-              <h2 className="text-3xl font-semibold text-gray-100 tracking-tight">How I got here.</h2>
-              <p className="text-xs text-gray-500 mt-2 leading-relaxed">
-                A non-linear history of academic benchmarks, GIS field observations, and application testing.
+              <span className="mono-label block mb-2 text-teal-400">Evolution Log</span>
+              <h2 className="text-3xl font-semibold text-neutral-100 tracking-tight">How I got here.</h2>
+              <p className="text-xs text-neutral-500 mt-2 leading-relaxed">
+                A horizontal ledger of academic steps, software builds, and location telemetry.
               </p>
             </div>
 
-            {/* Spatial Anchor Dashboard */}
-            <div className="p-4 border border-gray-900 bg-[#070b15]/60 rounded-md space-y-3">
-              <span className="mono-label text-[9px] block text-gray-500">SPATIAL RADAR ANCHOR</span>
-              <div className="space-y-1">
-                <AnimatePresence mode="wait">
-                  <motion.div
-                    key={activeCoords.coords}
-                    initial={{ opacity: 0, y: 3 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: -3 }}
-                    transition={{ duration: 0.25 }}
-                    className="font-mono-tech text-sm text-teal-400 font-medium"
-                  >
-                    {activeCoords.coords}
-                  </motion.div>
-                </AnimatePresence>
-                <AnimatePresence mode="wait">
-                  <motion.div
-                    key={activeCoords.location}
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    exit={{ opacity: 0 }}
-                    transition={{ duration: 0.2 }}
-                    className="text-[10px] text-gray-500 font-mono-tech uppercase tracking-wider"
-                  >
-                    {activeCoords.location}
-                  </motion.div>
-                </AnimatePresence>
+            {/* Static DOM coordinates indicator (Zero state-updates on scroll) */}
+            <div className="p-4 border border-neutral-900 bg-[#070b15]/60 backdrop-blur-md rounded space-y-2 max-w-xs">
+              <span className="mono-label text-[9px] block text-neutral-500">GEODESIC LOCATOR</span>
+              <div className="space-y-0.5 font-mono-tech text-neutral-300">
+                <div ref={coordsRef} className="text-xs text-teal-400 font-semibold uppercase">
+                  27.7800° N, 88.6300° E
+                </div>
+                <div ref={locationRef} className="text-[9px] text-neutral-500 uppercase tracking-wider">
+                  Sikkim Manipal Institute
+                </div>
               </div>
-              <div className="flex items-center gap-1.5 pt-2 border-t border-gray-950">
-                <span className="w-1.5 h-1.5 rounded-full bg-teal-500 animate-ping" />
-                <span className="text-[9px] font-mono-tech text-gray-600">LINKED TO CURRENT TIMELINE NODE</span>
+              <div className="h-px bg-neutral-950 w-full pt-1" />
+              <div className="flex items-center gap-1.5 pt-1">
+                <span className="w-1 h-1 rounded-full bg-teal-500/80" />
+                <span className="text-[8px] font-mono-tech text-neutral-600">60FPS SPATIAL BIND</span>
               </div>
             </div>
           </div>
 
-          {/* Right: Vertical Journey list */}
-          <div className="lg:col-span-8 relative pl-6 sm:pl-8 border-l border-gray-900 space-y-8">
-            {timeline.map((item, index) => {
-              const isExpanded = expandedItem === index;
-              const isEdu = item.type === 'education';
-
-              return (
+          {/* Right Column: Horizontal track */}
+          <div className="lg:col-span-8 overflow-hidden h-[420px] flex items-center relative">
+            <motion.div
+              className="flex gap-6 w-[350vw] items-center"
+              style={{ x: xTranslation }}
+            >
+              {TIMELINE_DATA.map((item, index) => (
                 <div
-                  key={`${item.year}-${item.title}`}
-                  ref={(el) => (itemRefs.current[index] = el)}
-                  data-year={item.year}
-                  className="relative group select-none"
+                  key={index}
+                  className="w-[300px] shrink-0 border border-neutral-900 bg-[#070b15]/20 p-6 rounded hover:border-neutral-850 transition-colors duration-300 space-y-4"
                 >
-                  {/* Outer point node */}
-                  <div
-                    className={`absolute -left-[31px] sm:-left-[39px] top-1 w-4 h-4 rounded-full border-2 bg-[#030712] transition-colors duration-300 flex items-center justify-center`}
-                    style={{
-                      borderColor: isEdu ? 'var(--dev-teal)' : 'var(--gis-olive)',
-                    }}
-                  >
-                    <span
-                      className="w-1.5 h-1.5 rounded-full"
-                      style={{
-                        backgroundColor: isEdu ? 'var(--dev-teal)' : 'var(--gis-olive)',
-                      }}
-                    />
-                  </div>
-
-                  {/* Year Tag */}
-                  <div className="flex items-center gap-2 mb-1">
-                    <span className="font-mono-tech text-xs font-semibold text-gray-400">{item.year}</span>
-                    <span
-                      className="font-mono text-[9px] px-1.5 py-0.5 rounded border"
-                      style={{
-                        color: isEdu ? 'var(--dev-teal)' : 'var(--gis-olive)',
-                        borderColor: isEdu ? 'rgba(13, 148, 136, 0.2)' : 'rgba(63, 98, 18, 0.2)',
-                        background: isEdu ? 'rgba(13, 148, 136, 0.05)' : 'rgba(63, 98, 18, 0.05)',
-                      }}
-                    >
-                      {item.type.toUpperCase()}
-                    </span>
-                  </div>
-
-                  {/* Card Structure */}
-                  <div
-                    onClick={() => toggleExpand(index)}
-                    className="p-5 border border-gray-900 bg-[#070b15]/30 rounded hover:border-gray-800 cursor-pointer transition-all duration-300"
-                  >
-                    <div className="flex justify-between items-center gap-4">
-                      <h4 className="font-semibold text-sm text-gray-200 group-hover:text-teal-400 transition-colors duration-200 leading-snug">
-                        {item.title}
-                      </h4>
-                      <span className="text-gray-600 font-mono text-xs select-none">
-                        {isExpanded ? '—' : '+'}
+                  <div className="flex items-center justify-between gap-4 border-b border-gray-950 pb-2 text-[10px] font-mono-tech text-neutral-600">
+                    <div className="flex items-center gap-2">
+                      <span>{item.year}</span>
+                      <span className="font-mono text-[9px] border border-neutral-850 text-neutral-400 px-1.5 py-0.2 rounded">
+                        {item.type}
                       </span>
                     </div>
-                    
-                    <p className="text-xs text-gray-500 mt-2 leading-relaxed">
+                    <span>LOG_{index + 1}</span>
+                  </div>
+
+                  <div className="space-y-2 h-36">
+                    <h4 className="font-semibold text-sm text-neutral-200 leading-snug">
+                      {item.title}
+                    </h4>
+                    <p className="text-xs text-neutral-500 leading-relaxed font-light">
                       {item.desc}
                     </p>
+                  </div>
 
-                    <AnimatePresence>
-                      {isExpanded && (
-                        <motion.div
-                          initial={{ height: 0, opacity: 0 }}
-                          animate={{ height: 'auto', opacity: 1 }}
-                          exit={{ height: 0, opacity: 0 }}
-                          transition={{ duration: 0.25 }}
-                          className="overflow-hidden"
-                        >
-                          <div className="border-t border-gray-950 mt-4 pt-3 space-y-2">
-                            <span className="mono-label text-[8px] text-gray-600 block">KEY FOCUS & LEARNINGS</span>
-                            <p className="text-[11px] text-gray-400 leading-relaxed">
-                              {isEdu 
-                                ? 'Acquired fundamental computing architectures, structural databases, and algorithm logic. Analyzed practical systems models.' 
-                                : 'Applied logic under operational constraints: handling spatial metrics coordinates, routing API data streams, and resolving verified user checkpoints.'}
-                            </p>
-                          </div>
-                        </motion.div>
-                      )}
-                    </AnimatePresence>
+                  <div className="pt-2 border-t border-gray-950 flex gap-1 items-center font-mono-tech text-[8px] text-neutral-600">
+                    <span>SYS_LOC:</span>
+                    <span className="text-neutral-500">{item.coords}</span>
                   </div>
                 </div>
-              );
-            })}
+              ))}
+            </motion.div>
           </div>
         </div>
+
       </div>
-    </section>
+    </div>
   );
 }

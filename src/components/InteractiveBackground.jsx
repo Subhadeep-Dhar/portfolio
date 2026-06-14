@@ -2,13 +2,12 @@
 
 import { useEffect, useRef, useState } from 'react';
 
-export default function InteractiveBackground({ focus = 'unified' }) {
+export default function InteractiveBackground({ focus = 'home' }) {
   const canvasRef = useRef(null);
   const mouseRef = useRef({ x: -1000, y: -1000, tx: -1000, ty: -1000, pulse: 0 });
   const [reducedMotion, setReducedMotion] = useState(false);
 
   useEffect(() => {
-    // Check for prefers-reduced-motion
     const mediaQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
     setReducedMotion(mediaQuery.matches);
     
@@ -35,7 +34,7 @@ export default function InteractiveBackground({ focus = 'unified' }) {
     };
     window.addEventListener('resize', handleResize);
 
-    // Track mouse
+    // Track mouse coordinates
     const handleMouseMove = (e) => {
       mouseRef.current.tx = e.clientX;
       mouseRef.current.ty = e.clientY;
@@ -45,35 +44,35 @@ export default function InteractiveBackground({ focus = 'unified' }) {
       mouseRef.current.ty = -1000;
     };
     const handleMouseDown = () => {
-      mouseRef.current.pulse = 1; // Trigger a ripple pulse
+      mouseRef.current.pulse = 1;
     };
 
     window.addEventListener('mousemove', handleMouseMove);
     window.addEventListener('mouseleave', handleMouseLeave);
     window.addEventListener('mousedown', handleMouseDown);
 
-    // Grid coordinates, lines, and system diagrams configuration
-    // We design clean, mathematical structures that don't float randomly
-    const points = [];
-    const numPoints = 25;
-    for (let i = 0; i < numPoints; i++) {
-      points.push({
-        x: Math.random() * width,
-        y: Math.random() * height,
-        vx: (Math.random() - 0.5) * 0.2,
-        vy: (Math.random() - 0.5) * 0.2,
-        radius: Math.random() * 2 + 1,
+    // Pre-build coordinates for topographic contour layers (Researcher Mode)
+    const contours = [];
+    const numContours = 7;
+    for (let c = 0; c < numContours; c++) {
+      contours.push({
+        cx: width * (0.4 + c * 0.03),
+        cy: height * (0.5 - (c % 2) * 0.03),
+        radius: 120 + c * 45,
       });
     }
 
-    // Topographical contour lines - pre-generated curves
-    const contours = [];
-    const numContours = 5;
-    for (let c = 0; c < numContours; c++) {
-      const cx = width * (0.3 + c * 0.1);
-      const cy = height * (0.4 + (c % 2) * 0.1);
-      const radius = 80 + c * 40;
-      contours.push({ cx, cy, radius });
+    // Pre-build technical node coordinates (Developer Mode)
+    const nodes = [];
+    const numNodes = 18;
+    for (let i = 0; i < numNodes; i++) {
+      nodes.push({
+        x: Math.random() * width,
+        y: Math.random() * height,
+        vx: (Math.random() - 0.5) * 0.15,
+        vy: (Math.random() - 0.5) * 0.15,
+        radius: 1.5,
+      });
     }
 
     let time = 0;
@@ -81,150 +80,155 @@ export default function InteractiveBackground({ focus = 'unified' }) {
     const render = () => {
       ctx.clearRect(0, 0, width, height);
 
-      // Smooth mouse coordinates interpolation
+      // Interpolate mouse coordinates (smooth lag)
       const mouse = mouseRef.current;
-      mouse.x += (mouse.tx - mouse.x) * 0.08;
-      mouse.y += (mouse.ty - mouse.y) * 0.08;
+      mouse.x += (mouse.tx - mouse.x) * 0.06;
+      mouse.y += (mouse.ty - mouse.y) * 0.06;
       if (mouse.pulse > 0.01) {
-        mouse.pulse -= 0.03; // Fade pulse
+        mouse.pulse -= 0.02;
       }
 
-      // Draw subtle spatial grid
-      ctx.strokeStyle = 'rgba(31, 41, 55, 0.06)';
+      // Draw subtle background spatial grid lines (Fine architectural grid ticks)
+      ctx.strokeStyle = 'rgba(210, 193, 168, 0.012)';
       ctx.lineWidth = 0.5;
-      const gridSize = 80;
+      const gridSize = 120;
       for (let x = 0; x < width; x += gridSize) {
         ctx.beginPath();
-        ctx.moveTo(x, 0);
-        ctx.lineTo(x, height);
+        // Shift grid coordinates slightly in Developer Mode for blueprint look
+        const dx = x - mouse.x;
+        const isNear = focus === 'developer' && Math.abs(dx) < 220;
+
+        if (isNear && !reducedMotion) {
+          const bend = (1 - Math.abs(dx) / 220) * 14 * (dx > 0 ? -1 : 1);
+          ctx.moveTo(x + bend, 0);
+          ctx.lineTo(x + bend, height);
+        } else {
+          ctx.moveTo(x, 0);
+          ctx.lineTo(x, height);
+        }
         ctx.stroke();
       }
+
       for (let y = 0; y < height; y += gridSize) {
         ctx.beginPath();
-        ctx.moveTo(0, y);
-        ctx.lineTo(width, y);
+        const dy = y - mouse.y;
+        const isNear = focus === 'developer' && Math.abs(dy) < 220;
+
+        if (isNear && !reducedMotion) {
+          const bend = (1 - Math.abs(dy) / 220) * 14 * (dy > 0 ? -1 : 1);
+          ctx.moveTo(0, y + bend);
+          ctx.lineTo(width, y + bend);
+        } else {
+          ctx.moveTo(0, y);
+          ctx.lineTo(width, y);
+        }
         ctx.stroke();
       }
 
-      // Context colors based on experienceFocus
-      let colorAccent = 'rgba(13, 148, 136, '; // Teal default
-      let colorSecondary = 'rgba(59, 130, 246, '; // Blue
-      let contourColor = 'rgba(63, 98, 18, '; // Olive green for GIS
-
-      if (focus === 'developer') {
-        colorAccent = 'rgba(13, 148, 136, '; // Teal
-        colorSecondary = 'rgba(79, 70, 229, '; // Indigo
-        contourColor = 'rgba(30, 41, 59, '; // Slate
-      } else if (focus === 'researcher') {
-        colorAccent = 'rgba(107, 114, 128, '; // Neutral grey
-        colorSecondary = 'rgba(8, 145, 178, '; // Glacier blue
-        contourColor = 'rgba(63, 98, 18, '; // Olive
+      // Draw coordinate indicators (Pure IBM Plex Mono aesthetic)
+      ctx.font = '8px "IBM Plex Mono", monospace';
+      ctx.fillStyle = 'rgba(210, 193, 168, 0.12)';
+      ctx.fillText('REF_SYS: WGS-84 / SPATIAL_GRID', 40, 40);
+      if (mouse.x > 0) {
+        const coordsText = focus === 'developer' ? '13.3444° N, 74.7944° E' : '27.7800° N, 88.6300° E';
+        ctx.fillText(`GEO_LOCK: [${coordsText}]`, 40, 52);
       }
 
-      // ─── 1. GIS Layer: Contour Lines ───
-      ctx.lineWidth = 0.8;
-      contours.forEach((contour, idx) => {
-        ctx.strokeStyle = contourColor + (0.05 - idx * 0.006) + ')';
-        ctx.beginPath();
-        
-        const segments = 60;
-        for (let i = 0; i <= segments; i++) {
-          const angle = (i / segments) * Math.PI * 2;
-          // Create organic noise using time
-          const noiseFactor = reducedMotion ? 0 : Math.sin(angle * 4 + time * 0.1) * 6 + Math.cos(angle * 2 - time * 0.05) * 4;
-          
-          let px = contour.cx + Math.cos(angle) * (contour.radius + noiseFactor);
-          let py = contour.cy + Math.sin(angle) * (contour.radius + noiseFactor);
+      // Mode-specific canvas render operations
+      if (focus === 'developer' || focus === 'home') {
+        // ─── Developer Layer: Blueprint Node Schema ───
+        ctx.lineWidth = 0.6;
+        nodes.forEach((n, idx) => {
+          if (!reducedMotion) {
+            n.x += n.vx;
+            n.y += n.vy;
 
-          // Mouse distortion interaction (Terrain ripple)
-          const dx = px - mouse.x;
-          const dy = py - mouse.y;
-          const dist = Math.sqrt(dx * dx + dy * dy);
-          if (dist < 180) {
-            const force = (180 - dist) / 180;
-            // Push coordinates out to simulate terrain ripple
-            px += (dx / dist) * force * 15;
-            py += (dy / dist) * force * 15;
+            // Wrap edges
+            if (n.x < 0) n.x = width;
+            if (n.x > width) n.x = 0;
+            if (n.y < 0) n.y = height;
+            if (n.y > height) n.y = 0;
+
+            // Cursor gravity interaction (attract nodes toward cursor)
+            const dx = mouse.x - n.x;
+            const dy = mouse.y - n.y;
+            const dist = Math.sqrt(dx * dx + dy * dy);
+            if (dist < 200) {
+              const pull = (200 - dist) / 200 * 0.15;
+              n.x += (dx / dist) * pull;
+              n.y += (dy / dist) * pull;
+            }
           }
 
-          if (i === 0) ctx.moveTo(px, py);
-          else ctx.lineTo(px, py);
-        }
-        ctx.closePath();
-        ctx.stroke();
-      });
+          ctx.fillStyle = focus === 'developer' ? 'rgba(155, 107, 78, 0.08)' : 'rgba(210, 193, 168, 0.04)';
+          ctx.beginPath();
+          ctx.arc(n.x, n.y, n.radius, 0, Math.PI * 2);
+          ctx.fill();
 
-      // ─── 2. Developer Layer: Structured System Lines ───
-      ctx.lineWidth = 0.6;
-      points.forEach((p, i) => {
-        // Move points unless reduced motion
-        if (!reducedMotion) {
-          p.x += p.vx;
-          p.y += p.vy;
-
-          // Wrap edges
-          if (p.x < 0) p.x = width;
-          if (p.x > width) p.x = 0;
-          if (p.y < 0) p.y = height;
-          if (p.y > height) p.y = 0;
-        }
-
-        // Draw node
-        ctx.fillStyle = colorAccent + '0.08)';
-        ctx.beginPath();
-        ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
-        ctx.fill();
-
-        // Check distance to draw system links
-        for (let j = i + 1; j < points.length; j++) {
-          const p2 = points[j];
-          const dx = p.x - p2.x;
-          const dy = p.y - p2.y;
-          const dist = Math.sqrt(dx * dx + dy * dy);
-
-          if (dist < 160) {
-            // Draw system line
-            ctx.strokeStyle = colorAccent + (0.04 * (1 - dist / 160)) + ')';
-            ctx.beginPath();
-            ctx.moveTo(p.x, p.y);
-            ctx.lineTo(p2.x, p2.y);
-            ctx.stroke();
+          for (let j = idx + 1; j < nodes.length; j++) {
+            const n2 = nodes[j];
+            const dist = Math.sqrt((n.x - n2.x) ** 2 + (n.y - n2.y) ** 2);
+            if (dist < 180) {
+              ctx.strokeStyle = focus === 'developer'
+                ? `rgba(155, 107, 78, ${0.05 * (1 - dist / 180)})`
+                : `rgba(210, 193, 168, ${0.02 * (1 - dist / 180)})`;
+              ctx.beginPath();
+              ctx.moveTo(n.x, n.y);
+              ctx.lineTo(n2.x, n2.y);
+              ctx.stroke();
+            }
           }
-        }
-      });
-
-      // ─── 3. Research Layer: Signal pulses ───
-      // Add crosshairs/radar overlays in corners
-      ctx.strokeStyle = 'rgba(75, 85, 99, 0.05)';
-      ctx.lineWidth = 0.5;
-
-      // Draw coordinate indicators dynamically
-      ctx.font = '9px monospace';
-      ctx.fillStyle = 'rgba(156, 163, 175, 0.2)';
-      ctx.fillText('REF_SYS: WS-84', 40, 40);
-      ctx.fillText(`GEO_POS: [${(27.78 + (mouse.x - width / 2) * 0.001).toFixed(4)}° N, ${(88.63 + (mouse.y - height / 2) * 0.001).toFixed(4)}° E]`, 40, 55);
-
-      // Radar scan pulse (subtle)
-      if (!reducedMotion) {
-        time += 0.05;
-        const scanY = (time * 15) % height;
-        ctx.strokeStyle = colorAccent + '0.015)';
-        ctx.beginPath();
-        ctx.moveTo(0, scanY);
-        ctx.lineTo(width, scanY);
-        ctx.stroke();
+        });
       }
 
-      // Draw mouse ripple pulse if triggered
+      if (focus === 'researcher' || focus === 'home') {
+        // ─── Researcher Layer: Topographic Contour Map ───
+        ctx.lineWidth = 0.6;
+        contours.forEach((contour, idx) => {
+          ctx.strokeStyle = focus === 'researcher'
+            ? `rgba(111, 129, 103, ${0.06 - idx * 0.008})`
+            : `rgba(210, 193, 168, ${0.03 - idx * 0.004})`;
+
+          ctx.beginPath();
+          const segments = 80;
+          for (let i = 0; i <= segments; i++) {
+            const angle = (i / segments) * Math.PI * 2;
+            const noise = reducedMotion ? 0 : Math.sin(angle * 4 + time * 0.05) * 4 + Math.cos(angle * 2 - time * 0.03) * 2;
+            
+            let px = contour.cx + Math.cos(angle) * (contour.radius + noise);
+            let py = contour.cy + Math.sin(angle) * (contour.radius + noise);
+
+            // Cursor ripple interaction (topographic wave displacement)
+            const dx = px - mouse.x;
+            const dy = py - mouse.y;
+            const dist = Math.sqrt(dx * dx + dy * dy);
+            if (dist < 160) {
+              const push = (160 - dist) / 160;
+              px += (dx / dist) * push * 10;
+              py += (dy / dist) * push * 10;
+            }
+
+            if (i === 0) ctx.moveTo(px, py);
+            else ctx.lineTo(px, py);
+          }
+          ctx.closePath();
+          ctx.stroke();
+        });
+      }
+
+      // Render custom geofence ripple ring on click
       if (mouse.pulse > 0.01) {
-        ctx.strokeStyle = colorSecondary + (mouse.pulse * 0.1) + ')';
+        ctx.strokeStyle = focus === 'researcher'
+          ? `rgba(111, 129, 103, ${mouse.pulse * 0.07})`
+          : `rgba(155, 107, 78, ${mouse.pulse * 0.07})`;
         ctx.lineWidth = 1;
         ctx.beginPath();
-        ctx.arc(mouse.x, mouse.y, (1 - mouse.pulse) * 120, 0, Math.PI * 2);
+        ctx.arc(mouse.x, mouse.y, (1 - mouse.pulse) * 140, 0, Math.PI * 2);
         ctx.stroke();
       }
 
       if (!reducedMotion) {
+        time += 0.03;
         animationId = requestAnimationFrame(render);
       }
     };

@@ -1,7 +1,6 @@
 'use client';
 
 import { useState, useEffect, useRef } from 'react';
-import { motion } from 'framer-motion';
 import { skillCategories } from '@/data/skills';
 import { projects } from '@/data/projects';
 
@@ -39,7 +38,7 @@ export default function TechEcosystem() {
     const containerRect = container.getBoundingClientRect();
     const newConnections = [];
 
-    // Find all matches between tech and projects
+    // Find matches between tech stack and projects
     skillCategories.forEach((cat) => {
       cat.skills.forEach((skill) => {
         const skillEl = container.querySelector(`[data-tech-id="${skill.name.toLowerCase()}"]`);
@@ -50,7 +49,6 @@ export default function TechEcosystem() {
         const xStart = skillRect.right - containerRect.left;
 
         activeProjects.forEach((proj) => {
-          // Case-insensitive/whitespace match
           const hasTech = proj.tech.some(
             (t) => t.toLowerCase() === skill.name.toLowerCase() || 
                    (t === 'Typescript' && skill.name === 'TypeScript') ||
@@ -125,7 +123,7 @@ export default function TechEcosystem() {
 
   return (
     <div ref={containerRef} className="relative w-full py-8 select-none">
-      {/* SVG Canvas for drawing paths (Visible on desktop only) */}
+      {/* SVG Canvas for drawing paths (Desktop only) */}
       {windowWidth >= 768 && (
         <svg className="absolute inset-0 w-full h-full pointer-events-none z-10 overflow-visible">
           {connections.map((conn, idx) => {
@@ -135,8 +133,8 @@ export default function TechEcosystem() {
 
             const isFaded = (activeTech || activeProj) && !isHighlighted;
 
-            // Generate a smooth horizontal S-curve (Bezier)
-            const controlOffset = Math.abs(conn.x2 - conn.x1) * 0.4;
+            // Generate smooth Bezier curve
+            const controlOffset = Math.abs(conn.x2 - conn.x1) * 0.45;
             const path = `M ${conn.x1} ${conn.y1} C ${conn.x1 + controlOffset} ${conn.y1}, ${conn.x2 - controlOffset} ${conn.y2}, ${conn.x2} ${conn.y2}`;
 
             return (
@@ -145,9 +143,9 @@ export default function TechEcosystem() {
                 d={path}
                 className="svg-connection-path"
                 style={{
-                  stroke: isHighlighted ? 'var(--dev-teal)' : 'rgba(75, 85, 99, 0.12)',
-                  strokeWidth: isHighlighted ? 1.8 : 1,
-                  opacity: isFaded ? 0.15 : 0.8,
+                  stroke: isHighlighted ? 'var(--active-accent)' : 'rgba(210, 193, 168, 0.04)',
+                  strokeWidth: isHighlighted ? 1.5 : 0.8,
+                  opacity: isFaded ? 0.08 : 0.6,
                 }}
               />
             );
@@ -155,24 +153,24 @@ export default function TechEcosystem() {
         </svg>
       )}
 
-      {/* Structured Dual Columns Layout */}
+      {/* Columns Layout */}
       <div className="grid md:grid-cols-12 gap-8 items-start relative z-20">
-        {/* Left: Technologies List (Categories) */}
+        {/* Left: Technologies List */}
         <div className="md:col-span-7 space-y-6">
           <div className="flex flex-col gap-1 mb-2">
-            <span className="mono-label">Ecosystem Grid</span>
-            <h3 className="font-semibold text-lg text-gray-200">Technologies I use in actual projects</h3>
+            <span className="mono-label text-[9px] text-neutral-500">System Parameters</span>
+            <h3 className="font-semibold text-lg text-neutral-200">Technologies utilized in projects</h3>
           </div>
           
           <div className="space-y-4">
             {skillCategories.map((category) => (
-              <div key={category.label} className="border-b border-gray-900 pb-4 last:border-0 last:pb-0">
-                <span className="font-mono text-xs text-gray-500 block mb-2">{category.label}</span>
+              <div key={category.label} className="border-b border-neutral-900 pb-4 last:border-0 last:pb-0">
+                <span className="font-mono-tech text-[10px] text-neutral-500 block mb-2">{category.label}</span>
                 <div className="flex flex-wrap gap-2">
                   {category.skills.map((skill) => {
                     const highlighted = isTechHighlighted(skill.name);
                     const isSelected = selectedTech === skill.name;
-                    const accentColor = category.color === 'cyan' ? 'var(--dev-teal)' : 'var(--gis-glacier)';
+                    const accentColor = category.color === 'cyan' ? 'var(--active-accent)' : 'var(--color-text-dim)';
 
                     return (
                       <button
@@ -181,26 +179,26 @@ export default function TechEcosystem() {
                         onMouseEnter={() => setHoveredTech(skill.name)}
                         onMouseLeave={() => setHoveredTech(null)}
                         onClick={() => handleTechClick(skill.name)}
-                        className="flex items-center gap-2 px-3 py-1.5 rounded-full border text-xs font-mono-tech transition-all duration-300"
+                        className="flex items-center gap-2 px-3 py-1 rounded-full border text-[11px] font-mono-tech transition-all duration-300 focus:outline-none"
                         style={{
                           borderColor: isSelected
-                            ? accentColor
+                            ? 'var(--active-accent)'
                             : highlighted
-                            ? 'rgba(75, 85, 99, 0.4)'
-                            : 'rgba(31, 41, 55, 0.15)',
+                            ? 'rgba(210, 193, 168, 0.2)'
+                            : 'rgba(210, 193, 168, 0.03)',
                           background: isSelected
-                            ? 'rgba(13, 148, 136, 0.08)'
+                            ? 'rgba(155, 107, 78, 0.06)'
                             : highlighted
-                            ? 'rgba(15, 23, 42, 0.4)'
+                            ? 'rgba(36, 32, 28, 0.5)'
                             : 'transparent',
-                          color: highlighted ? 'var(--color-text-main)' : 'var(--color-text-dim)',
-                          opacity: highlighted ? 1 : 0.4,
+                          color: highlighted ? 'var(--color-text-main)' : 'rgba(210, 193, 168, 0.15)',
+                          opacity: highlighted ? 1 : 0.3,
                         }}
                       >
                         <span
-                          className="w-1.5 h-1.5 rounded-full shrink-0"
+                          className="w-1 h-1 rounded-full shrink-0"
                           style={{
-                            backgroundColor: skill.level === 'learning' ? 'var(--color-text-dim)' : accentColor,
+                            backgroundColor: skill.level === 'learning' ? 'rgba(210, 193, 168, 0.2)' : accentColor,
                           }}
                         />
                         {skill.name}
@@ -213,11 +211,11 @@ export default function TechEcosystem() {
           </div>
         </div>
 
-        {/* Right: Projects Specifications List */}
+        {/* Right: Projects list */}
         <div className="md:col-span-5 space-y-4 md:pl-6">
           <div className="flex flex-col gap-1 mb-2">
-            <span className="mono-label">Active Implementations</span>
-            <h3 className="font-semibold text-lg text-gray-200">System nodes</h3>
+            <span className="mono-label text-[9px] text-neutral-500">Execution Targets</span>
+            <h3 className="font-semibold text-lg text-neutral-200">Active systems</h3>
           </div>
 
           <div className="space-y-3">
@@ -235,29 +233,29 @@ export default function TechEcosystem() {
                   className="p-4 rounded border cursor-pointer transition-all duration-300 relative select-none"
                   style={{
                     borderColor: isSelected
-                      ? 'var(--dev-teal)'
+                      ? 'var(--active-accent)'
                       : highlighted
-                      ? 'rgba(75, 85, 99, 0.4)'
-                      : 'rgba(31, 41, 55, 0.15)',
-                    background: highlighted ? 'rgba(11, 15, 25, 0.6)' : 'rgba(3, 7, 18, 0.2)',
-                    opacity: highlighted ? 1 : 0.35,
+                      ? 'rgba(210, 193, 168, 0.2)'
+                      : 'rgba(210, 193, 168, 0.03)',
+                    background: highlighted ? 'rgba(36, 32, 28, 0.5)' : 'rgba(23, 20, 17, 0.1)',
+                    opacity: highlighted ? 1 : 0.3,
                   }}
                 >
                   <div className="flex justify-between items-start gap-2">
                     <div>
-                      <span className="mono-label text-[9px] block mb-0.5">SYS_{proj.year}</span>
+                      <span className="mono-label text-[8px] text-neutral-500 block mb-0.5">SYS_{proj.year}</span>
                       <h4
-                        className="font-semibold text-sm transition-colors duration-200"
-                        style={{ color: highlighted ? 'var(--color-text-main)' : 'var(--color-text-dim)' }}
+                        className="font-semibold text-xs transition-colors duration-200"
+                        style={{ color: highlighted ? 'var(--color-text-main)' : 'rgba(210, 193, 168, 0.2)' }}
                       >
                         {proj.title}
                       </h4>
                     </div>
-                    <span className="status-tag text-[9px] scale-90 origin-top-right">
+                    <span className="status-tag text-[8px] scale-90 origin-top-right">
                       {proj.status}
                     </span>
                   </div>
-                  <p className="text-[11px] text-gray-500 mt-1 line-clamp-1 leading-snug">
+                  <p className="text-[10px] text-neutral-500 mt-1 line-clamp-1 leading-snug">
                     {proj.tagline}
                   </p>
                 </div>

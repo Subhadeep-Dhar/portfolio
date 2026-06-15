@@ -25,15 +25,15 @@ const TIMELINE_DATA = [
     type: 'Research & GIS',
     title: 'South Lhonak Glacier Analysis',
     desc: 'Assessed glacier flow velocity post-glacial lake flood disaster. Processed remote sensing imagery in SNAP and Google Earth Engine, classifying anomalies via K-Means.',
-    location: 'Lhonak Lake, Sikkim',
+    location: 'South Lhonak Lake, Sikkim',
     mode: 'researcher'
   },
   {
     year: '2024',
     type: 'Research',
-    title: 'ADRI — Research Intern',
+    title: 'Asian Development Research Institute — Research Intern',
     desc: 'Contributed to regional health surveillance mapping (IHIP-IDSP Bihar project). Modeled spatial trends to optimize department reporting indices.',
-    location: 'ADRI Department, Bihar',
+    location: 'Patna, Bihar',
     mode: 'researcher'
   },
   {
@@ -42,6 +42,14 @@ const TIMELINE_DATA = [
     title: 'SH1ELD Tech — Web Developer',
     desc: 'Built tailored tourism portals and local data workflows for regional agencies. Integrated API routes and optimized database access pipelines.',
     location: 'Gangtok, Sikkim',
+    mode: 'developer'
+  },
+  {
+    year: '2024',
+    type: 'Work',
+    title: 'Asian Development Reseasrch Institute — Research Intern',
+    desc: 'Enhanced regional health surveillance mapping (IHIP-IDSP Bihar project) by modeling spatial trends to optimize reporting indices.',
+    location: 'Patna, Bihar',
     mode: 'developer'
   },
   {
@@ -54,11 +62,11 @@ const TIMELINE_DATA = [
   },
   {
     year: '2026',
-    type: 'Systems',
-    title: 'Grounded App & Location Systems',
-    desc: 'Built a consistency challenge application utilizing geofencing trackers and weather indicators to audit user accountability.',
+    type: 'Research',
+    title: 'Spatio-Temporal variability of NDVI and LST in a monsoon dominated region of Manipal',
+    desc: 'Analysing the spatial-temporal variability of NDVI and LST in a monsoon dominated region of Manipal using Landsat-8 imagery.',
     location: 'Manipal, Karnataka',
-    mode: 'developer'
+    mode: 'researcher'
   }
 ];
 

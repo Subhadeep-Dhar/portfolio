@@ -37,11 +37,11 @@ export const projects = [
       'A scalable, production-ready platform with fast search, map-based tutor discovery, and optimized performance using caching and modern deployment practices on Vercel and Render.',
     future:
       'Introduce real-time chat between students and tutors, AI-based tutor recommendations, mobile app integration, and enhanced analytics dashboard for tutors.',
-    tech: ['Next.js', 'Typescript', 'Node.js', 'tailwind css', 'responsive ui design', 'Express', 'MongoDB', 'Redis', 'Google Maps API', 'Cloudinary'],
+    tech: ['Next.js', 'Typescript', 'Authentication Systems', 'cloudinary', 'vercel', 'Node.js', 'tailwind css', 'responsive ui design', 'mongodb atlas', 'render', 'git', 'Express', 'MongoDB', 'Redis', 'Google Maps API'],
     tags: ['Fullstack', 'Next.js / React'],
     featured: true,
     status: 'completed',
-    year: '2026',
+    year: '2025',
     links: {
       demo: 'https://dooarstutors.in',
       github: 'https://github.com/Subhadeep-Dhar/dooars-tutors-recreation',
@@ -78,7 +78,19 @@ export const projects = [
       'Open-Meteo API',
       'AI Integration',
       'JavaScript',
-      'EAS Build'
+      'EAS Build',
+      'authentication systems',
+      'google maps api',
+      'geofencing',
+      'context-aware systems',
+      'gps tracking',
+      'git',
+      'android debugging',
+      'expo cli',
+      'firebase storage',
+      'responsive ui design',
+      'zustand',
+      'expo router'
     ],
 
     tags: ['App', 'AI', 'ML', 'Productivity', 'Fullstack'],
@@ -106,7 +118,7 @@ export const projects = [
       'Achieved stable real-time gesture detection at 15+ FPS. Three gestures reliably detected — left head tilt for next video, right head tilt for previous video, mouth open for like. Zero mouse interaction needed once Chrome is focused.',
     future:
       'Add wink detection for play/pause. Explore eye-tracking for cursor control. Package as a background system tray app so no terminal window is needed.',
-    tech: ['Python', 'MediaPipe', 'OpenCV', 'PyAutoGUI', 'NumPy'],
+    tech: ['Python', 'MediaPipe', 'OpenCV', 'PyAutoGUI', 'NumPy', 'face tracking', 'computer vision', 'gesture recognition', 'git'],
     tags: ['Computer Vision', 'ML'],
     featured: true,
     status: 'completed',
@@ -138,12 +150,13 @@ export const projects = [
       'StateFlow',
       'Kotlinx Serialization',
       'ZXing (planned for QR)',
-      'Android DataStore'
+      'Android DataStore',
+      'git'
     ],
     tags: ['App'],
     featured: true,
     status: 'completed',
-    year: '2026',
+    year: '2025',
     links: {
       demo: null,
       github: 'https://github.com/Subhadeep-Dhar/FamSpace-offline',
@@ -180,7 +193,10 @@ export const projects = [
       'Upstash',
       'REST API',
       'Render',
-      'Vercel'
+      'Vercel',
+      'git',
+      'responsive ui design',
+      'tailwind css'
     ],
 
     tags: ['Fullstack', 'Next.js / React'],
@@ -208,7 +224,7 @@ export const projects = [
       'A fully static portfolio site with minimal dependencies, optimized for Lighthouse scores and fast loading, deployed on Vercel.',
     future:
       'Add new projects dynamically, improve accessibility, and explore light theme/dark theme toggles for enhanced UX.',
-    tech: ['Next.js', 'React', 'Tailwind CSS', 'Framer Motion'],
+    tech: ['Next.js', 'React', 'Tailwind CSS', 'javascript', 'Framer Motion', 'vercel', 'git', 'responsive ui design'],
     tags: ['Frontend', 'Next.js / React'],
     featured: true,
     status: 'completed',
@@ -268,7 +284,10 @@ export const projects = [
       'Landsat 8',
       'CHIRPS',
       'QGIS',
-      'Time-Series Analysis'
+      'Time-Series Analysis',
+      'gis',
+      'satellite imagery',
+      'geospatial analysis'
     ],
 
     tags: [
@@ -277,7 +296,7 @@ export const projects = [
     ],
 
     featured: true,
-    status: 'in-progress',
+    status: 'completed',
     year: '2026',
 
     links: {
@@ -299,7 +318,7 @@ export const projects = [
       'Initial analysis identified accelerated flow zones in the lower South Lhonak Glacier correlating with post-flood debris deposition, highlighting potential hazard zones.',
     future:
       'Integrate climate data to model seasonal glacier dynamics and predict flood risks. Develop early-warning alerts for downstream communities.',
-    tech: ['Satellite Imagery', 'Geospatial Analysis', 'GIS', 'QGIS', 'SNAP'],
+    tech: ['Satellite Imagery', 'Geospatial Analysis', 'GIS', 'QGIS', 'SNAP', 'remote sensing'],
     tags: ['ML', 'Research', 'Remote Sensing / GIS'],
     featured: false,
     status: 'completed',

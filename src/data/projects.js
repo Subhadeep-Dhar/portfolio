@@ -285,9 +285,9 @@ export const projects = [
       'CHIRPS',
       'QGIS',
       'Time-Series Analysis',
-      'gis',
-      'satellite imagery',
-      'geospatial analysis'
+      'GIS',
+      'Satellite Imagery',
+      'Geospatial Analysis'
     ],
 
     tags: [
@@ -318,7 +318,7 @@ export const projects = [
       'Initial analysis identified accelerated flow zones in the lower South Lhonak Glacier correlating with post-flood debris deposition, highlighting potential hazard zones.',
     future:
       'Integrate climate data to model seasonal glacier dynamics and predict flood risks. Develop early-warning alerts for downstream communities.',
-    tech: ['Satellite Imagery', 'Geospatial Analysis', 'GIS', 'QGIS', 'SNAP', 'remote sensing'],
+    tech: ['Satellite Imagery', 'Geospatial Analysis', 'GIS', 'QGIS', 'SNAP', 'Remote Sensing'],
     tags: ['ML', 'Research', 'Remote Sensing / GIS'],
     featured: false,
     status: 'completed',

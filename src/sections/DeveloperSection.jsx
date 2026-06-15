@@ -18,12 +18,12 @@ export default function DeveloperSection() {
       <div className="section-container">
         {/* Section Header */}
         <div className="max-w-3xl mb-16">
-          <span className="mono-label block mb-2 text-neutral-500">Section 02 — Software Engineering</span>
+          <span className="mono-label block mb-2 text-neutral-500">Software Engineering</span>
           <h2 className="text-3xl sm:text-4xl font-light text-neutral-100 tracking-tight leading-tight">
             Developer & Builder
           </h2>
           <p className="text-sm text-neutral-400 mt-2 max-w-xl leading-relaxed">
-            Architecting relational databases, designing offline-first local structures, and caching pipelines.
+            Architecting databases and designs, optimising structures, and caching pipelines.
           </p>
         </div>
 

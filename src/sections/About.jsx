@@ -37,7 +37,7 @@ export default function About() {
           {/* Left Column: Narrative Bio */}
           <div className="lg:col-span-5 space-y-6">
             <div>
-              <span className="mono-label block mb-2 text-[var(--active-accent)]">RESEARCHER PROFILE</span>
+              <span className="mono-label block mb-2 text-[var(--active-accent)]">PERSONAL PROFILE</span>
               <h2 className="text-3xl font-light text-neutral-100 tracking-tight leading-tight">
                 Engineering through scientific discipline.
               </h2>

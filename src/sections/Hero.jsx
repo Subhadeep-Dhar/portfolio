@@ -86,7 +86,7 @@ export default function Hero({ onFocusChange }) {
             className="group flex flex-col items-center bg-transparent border-0 focus:outline-none"
           >
             <span className="font-mono-tech text-xs sm:text-sm tracking-[0.2em] text-gray-400 group-hover:text-[#9B6B4E] transition-colors uppercase border-b border-transparent group-hover:border-[#9B6B4E] pb-1 duration-200">
-              Software Engineering
+              Software Development
             </span>
           </button>
 
@@ -97,7 +97,7 @@ export default function Hero({ onFocusChange }) {
             className="group flex flex-col items-center bg-transparent border-0 focus:outline-none"
           >
             <span className="font-mono-tech text-xs sm:text-sm tracking-[0.2em] text-gray-400 group-hover:text-[#6F8167] transition-colors uppercase border-b border-transparent group-hover:border-[#6F8167] pb-1 duration-200">
-              Research & Location Intelligence
+              Research & Analysis
             </span>
           </button>
         </div>
@@ -108,7 +108,7 @@ export default function Hero({ onFocusChange }) {
             <div className="flex items-center gap-2 px-3 py-1 rounded border border-gray-900/60 bg-gray-950/10">
               <span className="w-1.5 h-1.5 bg-[var(--active-accent)] rounded-full" />
               <span className="font-mono-tech text-xs text-gray-500 tracking-wider uppercase">
-                Based in {siteConfig.location}
+                {siteConfig.location}
               </span>
             </div>
           )}

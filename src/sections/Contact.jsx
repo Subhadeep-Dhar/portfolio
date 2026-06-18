@@ -97,10 +97,10 @@ export default function Contact() {
           {/* Professional Footer */}
           <div className="border-t border-neutral-950 pt-12 mt-16 text-center space-y-3">
             <p className="font-mono-tech text-xs text-neutral-500">
-              Built with Next.js, CSS, Canvas 2D & Framer Motion
+              Thank you for visiting my portfolio. If you're interested in discussing potential collaborations, projects, or just want to say hi, feel free to reach out through any of the contact methods above. I'm always open to connecting with like-minded individuals and exploring new opportunities in the tech space.
             </p>
             <p className="font-mono-tech text-xs text-neutral-600">
-              {siteConfig.name} © {new Date().getFullYear()} · Manipal & Sikkim, India
+              {siteConfig.name} © {new Date().getFullYear()} · Karnataka, India
             </p>
             
             {/* Replay action */}

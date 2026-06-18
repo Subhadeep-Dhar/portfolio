@@ -48,6 +48,30 @@ export const projects = [
     },
   },
   {
+    "id": "poultry_disease_detection",
+    "title": "Poultry Disease Detection App",
+    "tagline": "A mobile veterinary AI utility designed for offline, low-latency livestock disease diagnosis",
+    "problem":
+      "Poultry farmers in remote, rural areas experience severe production and economic losses due to devastating outbreaks like Newcastle disease and Aflatoxicosis. Existing computer vision solutions depend heavily on high-speed internet connectivity, rendering them unusable in disconnected agricultural environments.",
+    "hypothesis":
+      "Deploying optimized, on-device machine learning models directly inside a cross-platform mobile ecosystem can provide farmers with instant, zero-latency diagnostic feedback completely offline, mitigating massive outbreak spreads.",
+    "approach":
+      "Engineered a cross-platform mobile application using Flutter and Dart implementing a strict service-based modular architecture. Integrated a local TensorFlow Lite inference pipeline utilizing a MobileNet V2 neural network to extract image feature vectors, executing Cosine Similarity matching against pre-computed local JSON datasets.",
+    "result":
+      "Delivered an entirely offline, zero-latency diagnostic utility designed for bandwidth-constrained rural locations. Protected diagnosis reliability by implementing a strict 0.75 model confidence verification threshold and automated the creation of shareable PDF poultry health reports.",
+    "future":
+      "Expand local classifications to support multi-class avian pathologies, introduce an automated geolocation-based disease outbreak mapping engine for local veterinary authorities, and add multi-lingual voice navigation support for better accessibility.",
+    "tech": ["Flutter", "Dart", "Responsive UI Design", "TensorFlow Lite", "MobileNet V2", "Machine Learning", "Image Classification", "Cosine Similarity", "On-Device Inference", "PDF Generation", "Git"],
+    "tags": ["Mobile App", "Flutter / ML"],
+    "featured": true,
+    "status": "completed",
+    "year": "2026",
+    "links": {
+      "demo": "",
+      "github": "https://github.com/Subhadeep-Dhar/poultry-disease-detection"
+    }
+  },
+  {
     id: 'grounded_app',
     title: 'Grounded — Discipline & Consistency Platform',
     tagline: 'AI-powered accountability app that rewards consistency through real-world challenge completion',

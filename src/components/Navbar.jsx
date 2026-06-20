@@ -42,6 +42,19 @@ export default function Navbar({ mode = 'home', onExitMode }) {
 
   const currentLinks = mode === 'developer' ? devLinks : mode === 'researcher' ? resLinks : [];
 
+  const handleNavClick = (e, href) => {
+    if (mode !== 'home') {
+      e.preventDefault();
+      const targetId = href.replace('#', '');
+      const targetEl = document.getElementById(targetId);
+      if (targetEl) {
+        targetEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      } else {
+        window.location.hash = href;
+      }
+    }
+  };
+
   return (
     <motion.header
       initial={{ y: -60, opacity: 0 }}
@@ -87,6 +100,7 @@ export default function Navbar({ mode = 'home', onExitMode }) {
                 <a
                   key={link.href}
                   href={link.href}
+                  onClick={(e) => handleNavClick(e, link.href)}
                   className="font-body text-[14px] text-gray-300 hover:text-[var(--active-accent)] transition-colors tracking-normal font-medium"
                 >
                   {link.label}
@@ -132,7 +146,10 @@ export default function Navbar({ mode = 'home', onExitMode }) {
                 <a
                   key={link.href}
                   href={link.href}
-                  onClick={() => setMenuOpen(false)}
+                  onClick={(e) => {
+                    setMenuOpen(false);
+                    handleNavClick(e, link.href);
+                  }}
                   className="font-body text-sm text-gray-400 hover:text-[var(--active-accent)] transition-colors tracking-normal font-medium"
                 >
                   {link.label}

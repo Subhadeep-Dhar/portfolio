@@ -40,24 +40,29 @@ export default function ExperienceLayer() {
     }
   }, []);
 
+  const numSlides = SLIDES_DATA.length;
+  const trackWidth = numSlides * 100; // in vw
+  const sectionHeight = (numSlides + 3) * 100; // fewer extra viewports for tighter control
+  const totalOffset = (numSlides - 1) * 100;
+  const scrollFinish = 0.62;
+
   const { scrollYProgress } = useScroll({
     target: containerRef,
-    offset: ["start start", "end end"]
+    offset: ["start end", "end end"]
   });
 
-  // Horizontal translate: map vertical scroll to full horizontal traverse.
-  // 3 slides × 100vw = 300vw total track. Need to shift by 200vw (2 screens).
-  // -66.67% of 300vw = exactly -200vw, revealing all 3 slides sequentially.
-  // Range [0.0, 0.65]: horizontal scrolling completes at 65% scroll progress,
-  // leaving a 35% buffer before the section unpins — ensuring slide 03 is fully
-  // visible and the user can read it before vertical scrolling resumes.
-  const xTranslate = useTransform(scrollYProgress, [0.0, 0.65], ['0%', '-66.67%']);
+  // Horizontal translate: delay start to 30%, move across track fully by 72%, then hold until 95%.
+  const xTranslate = useTransform(
+    scrollYProgress,
+    [0.3, scrollFinish, 0.95],
+    ['0vw', `-${totalOffset}vw`, `-${totalOffset}vw`]
+  );
   
   // Parallax elements translations
-  const labelX = useTransform(scrollYProgress, [0.0, 0.65], ['0px', '-100px']);
+  const labelX = useTransform(scrollYProgress, [0.0, 1.0], ['0px', '-100px']);
 
-  // Scrollbar progress indicator
-  const progressWidth = useTransform(scrollYProgress, [0.0, 0.65], ['0%', '100%']);
+  // Scrollbar progress indicator stays full after the motion completes.
+  const progressWidth = useTransform(scrollYProgress, [0.3, scrollFinish, 0.95], ['0%', '100%', '100%']);
 
   const [mounted, setMounted] = useState(false);
   useEffect(() => {
@@ -100,8 +105,8 @@ export default function ExperienceLayer() {
   }
 
   return (
-    <div ref={containerRef} className="relative h-[500vh] w-full bg-transparent select-none z-20">
-      {/* Sticky Scroll Lock Window — stays pinned for the full 500vh scroll */}
+    <div ref={containerRef} style={{ height: `${sectionHeight}vh` }} className="relative w-full bg-transparent select-none z-20">
+      {/* Sticky Scroll Lock Window — stays pinned for the full horizontal section scroll */}
       <div className="sticky top-0 h-screen w-full overflow-hidden flex items-center bg-transparent">
         
         {/* Parallax layer: large monospaced label in background */}
@@ -114,15 +119,15 @@ export default function ExperienceLayer() {
           <div className="text-[120px] font-extrabold leading-none self-end">BUILD</div>
         </motion.div>
 
-        {/* Horizontal Track — 3 slides × 100vw = 300vw */}
+        {/* Horizontal Track — full width scales with slide count */}
         <motion.div
-          className="horizontal-scroll-container w-[300vw] h-full items-center relative z-10"
-          style={{ x: xTranslate }}
+          className="horizontal-scroll-container h-full items-center relative z-10"
+          style={{ x: xTranslate, width: `${trackWidth}vw` }}
         >
           {SLIDES_DATA.map((slide) => (
             <div 
               key={slide.num}
-              className="w-screen h-full flex items-center justify-center px-16 sm:px-24 md:px-32"
+              className="w-screen box-border flex-shrink-0 h-full flex items-center justify-center px-16 sm:px-24 md:px-32"
             >
               <div className="max-w-4xl w-full grid md:grid-cols-12 gap-12 items-center">
                 {/* Left Numbering Indicator */}

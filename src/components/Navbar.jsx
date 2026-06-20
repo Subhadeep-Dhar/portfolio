@@ -6,14 +6,14 @@ import { siteConfig } from '@/data/siteConfig';
 
 const devLinks = [
   { label: 'Profile',    href: '#profile' },
-  { label: 'Systems',   href: '#ecosystem-section' },
+  { label: 'Projects',   href: '#ecosystem-section' },
   { label: 'Evolution', href: '#evolution' },
   { label: 'Contact',   href: '#contact' },
 ];
 
 const resLinks = [
   { label: 'Profile',    href: '#profile' },
-  { label: 'Research',  href: '#research-section' },
+  { label: 'Projects',  href: '#research-section' },
   { label: 'Evolution', href: '#evolution' },
   { label: 'Contact',   href: '#contact' },
 ];

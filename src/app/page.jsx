@@ -40,12 +40,39 @@ export default function Home() {
   });
 
   const handleExitMode = () => {
+    // Prefer navigating back through history so popstate handlers run
+    if (typeof window !== 'undefined' && window.history && window.history.state && window.history.length > 1) {
+      window.history.back();
+      return;
+    }
+
     setExperienceMode('home');
     const body = document.querySelector('body');
     if (body) {
       body.className = '';
     }
   };
+
+  // Sync experience mode with browser history (back/forward gestures)
+  useState(() => {
+    if (typeof window === 'undefined') return;
+
+    const onPop = (e) => {
+      const state = e.state;
+      if (state && state.experience) {
+        setExperienceMode(state.experience);
+        const body = document.querySelector('body');
+        if (body) body.className = `theme-${state.experience}`;
+      } else {
+        setExperienceMode('home');
+        const body = document.querySelector('body');
+        if (body) body.className = '';
+      }
+    };
+
+    window.addEventListener('popstate', onPop);
+    return () => window.removeEventListener('popstate', onPop);
+  });
 
   return (
     <div className={experienceMode === 'developer' ? 'theme-developer' : experienceMode === 'researcher' ? 'theme-researcher' : ''}>

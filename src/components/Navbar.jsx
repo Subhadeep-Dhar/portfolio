@@ -31,7 +31,12 @@ export default function Navbar({ mode = 'home', onExitMode }) {
   const handleBrandClick = (e) => {
     if (mode !== 'home') {
       e.preventDefault();
-      onExitMode();
+      // Use browser history to navigate back so gestures/buttons work
+      if (typeof window !== 'undefined' && window.history && window.history.length > 1) {
+        window.history.back();
+      } else if (onExitMode) {
+        onExitMode();
+      }
     }
   };
 
@@ -49,13 +54,31 @@ export default function Navbar({ mode = 'home', onExitMode }) {
       <div className="section-container">
         <div className="flex items-center justify-between h-16">
           {/* Logo / Brand Name Trigger (Reset Path) */}
-          <a
-            href="#"
-            onClick={handleBrandClick}
-            className="font-body text-base text-[var(--active-accent)] hover:text-gray-100 transition-colors tracking-normal font-semibold"
-          >
-            Subhadeep Dhar
-          </a>
+          <div className="flex items-center gap-3">
+            {mode !== 'home' && (
+              <button
+                onClick={() => {
+                  if (typeof window !== 'undefined' && window.history && window.history.length > 1) {
+                    window.history.back();
+                  } else if (onExitMode) {
+                    onExitMode();
+                  }
+                }}
+                aria-label="Go back"
+                className="text-gray-300 hover:text-[var(--active-accent)] transition-colors"
+              >
+                ←
+              </button>
+            )}
+
+            <a
+              href="#"
+              onClick={handleBrandClick}
+              className="font-body text-base text-[var(--active-accent)] hover:text-gray-100 transition-colors tracking-normal font-semibold"
+            >
+              Subhadeep Dhar
+            </a>
+          </div>
 
           {/* Dynamic Path Navigation */}
           {mode !== 'home' && (

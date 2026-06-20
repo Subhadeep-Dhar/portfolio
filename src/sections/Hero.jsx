@@ -42,6 +42,15 @@ export default function Hero({ onFocusChange }) {
       body.className = `theme-${focusType}`;
     }
 
+    // Push a history entry so the browser back gesture will return to the landing page
+    if (typeof window !== 'undefined' && window.history && window.history.pushState) {
+      try {
+        window.history.pushState({ experience: focusType }, '', `#${elementId}`);
+      } catch (err) {
+        // ignore
+      }
+    }
+
     setTimeout(() => {
       const el = document.getElementById(elementId);
       if (el) {

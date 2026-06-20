@@ -37,7 +37,7 @@ export const projects = [
       'A scalable, production-ready platform with fast search, map-based tutor discovery, and optimized performance using caching and modern deployment practices on Vercel and Render.',
     future:
       'Introduce real-time chat between students and tutors, AI-based tutor recommendations, mobile app integration, and enhanced analytics dashboard for tutors.',
-    tech: ['Next.js', 'Typescript', 'Authentication Systems', 'cloudinary', 'vercel', 'Node.js', 'tailwind css', 'responsive ui design', 'mongodb atlas', 'render', 'git', 'Express', 'MongoDB', 'Redis', 'Google Maps API'],
+    tech: ['Next.js', 'Typescript', 'Authentication Systems', 'Cloudinary', 'Vercel', 'Node.js', 'Tailwind CSS', 'Responsive UI Design', 'MongoDB Atlas', 'Render', 'Git', 'Express', 'MongoDB', 'Redis', 'Google Maps API'],
     tags: ['Fullstack', 'Next.js / React'],
     featured: true,
     status: 'completed',
@@ -103,18 +103,18 @@ export const projects = [
       'AI Integration',
       'JavaScript',
       'EAS Build',
-      'authentication systems',
-      'google maps api',
-      'geofencing',
-      'context-aware systems',
-      'gps tracking',
-      'git',
-      'android debugging',
-      'expo cli',
-      'firebase storage',
-      'responsive ui design',
-      'zustand',
-      'expo router'
+      'Authentication systems',
+      'Google Maps API',
+      'Geofencing',
+      'Context-aware systems',
+      'GPS Tracking',
+      'Git',
+      'Android Debugging',
+      'Expo CLI',
+      'Firebase Storage',
+      'Responsive UI Design',
+      'Zustand',
+      'Expo Router'
     ],
 
     tags: ['App', 'AI', 'ML', 'Productivity', 'Fullstack'],
@@ -142,7 +142,7 @@ export const projects = [
       'Achieved stable real-time gesture detection at 15+ FPS. Three gestures reliably detected — left head tilt for next video, right head tilt for previous video, mouth open for like. Zero mouse interaction needed once Chrome is focused.',
     future:
       'Add wink detection for play/pause. Explore eye-tracking for cursor control. Package as a background system tray app so no terminal window is needed.',
-    tech: ['Python', 'MediaPipe', 'OpenCV', 'PyAutoGUI', 'NumPy', 'face tracking', 'computer vision', 'gesture recognition', 'git'],
+    tech: ['Python', 'MediaPipe', 'OpenCV', 'PyAutoGUI', 'NumPy', 'Face Tracking', 'Computer Vision', 'Gesture Recognition', 'Git'],
     tags: ['Computer Vision', 'ML'],
     featured: true,
     status: 'completed',
@@ -175,7 +175,7 @@ export const projects = [
       'Kotlinx Serialization',
       'ZXing (planned for QR)',
       'Android DataStore',
-      'git'
+      'Git'
     ],
     tags: ['App'],
     featured: true,
@@ -218,9 +218,9 @@ export const projects = [
       'REST API',
       'Render',
       'Vercel',
-      'git',
-      'responsive ui design',
-      'tailwind css'
+      'Git',
+      'Responsive UI Design',
+      'Tailwind CSS'
     ],
 
     tags: ['Fullstack', 'Next.js / React'],
@@ -248,7 +248,7 @@ export const projects = [
       'A fully static portfolio site with minimal dependencies, optimized for Lighthouse scores and fast loading, deployed on Vercel.',
     future:
       'Add new projects dynamically, improve accessibility, and explore light theme/dark theme toggles for enhanced UX.',
-    tech: ['Next.js', 'React', 'Tailwind CSS', 'javascript', 'Framer Motion', 'vercel', 'git', 'responsive ui design'],
+    tech: ['Next.js', 'React', 'Tailwind CSS', 'javascript', 'Framer Motion', 'Vercel', 'Git', 'Responsive UI Design'],
     tags: ['Frontend', 'Next.js / React'],
     featured: true,
     status: 'completed',

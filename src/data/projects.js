@@ -38,13 +38,15 @@ export const projects = [
     future:
       'Introduce real-time chat between students and tutors, advanced AI-based matching workflows, native mobile app integration, and rich analytics dashboards for trainers.',
     tech: [
-      'Next.js 16', 
+      'Next.js', 
       'TypeScript', 
       'Node.js', 
-      'Express.js', 
+      'Express', 
       'MongoDB Atlas', 
-      'Redis (Upstash)', 
-      'Tailwind CSS v4', 
+      'Redis',
+      'Upstash',
+      'JavaScript',
+      'Tailwind CSS', 
       'Shadcn UI', 
       'Framer Motion',
       'Zustand',
@@ -54,7 +56,12 @@ export const projects = [
       'Resend API',
       'Gemini AI',
       'Vercel', 
-      'Render'
+      'Render',
+      'Responsive UI Design',
+      'Authentication Systems',
+      'Mongoose',
+      'Git',
+      'Github CI'
     ],
     tags: ['Fullstack', 'Next.js / React'],
     featured: true,

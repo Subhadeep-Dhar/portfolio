@@ -32,16 +32,34 @@ export const projects = [
     hypothesis:
       'A full-stack platform with advanced search, location integration, and structured tutor profiles can significantly improve discoverability and user experience for both students and tutors.',
     approach:
-      'Built using Next.js 16 (App Router) for frontend, Node.js + Express for backend APIs, MongoDB Atlas for data storage, and Upstash Redis for caching. Integrated Google Maps for location-based discovery, Cloudinary for media handling, and implemented JWT authentication with access and refresh tokens.',
+      'Built using Next.js 16 (App Router) with Tailwind CSS v4 and Shadcn UI for a highly responsive frontend, enriched with Framer Motion animations. The backend is powered by Node.js, Express, and MongoDB Atlas, utilizing Upstash Redis for high-performance caching. Integrated the Google Maps API for geographical discovery, Cloudinary for media hosting, Resend for transactional emails, and Gemini AI. State is managed via Zustand, protected by secure JWT authentication.',
     result:
-      'A scalable, production-ready platform with fast search, map-based tutor discovery, and optimized performance using caching and modern deployment practices on Vercel and Render.',
+      'A scalable, production-ready platform with instant search, interactive map-based discovery, and optimized performance leveraging caching and modern deployment pipelines on Vercel and Render.',
     future:
-      'Introduce real-time chat between students and tutors, AI-based tutor recommendations, mobile app integration, and enhanced analytics dashboard for tutors.',
-    tech: ['Next.js', 'Typescript', 'Authentication Systems', 'Cloudinary', 'Vercel', 'Node.js', 'Tailwind CSS', 'Responsive UI Design', 'MongoDB Atlas', 'Render', 'Git', 'Express', 'MongoDB', 'Redis', 'Google Maps API'],
+      'Introduce real-time chat between students and tutors, advanced AI-based matching workflows, native mobile app integration, and rich analytics dashboards for trainers.',
+    tech: [
+      'Next.js 16', 
+      'TypeScript', 
+      'Node.js', 
+      'Express.js', 
+      'MongoDB Atlas', 
+      'Redis (Upstash)', 
+      'Tailwind CSS v4', 
+      'Shadcn UI', 
+      'Framer Motion',
+      'Zustand',
+      'JWT Auth', 
+      'Google Maps API', 
+      'Cloudinary', 
+      'Resend API',
+      'Gemini AI',
+      'Vercel', 
+      'Render'
+    ],
     tags: ['Fullstack', 'Next.js / React'],
     featured: true,
     status: 'completed',
-    year: '2025',
+    year: '2026',
     links: {
       demo: 'https://dooarstutors.in',
       github: 'https://github.com/Subhadeep-Dhar/dooars-tutors-recreation',

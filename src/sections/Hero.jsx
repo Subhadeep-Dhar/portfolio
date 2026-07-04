@@ -99,8 +99,6 @@ export default function Hero({ onFocusChange }) {
             </span>
           </button>
 
-          <span className="hidden sm:inline-block w-1 h-1 rounded-full bg-gray-800" />
-
           <button
             onClick={() => handleLinkClick('researcher', 'research-section')}
             className="group flex flex-col items-center bg-transparent border-0 focus:outline-none"
@@ -114,7 +112,11 @@ export default function Hero({ onFocusChange }) {
         {/* Ambient status indicator */}
           <div className="pt-8 flex justify-center">
           {siteConfig.available && (
-            <div className="flex items-center px-3 py-1 rounded border border-gray-900/60 bg-gray-950/10">
+            <div className="flex items-center gap-1.5 px-3 py-1 rounded border border-gray-900/60 bg-gray-950/10">
+              <svg viewBox="0 0 24 24" className="w-3 h-3 shrink-0 text-gray-500" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                <path d="M12 21s-6-5.4-6-11a6 6 0 1 1 12 0c0 5.6-6 11-6 11Z" />
+                <circle cx="12" cy="10" r="2.2" />
+              </svg>
               <span className="font-mono-tech text-xs text-gray-500 tracking-wider uppercase">
                 {siteConfig.location}
               </span>

@@ -48,7 +48,7 @@ export default function ResearchSection() {
                     <div className="flex justify-between items-start gap-4 pb-3 border-b border-neutral-900">
                       <div>
                         <span className="font-mono-tech text-xs text-[var(--active-accent)] block">
-                          Publication {String(idx + 1).padStart(2, '0')}
+                          Research {String(idx + 1).padStart(2, '0')}
                         </span>
                         <span className="font-mono-tech text-xs text-neutral-600 block mt-0.5">
                           Location: {paper.location}
@@ -94,7 +94,7 @@ export default function ResearchSection() {
                     >
                       {isOpen ? 'Close Overview' : 'View Research Brief'}
                     </button>
-                    <span className="font-mono-tech text-xs text-neutral-650">Source: Remote Sensing</span>
+                    {/* <span className="font-mono-tech text-xs text-neutral-650">Source: Remote Sensing</span> */}
                   </div>
 
                   {/* Expanded Brief */}

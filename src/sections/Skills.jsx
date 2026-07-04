@@ -75,27 +75,17 @@ export default function Skills() {
           ))}
         </div>
 
-        {/* Legend */}
+        {/* Note */}
         <motion.div
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
           transition={{ delay: 0.4, duration: 0.4 }}
-          className="flex flex-wrap gap-6 mt-12 pt-8 border-t border-lab-line"
+          className="mt-12 pt-8 border-t border-lab-line"
         >
-          {[
-            { dot: 'var(--active-accent)', label: 'Core (daily use)' },
-            { dot: 'rgba(var(--active-accent-rgb), 0.4)', label: 'Proficient' },
-            { dot: 'var(--color-text-dim)', label: 'Learning (~)' },
-          ].map(({ dot, label }) => (
-            <div key={label} className="flex items-center gap-2">
-              <span
-                className="w-2 h-2 rounded-full shrink-0"
-                style={{ backgroundColor: dot }}
-              />
-              <span className="font-mono text-xs text-lab-muted">{label}</span>
-            </div>
-          ))}
+          <p className="font-mono text-xs text-lab-muted">
+            A practical mix of tools I use regularly, have worked with closely, and continue to learn.
+          </p>
         </motion.div>
       </div>
     </section>

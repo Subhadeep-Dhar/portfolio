@@ -6,24 +6,24 @@ import { motion, useScroll, useTransform } from 'framer-motion';
 const SLIDES_DATA = [
   {
     num: '01',
-    title: 'Curiosity & Observation',
-    subtitle: 'Fieldwork & Geospatial Sensing',
-    desc: 'Standing at the boundary where physical geography meets systemic data. Observing glacier flow rates in high-altitude catchments, precipitation spikes, and vegetation indices. Curiosity begins by inspecting anomalies on the terrain.',
-    details: 'Location: South Lhonak Glacier, Sikkim'
+    title: 'Fieldwork',
+    subtitle: 'Research & site context',
+    desc: 'I begin with the setting: terrain, conditions, and the questions that matter on the ground before making any assumptions.',
+    details: 'South Lhonak Glacier, Sikkim'
   },
   {
     num: '02',
-    title: 'Hypotheses & Analysis',
-    subtitle: 'Data Synthesis & Spatial Analysis',
-    desc: 'Formulating parameters to test environmental dynamics. We process multi-spectral Landsat tiles in Google Earth Engine and apply K-Means velocity classifications to filter spatial noise and extract the primary signal.',
-    details: 'Methodology: Landsat 8 Composites & NDVI temporal regressions'
+    title: 'Reviewing the data',
+    subtitle: 'Analysis & interpretation',
+    desc: 'I work through the material carefully, checking patterns, comparing observations, and keeping the conclusions grounded in evidence.',
+    details: 'Landsat composites and NDVI-based review'
   },
   {
     num: '03',
-    title: 'Building Solutions',
-    subtitle: 'Software Architecture & Implementation',
-    desc: 'Translating verified models into high-fidelity code. Deploying geofenced routine challenges, database caching, and custom Express frameworks. The engineering loop closes when data transforms into active software.',
-    details: 'Location: Manipal, Karnataka'
+    title: 'Implementation',
+    subtitle: 'Building the product',
+    desc: 'Once the approach is clear, I move into the build: interfaces, systems, and the details that make the work usable.',
+    details: 'Manipal, Karnataka'
   }
 ];
 
@@ -114,8 +114,8 @@ export default function ExperienceLayer() {
           className="absolute inset-0 pointer-events-none opacity-[0.02] z-0 flex flex-col justify-between p-16 font-mono-tech"
           style={{ x: labelX }}
         >
-          <div className="text-[120px] font-extrabold leading-none">OBSERVE</div>
-          <div className="text-[120px] font-extrabold leading-none self-center">ANALYZE</div>
+          <div className="text-[120px] font-extrabold leading-none">FIELDWORK</div>
+          <div className="text-[120px] font-extrabold leading-none self-center">REVIEW</div>
           <div className="text-[120px] font-extrabold leading-none self-end">BUILD</div>
         </motion.div>
 
@@ -149,8 +149,7 @@ export default function ExperienceLayer() {
                     {slide.desc}
                   </p>
                   
-                  <div className="pt-4 flex items-center gap-2 text-xs font-mono-tech text-gray-500">
-                    <span className="w-1.5 h-1.5 rounded-full bg-[var(--active-accent)]/80" />
+                  <div className="pt-4 text-xs font-mono-tech text-gray-500">
                     <span>{slide.details}</span>
                   </div>
                 </div>

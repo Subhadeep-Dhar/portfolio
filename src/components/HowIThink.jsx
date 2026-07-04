@@ -47,7 +47,7 @@ export default function HowIThink() {
   return (
     <div className="w-full border border-neutral-900 bg-[#1a211d]/5 p-6 sm:p-8 rounded select-none">
       <div className="flex flex-col gap-1 mb-8">
-        <span className="mono-label text-neutral-500">Cognitive Pipeline</span>
+        <span className="mono-label text-neutral-500">Working Style</span>
         <h3 className="font-semibold text-lg text-neutral-200">How I approach complex tasks</h3>
       </div>
 
@@ -65,13 +65,12 @@ export default function HowIThink() {
               onClick={() => setActiveStep(index)}
               className="flex flex-col items-center relative z-10 group focus:outline-none"
             >
-              {/* Dot indicator */}
               <motion.div
                 animate={{
-                  scale: isActive ? 1.15 : 1,
+                  scale: isActive ? 1.05 : 1,
                   borderColor: isActive ? 'var(--active-accent)' : isPassed ? 'var(--color-text-dim)' : 'rgba(210, 193, 168, 0.05)',
                 }}
-                className={`w-7 h-7 rounded-full bg-[#111614] border-2 flex items-center justify-center text-xs font-mono-tech transition-colors duration-300`}
+                className={`w-8 h-8 rounded-md bg-[#111614] border flex items-center justify-center text-xs font-mono-tech transition-colors duration-300`}
                 style={{
                   color: isActive ? 'var(--active-accent)' : 'rgba(210, 193, 168, 0.2)',
                 }}

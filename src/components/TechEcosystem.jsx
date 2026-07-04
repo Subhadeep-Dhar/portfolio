@@ -165,8 +165,8 @@ export default function TechEcosystem() {
         {/* Left: Technologies List */}
         <div className="md:col-span-7 space-y-6">
           <div className="flex flex-col gap-1 mb-2">
-            <span className="mono-label text-neutral-500">System Parameters</span>
-            <h3 className="font-semibold text-lg text-neutral-200">Technologies utilized in projects</h3>
+            <span className="mono-label text-neutral-500">Tools</span>
+            <h3 className="font-semibold text-lg text-neutral-200">Technologies used across the work</h3>
           </div>
           
           <div className="space-y-4">
@@ -202,12 +202,6 @@ export default function TechEcosystem() {
                           opacity: highlighted ? 1 : 0.3,
                         }}
                       >
-                        <span
-                          className="w-1 h-1 rounded-full shrink-0"
-                          style={{
-                            backgroundColor: skill.level === 'learning' ? 'rgba(210, 193, 168, 0.2)' : accentColor,
-                          }}
-                        />
                         {skill.name}
                       </button>
                     );
@@ -221,8 +215,8 @@ export default function TechEcosystem() {
         {/* Right: Projects list */}
         <div className="md:col-span-5 space-y-4 md:pl-6">
           <div className="flex flex-col gap-1 mb-2">
-            <span className="mono-label text-neutral-500">Execution Targets</span>
-            <h3 className="font-semibold text-lg text-neutral-200">Active systems</h3>
+            <span className="mono-label text-neutral-500">Projects</span>
+            <h3 className="font-semibold text-lg text-neutral-200">Selected work</h3>
           </div>
 
           <div className="space-y-3">
@@ -250,7 +244,7 @@ export default function TechEcosystem() {
                 >
                   <div className="flex justify-between items-start gap-2">
                     <div>
-                      <span className="mono-label text-neutral-500 block mb-0.5">SYS_{proj.year}</span>
+                      <span className="mono-label text-neutral-500 block mb-0.5">{proj.year}</span>
                       <h4
                         className="font-semibold text-xs sm:text-sm transition-colors duration-200"
                         style={{ color: highlighted ? 'var(--color-text-main)' : 'rgba(210, 193, 168, 0.2)' }}

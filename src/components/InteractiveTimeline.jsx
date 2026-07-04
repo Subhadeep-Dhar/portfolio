@@ -128,7 +128,7 @@ export default function InteractiveTimeline({ mode = 'developer' }) {
                       {item.type}
                     </span>
                   </div>
-                  <span className="text-neutral-550 font-body text-[10px]">Record {String(index + 1).padStart(2, '0')}</span>
+                  {/* <span className="text-neutral-550 font-body text-[10px]">Record {String(index + 1).padStart(2, '0')}</span> */}
                 </div>
 
                 {/* Content */}
@@ -143,7 +143,10 @@ export default function InteractiveTimeline({ mode = 'developer' }) {
 
                 {/* Location Footer */}
                 <div className="pt-2 border-t border-neutral-950 flex gap-2 items-center text-xs text-neutral-500">
-                  <span>📍</span>
+                  <svg viewBox="0 0 24 24" className="w-3.5 h-3.5 shrink-0" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                    <path d="M12 21s-6-5.4-6-11a6 6 0 1 1 12 0c0 5.6-6 11-6 11Z" />
+                    <circle cx="12" cy="10" r="2.2" />
+                  </svg>
                   <span>{item.location}</span>
                 </div>
 

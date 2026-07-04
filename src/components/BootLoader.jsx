@@ -4,12 +4,10 @@ import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 
 const BOOT_LOGS = [
-  { text: 'Initializing portfolio...', delay: 100 },
-  { text: 'Loading configuration profiles... Done', delay: 400 },
-  { text: 'Resolving regional settings...', delay: 800 },
-  { text: 'Preparing developer space... Done', delay: 1300 },
-  { text: 'Preparing research records... Done', delay: 1800 },
-  { text: 'System ready.', delay: 2300 }
+  { text: 'Opening the portfolio...', delay: 100 },
+  { text: 'Loading recent work...', delay: 400 },
+  { text: 'Preparing the layout...', delay: 800 },
+  { text: 'Almost ready...', delay: 1300 }
 ];
 
 export default function BootLoader({ onComplete }) {
@@ -56,8 +54,8 @@ export default function BootLoader({ onComplete }) {
       <div className="max-w-md w-full border border-neutral-800 bg-[#1a1a1a]/90 backdrop-blur-md p-6 rounded shadow-lg relative z-10 text-neutral-400">
         {/* Panel Header */}
         <div className="flex items-center justify-between border-b border-neutral-850 pb-3 mb-4 text-xs uppercase tracking-wider text-neutral-600">
-          <span>PORTFOLIO CORE BOOT</span>
-          <span>SYS_VAL // 2026</span>
+          <span>PORTFOLIO</span>
+          <span>2026</span>
         </div>
 
         {/* Logs */}
@@ -82,7 +80,7 @@ export default function BootLoader({ onComplete }) {
         {/* Panel Footer */}
         <div className="mt-4 pt-3 border-t border-neutral-850 flex justify-between text-[10px] text-neutral-600 uppercase tracking-widest">
           <span>PORT: 3000</span>
-          <span>STABLE CONNECT</span>
+          <span>READY</span>
         </div>
       </div>
     </motion.div>

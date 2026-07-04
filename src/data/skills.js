@@ -63,7 +63,7 @@ export const skillCategories = [
     ],
   },
   {
-    label: 'AI, ML & Location Intelligence',
+    label: 'Media & Location Tools',
     icon: '◑',
     color: 'purple',
     skills: [
@@ -71,17 +71,17 @@ export const skillCategories = [
       { name: 'TensorFlow Lite', level: 'core' },
       { name: 'MobileNet V2', level: 'proficient' },
       { name: 'Cosine Similarity', level: 'proficient' },
-      { name: 'Computer Vision', level: 'core' },
+      { name: 'Image Processing', level: 'core' },
       { name: 'OpenCV', level: 'core' },
       { name: 'MediaPipe', level: 'core' },
       { name: 'Face Tracking', level: 'proficient' },
-      { name: 'Gesture Recognition', level: 'proficient' },
+      { name: 'Gesture Controls', level: 'proficient' },
       
       // Location / Context
       { name: 'Geofencing', level: 'core' },
       { name: 'GPS Tracking', level: 'core' },
-      { name: 'AI Integration', level: 'core' },
-      { name: 'Context-Aware Systems', level: 'proficient' },
+      { name: 'Location-based features', level: 'core' },
+      { name: 'User reminders', level: 'proficient' },
     ],
   },
   {

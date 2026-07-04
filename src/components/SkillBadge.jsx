@@ -20,13 +20,6 @@ export default function SkillBadge({ name, level, accent }) {
     <div
       className="flex items-center gap-2 px-3 py-2 rounded-lg border border-[var(--color-border)] hover:border-[var(--active-accent)] bg-transparent hover:bg-[var(--color-surface)]/30 transition-all duration-200"
     >
-      {/* Level indicator dot */}
-      <span
-        className="w-1.5 h-1.5 rounded-full shrink-0"
-        style={{
-          backgroundColor: activeDot,
-        }}
-      />
       <span className="font-mono text-sm text-[var(--color-text-main)] leading-none">{name}</span>
       {isLearning && (
         <span className="ml-auto font-mono text-xs text-neutral-500 opacity-60">~</span>

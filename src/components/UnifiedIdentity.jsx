@@ -30,7 +30,7 @@ export default function UnifiedIdentity() {
         {/* Narrative Center Header */}
         <div className="max-w-3xl mx-auto text-center mb-16 space-y-4">
           <span className="mono-label tracking-[0.25em] text-[var(--active-accent)] block">
-            Unified Approach
+            Approach
           </span>
           <h2 className="text-3xl sm:text-4xl font-light text-neutral-100 tracking-tight leading-tight">
             Why these worlds belong together.
@@ -41,7 +41,7 @@ export default function UnifiedIdentity() {
         {/* Core Philosophy Callout */}
         <div className="max-w-4xl mx-auto border border-neutral-900 bg-[#24201c]/5 p-8 rounded mb-16 relative">
           <div className="absolute top-0 left-6 -translate-y-1/2 bg-[#111111] px-3 font-mono-tech text-xs text-[var(--active-accent)] uppercase tracking-wider">
-            Focus Statement
+            Focus
           </div>
           <p className="text-base sm:text-lg text-neutral-350 leading-relaxed text-center font-light">
             “I do not simply build software or conduct research independently. <br className="hidden sm:inline" />

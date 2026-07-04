@@ -37,20 +37,19 @@ export default function Contact() {
         <div className="h-px w-full bg-gradient-to-r from-transparent via-neutral-900 to-transparent mb-24" />
 
         <div className="max-w-2xl mx-auto space-y-12">
-          {/* Signal Indicator & Heading */}
+          {/* Heading */}
           <div className="text-center space-y-4">
-            <div className="flex justify-center items-center gap-2 mb-2">
-              <span className="w-1.5 h-1.5 rounded-full bg-[var(--active-accent)]" />
+            <div className="mb-2">
               <span className="font-mono-tech text-xs text-[var(--active-accent)] uppercase tracking-[0.25em]">
                 Get In Touch
               </span>
             </div>
             
             <h2 className="text-3xl font-light text-neutral-100 tracking-tight leading-tight">
-              Let's build something meaningful.
+              Let&apos;s talk about your next project.
             </h2>
             <p className="text-sm text-neutral-450 max-w-sm mx-auto leading-relaxed">
-              Open to collaborating on spatial data analysis, database systems, or software architectures.
+              I&apos;m open to web, mobile, and data-driven work where clarity and care matter.
             </p>
           </div>
 

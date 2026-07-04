@@ -25,14 +25,12 @@ export default function TimelineItem({ item, index, isLast }) {
       transition={{ delay: index * 0.07, duration: 0.4 }}
       className="flex gap-4 sm:gap-6"
     >
-      {/* ── Vertical line + dot ──────────────────────────────────── */}
+      {/* ── Vertical line ─────────────────────────────────────── */}
       <div className="flex flex-col items-center">
-        {/* Dot */}
         <div
-          className="w-3 h-3 rounded-full shrink-0 mt-1 ring-2 ring-offset-2 ring-offset-[#111]"
-          style={{ backgroundColor: typeConfig.dot, ringColor: typeConfig.dot }}
+          className="w-0.5 flex-1 mt-1 bg-[var(--color-border)]"
+          style={{ backgroundColor: typeConfig.dot }}
         />
-        {/* Line (hidden after last item) */}
         {!isLast && (
           <div className="w-px flex-1 mt-2 bg-[var(--color-border)]" />
         )}

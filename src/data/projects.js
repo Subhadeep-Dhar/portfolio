@@ -26,17 +26,17 @@ export const projects = [
   {
     id: 'dooars_tutors',
     title: 'Dooars Tutors',
-    tagline: 'A location-based platform to discover tutors, coaching centers, and trainers',
+    tagline: 'A practical platform for finding tutors and coaching in local areas',
     problem:
       'Students in local regions struggle to find reliable tutors with proper filtering, verified profiles, and location-based discovery. Existing solutions are either unstructured or lack real-time search and mapping features.',
     hypothesis:
       'A full-stack platform with advanced search, location integration, and structured tutor profiles can significantly improve discoverability and user experience for both students and tutors.',
     approach:
-      'Built using Next.js 16 (App Router) with Tailwind CSS v4 and Shadcn UI for a highly responsive frontend, enriched with Framer Motion animations. The backend is powered by Node.js, Express, and MongoDB Atlas, utilizing Upstash Redis for high-performance caching. Integrated the Google Maps API for geographical discovery, Cloudinary for media hosting, Resend for transactional emails, and Gemini AI. State is managed via Zustand, protected by secure JWT authentication.',
+      'Built the interface with Next.js and Tailwind and connected it to a Node.js backend with MongoDB and Redis for search, caching, and reliable performance. The project also includes map-based discovery, image uploads, email notifications, and secure login flows.',
     result:
       'A scalable, production-ready platform with instant search, interactive map-based discovery, and optimized performance leveraging caching and modern deployment pipelines on Vercel and Render.',
     future:
-      'Introduce real-time chat between students and tutors, advanced AI-based matching workflows, native mobile app integration, and rich analytics dashboards for trainers.',
+      'Add chat between students and tutors, better profile filtering, and a mobile-friendly experience for both sides of the platform.',
     tech: [
       'Next.js', 
       'TypeScript', 
@@ -54,11 +54,11 @@ export const projects = [
       'Google Maps API', 
       'Cloudinary', 
       'Resend API',
-      'Gemini AI',
+      'Email API',
       'Vercel', 
       'Render',
       'Responsive UI Design',
-      'Authentication Systems',
+      'Authentication',
       'Mongoose',
       'Git',
       'Github CI'
@@ -75,18 +75,18 @@ export const projects = [
   {
     "id": "poultry_disease_detection",
     "title": "Poultry Disease Detection App",
-    "tagline": "A mobile veterinary AI utility designed for offline, low-latency livestock disease diagnosis",
+    "tagline": "A mobile tool for offline livestock disease checks in low-connectivity areas",
     "problem":
       "Poultry farmers in remote, rural areas experience severe production and economic losses due to devastating outbreaks like Newcastle disease and Aflatoxicosis. Existing computer vision solutions depend heavily on high-speed internet connectivity, rendering them unusable in disconnected agricultural environments.",
     "hypothesis":
-      "Deploying optimized, on-device machine learning models directly inside a cross-platform mobile ecosystem can provide farmers with instant, zero-latency diagnostic feedback completely offline, mitigating massive outbreak spreads.",
+      "A lightweight mobile app can give farmers a fast way to check symptoms offline, even in places with poor network access.",
     "approach":
-      "Engineered a cross-platform mobile application using Flutter and Dart implementing a strict service-based modular architecture. Integrated a local TensorFlow Lite inference pipeline utilizing a MobileNet V2 neural network to extract image feature vectors, executing Cosine Similarity matching against pre-computed local JSON datasets.",
+      "Built the app in Flutter and Dart with a modular structure, then added a local matching workflow that compares images against a small offline dataset for quick checks.",
     "result":
-      "Delivered an entirely offline, zero-latency diagnostic utility designed for bandwidth-constrained rural locations. Protected diagnosis reliability by implementing a strict 0.75 model confidence verification threshold and automated the creation of shareable PDF poultry health reports.",
+      "Delivered an offline diagnostic tool for rural use, with simple report generation and a careful confidence threshold to keep the results reliable.",
     "future":
       "Expand local classifications to support multi-class avian pathologies, introduce an automated geolocation-based disease outbreak mapping engine for local veterinary authorities, and add multi-lingual voice navigation support for better accessibility.",
-    "tech": ["Flutter", "Dart", "Responsive UI Design", "TensorFlow Lite", "MobileNet V2", "Machine Learning", "Image Classification", "Cosine Similarity", "On-Device Inference", "PDF Generation", "Git"],
+    "tech": ["Flutter", "Dart", "Responsive UI Design", "TensorFlow Lite", "MobileNet V2", "Image Matching", "Offline Data", "PDF Generation", "Git"],
     "tags": ["Mobile App", "Flutter / ML"],
     "featured": true,
     "status": "completed",
@@ -99,22 +99,22 @@ export const projects = [
   {
     id: 'grounded_app',
     title: 'Grounded — Discipline & Consistency Platform',
-    tagline: 'AI-powered accountability app that rewards consistency through real-world challenge completion',
+    tagline: 'A mobile app for daily challenges and accountability in everyday routines',
 
     problem:
       'Students and young professionals often struggle with consistency, discipline, and maintaining healthy routines due to lack of accountability and motivation. Traditional habit trackers fail to create real-world commitment or social reinforcement.',
 
     hypothesis:
-      'A geolocation-based challenge system combined with AI-driven engagement, trust scoring, and social accountability can significantly improve consistency and routine adherence among users.',
+      'A location-based challenge system with clear goals, simple feedback, and social accountability can make daily routines easier to stick with.',
 
     approach:
-      'Built a full-stack mobile application using Expo React Native and Firebase that assigns users real-world location-based challenges around the MIT Manipal campus. The platform uses GPS geofencing, live location tracking, image verification, streak systems, trust scoring, leaderboards, and AI-powered contextual engagement features including weather-aware recommendations and dynamic notifications.',
+      'Built a full-stack mobile application using Expo React Native and Firebase that assigns location-based challenges around the MIT Manipal campus. The platform uses GPS checks, live tracking, image verification, streaks, leaderboards, and simple reminders to keep people engaged.',
 
     result:
-      'Successfully developed and deployed a production-ready Android application with real-time challenge tracking, geofenced validation, profile systems, social feeds, and AI-assisted engagement flows. Optimized for smooth mobile performance with native Android support, secure Firebase integration, and scalable architecture.',
+      'Delivered a working Android app with challenge tracking, location validation, profile pages, and social feeds, with a focus on reliable mobile performance and clean app structure.',
 
     future:
-      'Expand AI capabilities with personalized behavioral insights, adaptive challenge difficulty, intelligent consistency coaching, voice-based wake-up systems, and campus-wide social accountability networks. Planned additions include ML-driven trust analysis and smart habit prediction systems.',
+      'Add better challenge suggestions, more useful progress summaries, and a few quality-of-life features that make the routine feel smoother for daily use.',
 
     tech: [
       'React Native',
@@ -125,13 +125,13 @@ export const projects = [
       'Google Maps',
       'Expo Notifications',
       'Open-Meteo API',
-      'AI Integration',
+      'Location-based features',
       'JavaScript',
       'EAS Build',
-      'Authentication systems',
+      'Authentication',
       'Google Maps API',
       'Geofencing',
-      'Context-aware systems',
+      'User reminders',
       'GPS Tracking',
       'Git',
       'Android Debugging',
@@ -167,8 +167,8 @@ export const projects = [
       'Achieved stable real-time gesture detection at 15+ FPS. Three gestures reliably detected — left head tilt for next video, right head tilt for previous video, mouth open for like. Zero mouse interaction needed once Chrome is focused.',
     future:
       'Add wink detection for play/pause. Explore eye-tracking for cursor control. Package as a background system tray app so no terminal window is needed.',
-    tech: ['Python', 'MediaPipe', 'OpenCV', 'PyAutoGUI', 'NumPy', 'Face Tracking', 'Computer Vision', 'Gesture Recognition', 'Git'],
-    tags: ['Computer Vision', 'ML'],
+    tech: ['Python', 'MediaPipe', 'OpenCV', 'PyAutoGUI', 'NumPy', 'Face Tracking', 'Gesture Controls', 'Git'],
+    tags: ['Interaction', 'Python'],
     featured: true,
     status: 'completed',
     year: '2026',
@@ -308,6 +308,31 @@ export const projects = [
   //   },
   // },
   {
+    id: 'south_lhonak_glacier',
+    title: 'South Lhonak Glacier Health Assessment',
+    tagline: 'Analyzing glacier velocity and health post-Teesta flood hazard in Sikkim',
+    problem:
+      'Rapid glacier changes and flood hazards make monitoring glacier health and predicting risks challenging.',
+    hypothesis:
+      'Remote sensing data combined with anomaly detection can identify accelerated glacier movement and areas of potential hazard without extensive field surveys.',
+    approach:
+      'Satellite imagery + digital elevation models (DEMs) for velocity mapping. K-means clustering for glacier zone classification; isolation forest for detecting abnormal velocity patterns.',
+    result:
+      'Initial analysis identified accelerated flow zones in the lower South Lhonak Glacier correlating with post-flood debris deposition, highlighting potential hazard zones.',
+    future:
+      'Integrate climate data to model seasonal glacier dynamics and predict flood risks. Develop early-warning alerts for downstream communities.',
+    tech: ['Satellite Imagery', 'Geospatial Analysis', 'GIS', 'QGIS', 'SNAP', 'Remote Sensing'],
+    tags: ['ML', 'Research', 'Remote Sensing / GIS'],
+    featured: false,
+    status: 'completed',
+    year: '2024',
+    location: 'Sikkim, India',
+    links: {
+      demo: null,
+      github: null,
+    },
+  },
+  {
     id: 'manipal_ndvi_lst',
     title: 'NDVI–LST Multi-Temporal Analysis (Manipal)',
     tagline: 'Assessing vegetation–temperature dynamics in a monsoon-driven coastal environment',
@@ -347,31 +372,8 @@ export const projects = [
     featured: true,
     status: 'completed',
     year: '2026',
+    location: 'Manipal, India',
 
-    links: {
-      demo: null,
-      github: null,
-    },
-  },
-  {
-    id: 'south_lhonak_glacier',
-    title: 'South Lhonak Glacier Health Assessment',
-    tagline: 'Analyzing glacier velocity and health post-Teesta flood hazard in Sikkim',
-    problem:
-      'Rapid glacier changes and flood hazards make monitoring glacier health and predicting risks challenging.',
-    hypothesis:
-      'Remote sensing data combined with anomaly detection can identify accelerated glacier movement and areas of potential hazard without extensive field surveys.',
-    approach:
-      'Satellite imagery + digital elevation models (DEMs) for velocity mapping. K-means clustering for glacier zone classification; isolation forest for detecting abnormal velocity patterns.',
-    result:
-      'Initial analysis identified accelerated flow zones in the lower South Lhonak Glacier correlating with post-flood debris deposition, highlighting potential hazard zones.',
-    future:
-      'Integrate climate data to model seasonal glacier dynamics and predict flood risks. Develop early-warning alerts for downstream communities.',
-    tech: ['Satellite Imagery', 'Geospatial Analysis', 'GIS', 'QGIS', 'SNAP', 'Remote Sensing'],
-    tags: ['ML', 'Research', 'Remote Sensing / GIS'],
-    featured: false,
-    status: 'completed',
-    year: '2024',
     links: {
       demo: null,
       github: null,

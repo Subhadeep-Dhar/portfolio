@@ -9,15 +9,15 @@ export const siteConfig = {
   // ─── Identity ─────────────────────────────────────────────────
   name: 'Subhadeep Dhar',
   handle: '@subhadeep_dhar',
-  headline: 'Building Solutions Through Code & Curiosity',
-  subheadline: 'MCA Student · Developer · Analyst',
+  headline: 'Building thoughtful products with care and attention to detail',
+  subheadline: 'MCA Student · Developer · Researcher',
   location: 'Karnataka, India',
   available: true,          // set to false to hide "open to work" tag
 
   // ─── About / Profile ──────────────────────────────────────────
   bio: [
     "I approach engineering problems like a researcher: define the question, form a hypothesis, run the experiment, measure results.",
-    "My current focus is on systems that sit at the intersection of data, language, and product — tools that make information useful, not just accessible.",
+    "My work usually sits at the overlap of practical software, local context, and careful data work.",
     "When I'm not building, I'm breaking things to understand how they work.",
   ],
 

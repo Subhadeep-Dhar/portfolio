@@ -6,24 +6,20 @@ import { siteConfig } from '@/data/siteConfig';
 export default function About() {
   const traits = [
     {
-      code: 'SYS_01',
-      label: 'Systems Thinking',
-      desc: 'Mapping relational dependencies before deploying a single line of logic. Complex schemas are organized using strict, predictable models.'
+      label: 'Research',
+      desc: 'I begin by understanding the problem clearly, the context around it, and the constraints that matter.'
     },
     {
-      code: 'DAT_02',
-      label: 'Data Validation',
-      desc: 'Formulating structured assumptions. Hypotheses get test models, logs are evaluated, and parameters are continuously refined.'
+      label: 'Building',
+      desc: 'I prefer clear structures, careful decisions, and work that is straightforward to maintain over time.'
     },
     {
-      code: 'GIS_03',
-      label: 'Spatial Intelligence',
-      desc: 'Analyzing how physical variables interact across geography. Processing temporal indices and mapping climate benchmarks.'
+      label: 'Fieldwork',
+      desc: 'I work comfortably across maps, data, and real-world conditions when a project needs that depth.'
     },
     {
-      code: 'DEV_04',
-      label: 'Execution focus',
-      desc: 'Building performant full-stack architectures. Focused on minimum compiler overhead, cached channels, and clear blueprints.'
+      label: 'Delivery',
+      desc: 'I focus on building things that are practical, well considered, and useful to the people using them.'
     }
   ];
 
@@ -39,7 +35,7 @@ export default function About() {
             <div>
               <span className="mono-label block mb-2 text-[var(--active-accent)]">PERSONAL PROFILE</span>
               <h2 className="text-3xl font-light text-neutral-100 tracking-tight leading-tight">
-                Engineering through scientific discipline.
+                Working through problems with care and patience.
               </h2>
             </div>
             
@@ -52,15 +48,19 @@ export default function About() {
             </div>
 
             <div className="flex flex-wrap gap-2 pt-2">
-              <span className="font-mono-tech text-xs border border-neutral-900 px-3 py-1 rounded bg-[#24201c]/5 text-neutral-500">
-                📍 {siteConfig.location}
+              <span className="font-mono-tech text-xs border border-neutral-900 px-3 py-1 rounded bg-[#24201c]/5 text-neutral-500 flex items-center gap-1.5">
+                <svg viewBox="0 0 24 24" className="w-3 h-3 shrink-0" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                  <path d="M12 21s-6-5.4-6-11a6 6 0 1 1 12 0c0 5.6-6 11-6 11Z" />
+                  <circle cx="12" cy="10" r="2.2" />
+                </svg>
+                {siteConfig.location}
               </span>
               <span className="font-mono-tech text-xs border border-neutral-900 px-3 py-1 rounded bg-[#24201c]/5 text-neutral-500">
-                🎓 MCA Scholar
+                MCA Scholar
               </span>
               {siteConfig.available && (
                 <span className="font-mono-tech text-xs border border-[var(--active-accent)]/30 text-[var(--active-accent)] px-3 py-1 rounded bg-[var(--active-accent)]/5">
-                  ✦ Available for systems build
+                  Available for freelance work
                 </span>
               )}
             </div>
@@ -77,9 +77,8 @@ export default function About() {
                 transition={{ delay: idx * 0.08, duration: 0.4 }}
                 className="p-5 border border-neutral-900/60 bg-neutral-950/80 backdrop-blur-md rounded group hover:border-neutral-800 transition-colors duration-300"
               >
-                <div className="flex items-center justify-between mb-3">
-                  <span className="font-mono-tech text-xs text-neutral-600">{trait.code}</span>
-                  <span className="w-1.5 h-1.5 rounded-full bg-[var(--active-accent)]/50" />
+                <div className="mb-3">
+                  <span className="font-mono-tech text-xs text-neutral-600">{trait.label}</span>
                 </div>
                 <h4 className="font-semibold text-sm text-neutral-350 uppercase tracking-wider mb-2">
                   {trait.label}

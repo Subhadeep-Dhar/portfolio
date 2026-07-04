@@ -112,10 +112,9 @@ export default function Hero({ onFocusChange }) {
         </div>
 
         {/* Ambient status indicator */}
-        <div className="pt-8 flex justify-center">
+          <div className="pt-8 flex justify-center">
           {siteConfig.available && (
-            <div className="flex items-center gap-2 px-3 py-1 rounded border border-gray-900/60 bg-gray-950/10">
-              <span className="w-1.5 h-1.5 bg-[var(--active-accent)] rounded-full" />
+            <div className="flex items-center px-3 py-1 rounded border border-gray-900/60 bg-gray-950/10">
               <span className="font-mono-tech text-xs text-gray-500 tracking-wider uppercase">
                 {siteConfig.location}
               </span>

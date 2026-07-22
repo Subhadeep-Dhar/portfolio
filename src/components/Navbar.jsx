@@ -124,6 +124,7 @@ export default function Navbar({ mode = 'home', onExitMode }) {
           {/* Dynamic Path Navigation */}
           {mode !== 'home' && (
             <nav className="hidden md:flex items-center gap-6">
+              {/*
               <button
                 onClick={() => setGesturesEnabled(!gesturesEnabled)}
                 title={gesturesEnabled ? "Disable Gestures" : "Enable Gestures"}
@@ -139,6 +140,7 @@ export default function Navbar({ mode = 'home', onExitMode }) {
                 </svg>
                 {gesturesEnabled ? (isReady ? 'Gestures ON' : 'Loading...') : 'Gestures OFF'}
               </button>
+              */}
               {currentLinks.map((link) => (
                 <a
                   key={link.href}

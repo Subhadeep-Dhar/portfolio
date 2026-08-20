@@ -23,6 +23,7 @@
  */
 
 export const projects = [
+  
   {
     id: 'dooars_tutors',
     title: 'Dooars Tutors',
@@ -92,6 +93,40 @@ export const projects = [
       "demo": "",
       "github": "https://github.com/Subhadeep-Dhar/poultry-disease-detection"
     }
+  },
+
+  {
+    id: 'yt_playlist_downloader',
+    title: 'YT Playlist Downloader',
+    tagline: 'A modern desktop application for downloading YouTube playlists with high-quality audio extraction',
+    problem:
+      'Downloading YouTube playlists and extracting high-quality audio often requires complex CLI tools or unreliable web services that lack persistent history and real-time tracking.',
+    hypothesis:
+      'A native desktop application combining the power of yt-dlp and FFmpeg with a rich Flutter UI can provide a seamless, reliable download experience with intelligent error handling.',
+    approach:
+      'Built a Windows desktop app using Flutter and Dart, with yt-dlp as the core download engine and FFmpeg for audio transcoding. Used Provider for state management and Shared Preferences for persistent history. Designed a Material 3 dark-mode UI with a real-time "Hero" view for tracking speeds, percentages, and ETAs.',
+    result:
+      'Delivered a powerful desktop application that natively extracts lossless audio (MP3, WAV, FLAC, OPUS) and handles videos seamlessly. Features intelligent retry mechanisms for network drops and format intelligence to prevent mid-download crashes.',
+    future:
+      'Add multi-platform support (macOS/Linux), batch URL imports, and customizable ID3 metadata tagging.',
+    tech: [
+      'Flutter',
+      'Dart',
+      'yt-dlp',
+      'FFmpeg',
+      'Provider',
+      'Shared Preferences',
+      'Responsive UI Design',
+      'Git'
+    ],
+    tags: ['App', 'Desktop'],
+    featured: true,
+    status: 'completed',
+    year: '2026',
+    links: {
+      demo: null,
+      github: 'https://github.com/Subhadeep-Dhar/YT-Playlist-Downloader',
+    },
   },
   {
     id: 'grounded_app',

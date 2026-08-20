@@ -1,8 +1,8 @@
 /**
- * ╔══════════════════════════════════════════════════════════════╗
- * ║  SKILLS DATA FILE                                            ║
- * ║  Edit ONLY this file to add, remove, or update skills.      ║
- * ╚══════════════════════════════════════════════════════════════╝
+ * +--------------------------------------------------------------+
+ * ¦  SKILLS DATA FILE                                            ¦
+ * ¦  Edit ONLY this file to add, remove, or update skills.      ¦
+ * +--------------------------------------------------------------+
  *
  * Each category has:
  *   label   — display name
@@ -15,22 +15,20 @@
 export const skillCategories = [
   {
     label: 'Languages',
-    icon: '⌨',
+    icon: '?',
     color: 'cyan',
     skills: [
       { name: 'JavaScript', level: 'core' },
       { name: 'TypeScript', level: 'proficient' },
       { name: 'Dart', level: 'proficient' },
       { name: 'Python', level: 'core' },
-      { name: 'C++', level: 'proficient' },
-      { name: 'Java', level: 'proficient' },
       { name: 'Kotlin', level: 'proficient' },
-      { name: 'SQL', level: 'core' },
+      { name: 'NumPy', level: 'proficient' },
     ],
   },
   {
     label: 'Mobile & Frontend',
-    icon: '◻',
+    icon: '?',
     color: 'purple',
     skills: [
       { name: 'React', level: 'core' },
@@ -42,6 +40,7 @@ export const skillCategories = [
       { name: 'Jetpack Compose', level: 'core' },
       { name: 'Tailwind CSS', level: 'core' },
       { name: 'Framer Motion', level: 'proficient' },
+      { name: 'Shadcn UI', level: 'proficient' },
       { name: 'Responsive UI Design', level: 'core' },
       { name: 'Zustand', level: 'proficient' },
       { name: 'Kotlin Coroutines', level: 'core' },
@@ -51,77 +50,80 @@ export const skillCategories = [
   },
   {
     label: 'Backend & APIs',
-    icon: '◈',
+    icon: '?',
     color: 'cyan',
     skills: [
       { name: 'Node.js', level: 'core' },
       { name: 'Express', level: 'proficient' },
-      { name: 'REST APIs', level: 'core' },
+      { name: 'REST API', level: 'core' },
       { name: 'Authentication Systems', level: 'proficient' },
+      { name: 'JWT Auth', level: 'proficient' },
+      { name: 'Vercel AI SDK', level: 'proficient' },
+      { name: 'Google Gemini API', level: 'proficient' },
+      { name: 'RAG', level: 'proficient' },
       { name: 'Google Maps API', level: 'core' },
       { name: 'Open-Meteo API', level: 'proficient' },
+      { name: 'Expo Notifications', level: 'proficient' },
     ],
   },
   {
     label: 'Media & Location Tools',
-    icon: '◑',
+    icon: '?',
     color: 'purple',
     skills: [
-      // Computer Vision & Edge AI
       { name: 'TensorFlow Lite', level: 'core' },
       { name: 'MobileNet V2', level: 'proficient' },
-      { name: 'Cosine Similarity', level: 'proficient' },
-      { name: 'Image Processing', level: 'core' },
       { name: 'OpenCV', level: 'core' },
       { name: 'MediaPipe', level: 'core' },
       { name: 'Face Tracking', level: 'proficient' },
       { name: 'Gesture Controls', level: 'proficient' },
-      
-      // Location / Context
+      { name: 'PyAutoGUI', level: 'proficient' },
+      { name: 'Image Matching', level: 'proficient' },
       { name: 'Geofencing', level: 'core' },
       { name: 'GPS Tracking', level: 'core' },
+      { name: 'Expo Location', level: 'proficient' },
+      { name: 'Google Maps', level: 'core' },
       { name: 'Location-based features', level: 'core' },
       { name: 'User reminders', level: 'proficient' },
     ],
   },
   {
     label: 'Databases & Caching',
-    icon: '🗄',
+    icon: '??',
     color: 'purple',
     skills: [
-      { name: 'MongoDB', level: 'core' },
       { name: 'MongoDB Atlas', level: 'core' },
+      { name: 'MongoDB Atlas Vector Search', level: 'proficient' },
       { name: 'Mongoose', level: 'proficient' },
       { name: 'Redis', level: 'proficient' },
+      { name: 'Firebase', level: 'core' },
       { name: 'Firestore', level: 'core' },
       { name: 'Firebase Storage', level: 'proficient' },
-      { name: 'MySql', level: 'core' },
       { name: 'Room Database', level: 'core' },
       { name: 'Android DataStore', level: 'proficient' },
+      { name: 'Offline Data', level: 'proficient' },
     ],
   },
   {
     label: 'DevOps & Tools',
-    icon: '◎',
+    icon: '?',
     color: 'cyan',
     skills: [
       { name: 'Git', level: 'core' },
-      { name: 'Docker', level: 'proficient' },
       { name: 'Vercel', level: 'core' },
       { name: 'Render', level: 'proficient' },
       { name: 'Upstash', level: 'proficient' },
-      { name: 'GitHub CI', level: 'core' },
       { name: 'EAS Build', level: 'core' },
       { name: 'Expo CLI', level: 'core' },
-      { name: 'Postman', level: 'proficient' },
-      { name: 'Node-cron', level: 'proficient' },
       { name: 'Android Debugging', level: 'proficient' },
       { name: 'Kotlinx Serialization', level: 'proficient' },
+      { name: 'ZXing (planned for QR)', level: 'proficient' },
+      { name: 'PDF Generation', level: 'proficient' },
     ],
   },
   {
     label: 'Geospatial & Remote Sensing',
-    icon: '🛰',
+    icon: '??',
     color: 'cyan',
     skills: [
       { name: 'Google Earth Engine', level: 'core' },
@@ -137,3 +139,4 @@ export const skillCategories = [
     ],
   }
 ];
+

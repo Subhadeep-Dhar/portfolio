@@ -4,8 +4,6 @@ import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { siteConfig } from '@/data/siteConfig';
 import { useGestures } from '@/hooks/useGestures';
-import { ThemeToggleButton } from '@/components/ThemeToggle';
-
 const devLinks = [
   { label: 'Profile',    href: '#profile' },
   { label: 'Projects',   href: '#ecosystem-section' },
@@ -125,7 +123,6 @@ export default function Navbar({ mode = 'home', onExitMode }) {
           {/* Dynamic Path Navigation */}
           {mode !== 'home' && (
             <nav className="hidden md:flex items-center gap-6">
-              <ThemeToggleButton variant="circle" start="center" blur={false} />
               {currentLinks.map((link) => (
                 <a
                   key={link.href}

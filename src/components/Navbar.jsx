@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { siteConfig } from '@/data/siteConfig';
 import { useGestures } from '@/hooks/useGestures';
+import { ThemeToggleButton } from '@/components/ThemeToggle';
 
 const devLinks = [
   { label: 'Profile',    href: '#profile' },
@@ -124,23 +125,7 @@ export default function Navbar({ mode = 'home', onExitMode }) {
           {/* Dynamic Path Navigation */}
           {mode !== 'home' && (
             <nav className="hidden md:flex items-center gap-6">
-              {/*
-              <button
-                onClick={() => setGesturesEnabled(!gesturesEnabled)}
-                title={gesturesEnabled ? "Disable Gestures" : "Enable Gestures"}
-                className={`font-body text-xs px-3 py-1.5 rounded flex items-center gap-1.5 transition-colors ${
-                  gesturesEnabled ? 'bg-[var(--active-accent)] text-[#07090e]' : 'text-gray-400 hover:text-[var(--active-accent)] border border-gray-700/50'
-                }`}
-              >
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                  <path d="M18 11V6a2 2 0 0 0-2-2a2 2 0 0 0-2 2v2" />
-                  <path d="M14 10V4a2 2 0 0 0-2-2a2 2 0 0 0-2 2v2" />
-                  <path d="M10 10.5V5a2 2 0 0 0-2-2a2 2 0 0 0-2 2v4" />
-                  <path d="M6 14v-2a2 2 0 0 0-2-2a2 2 0 0 0-2 2v8a6 6 0 0 0 6 6h1a8 8 0 0 0 8-8v-7a2 2 0 0 0-2-2a2 2 0 0 0-2 2v3" />
-                </svg>
-                {gesturesEnabled ? (isReady ? 'Gestures ON' : 'Loading...') : 'Gestures OFF'}
-              </button>
-              */}
+              <ThemeToggleButton variant="circle" start="center" blur={false} />
               {currentLinks.map((link) => (
                 <a
                   key={link.href}

@@ -1,5 +1,6 @@
 import '../styles/globals.css';
 import { siteConfig } from '@/data/siteConfig';
+import { ThemeProvider } from '@/components/ThemeProvider';
 
 /**
  * Root Layout
@@ -69,7 +70,11 @@ export default function RootLayout({ children }) {
           }}
         />
       </head>
-      <body className="antialiased">{children}</body>
+      <body className="antialiased">
+        <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+          {children}
+        </ThemeProvider>
+      </body>
     </html>
   );
 }

@@ -126,11 +126,11 @@ export default function Navbar() {
       <AnimatePresence>
         {menuOpen && (
           <motion.div
-            initial={{ opacity: 0, y: -20, scale: 0.95 }}
-            animate={{ opacity: 1, y: 0, scale: 1 }}
-            exit={{ opacity: 0, y: -20, scale: 0.95 }}
+            initial={{ opacity: 0, y: -20, x: "-50%", scale: 0.95 }}
+            animate={{ opacity: 1, y: 0, x: "-50%", scale: 1 }}
+            exit={{ opacity: 0, y: -20, x: "-50%", scale: 0.95 }}
             transition={{ duration: 0.25 }}
-            className="fixed top-20 left-1/2 -translate-x-1/2 w-[90%] max-w-sm bg-neutral-900/80 backdrop-blur-2xl border border-white/10 rounded-2xl shadow-2xl z-40 overflow-hidden md:hidden"
+            className="absolute top-20 left-1/2 w-[90%] max-w-sm bg-neutral-900/80 backdrop-blur-2xl border border-white/10 rounded-2xl shadow-2xl z-40 overflow-hidden md:hidden pointer-events-auto"
           >
             <div className="p-6 flex flex-col gap-4">
               {unifiedLinks.map((link) => (

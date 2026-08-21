@@ -26,9 +26,16 @@ export const metadata = {
   },
 };
 
+export const viewport = {
+  width: 'device-width',
+  initialScale: 1,
+  maximumScale: 1,
+  userScalable: false,
+};
+
 export default function RootLayout({ children }) {
   return (
-    <html lang="en" className="scroll-smooth">
+    <html lang="en" className="scroll-smooth overflow-x-clip">
       <head>
         {/* Preconnect to Google Fonts for faster load */}
         <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -69,7 +76,7 @@ export default function RootLayout({ children }) {
           }}
         />
       </head>
-      <body className="antialiased">
+      <body className="antialiased overflow-x-clip">
         {children}
       </body>
     </html>

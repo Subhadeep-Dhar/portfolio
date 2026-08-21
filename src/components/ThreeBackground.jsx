@@ -23,7 +23,8 @@ function ParticleField() {
 
   // Generate a realistic 3D spiral galaxy
   const { positions, colors } = useMemo(() => {
-    const count = 1500; // Increased to accommodate background stars
+    const isMobile = typeof window !== 'undefined' ? window.innerWidth < 768 : false;
+    const count = isMobile ? 600 : 1500; // Drastically reduced for mobile
     const positions = new Float32Array(count * 3);
     const colors = new Float32Array(count * 3);
     

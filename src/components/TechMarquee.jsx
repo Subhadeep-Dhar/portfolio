@@ -40,7 +40,7 @@ export default function TechMarquee() {
       <div className="absolute top-0 bottom-0 right-0 w-24 bg-gradient-to-l from-[var(--background)] to-transparent z-10 pointer-events-none" />
 
       {/* Marquee Track */}
-      <div className="flex w-[200%] gap-12 sm:gap-16 md:gap-24 items-center">
+      <div className="flex w-max max-w-none gap-12 sm:gap-16 md:gap-24 items-center">
         <motion.div
           animate={{ x: ["0%", "-50%"] }}
           transition={{

@@ -42,7 +42,7 @@ export default function DeveloperSection() {
   const activeProject = devProjects.find((p) => p.id === activeProjectId);
 
   return (
-    <section id="ecosystem-section" ref={containerRef} className="py-32 md:py-48 relative z-10">
+    <section id="ecosystem-section" ref={containerRef} className="py-32 md:py-48 relative z-10 w-full overflow-hidden">
       <div className="section-container">
         {/* Section Header */}
         <div className="dev-header max-w-3xl mb-16 will-change-transform">
@@ -79,35 +79,35 @@ export default function DeveloperSection() {
           {devProjects.map((project, idx) => (
             <div 
               key={`wrapper-${project.id}`} 
-              className="dev-project-wrapper sticky top-[12vh] w-full h-[75vh] flex items-center justify-center mb-32 origin-top"
-              style={{ zIndex: idx }}
+              className="dev-project-wrapper sticky top-[10vh] lg:top-[12vh] w-full flex items-center justify-center mb-16 lg:mb-32 origin-top"
+              style={{ zIndex: idx, height: '80vh' }}
             >
               <motion.div
                 key={project.id}
                 layoutId={`card-container-${project.id}`}
                 onClick={() => setActiveProjectId(project.id)}
-                className="dev-project-item w-full h-full flex flex-col md:flex-row bg-neutral-900 border border-neutral-800 rounded-[2rem] overflow-hidden cursor-pointer hover:border-[var(--active-accent)]/80 transition-colors group will-change-transform shadow-2xl"
+                className="dev-project-item w-full h-full flex flex-col lg:flex-row bg-neutral-900 border border-neutral-800 rounded-[1.5rem] lg:rounded-[2rem] overflow-hidden cursor-pointer hover:border-[var(--active-accent)]/80 transition-colors group will-change-transform shadow-2xl"
               >
-                {/* Card Content */}
-                <motion.div layoutId={`card-content-${project.id}`} className="p-8 md:p-12 lg:p-16 flex flex-col flex-grow justify-center relative bg-neutral-900">
-                  <div className="flex items-center gap-3 mb-8">
-                    <span className="font-mono-tech text-xs px-3 py-1.5 rounded-full bg-neutral-900 border border-neutral-800 text-neutral-400 uppercase">
+                {/* Card Content (Top Half on Mobile, Left Half on Desktop) */}
+                <motion.div layoutId={`card-content-${project.id}`} className="w-full h-[50%] lg:w-1/2 lg:h-full p-6 lg:p-12 xl:p-16 flex flex-col justify-center relative bg-neutral-900 overflow-hidden shrink-0">
+                  <div className="flex items-center gap-3 mb-4 lg:mb-8">
+                    <span className="font-mono-tech text-[10px] lg:text-xs px-3 py-1.5 rounded-full bg-neutral-900 border border-neutral-800 text-neutral-400 uppercase">
                       {project.year}
                     </span>
-                    <span className="font-mono-tech text-xs text-[var(--active-accent)] uppercase tracking-wider font-medium">
+                    <span className="font-mono-tech text-[10px] lg:text-xs text-[var(--active-accent)] uppercase tracking-wider font-medium">
                       {project.status}
                     </span>
                   </div>
                   
-                  <motion.h4 layoutId={`card-title-${project.id}`} className="font-semibold text-3xl md:text-5xl lg:text-6xl text-neutral-100 mb-6 tracking-tight leading-tight">
+                  <motion.h4 layoutId={`card-title-${project.id}`} className="font-semibold text-2xl md:text-4xl lg:text-5xl xl:text-6xl text-neutral-100 mb-2 lg:mb-6 tracking-tight leading-tight line-clamp-2">
                     {project.title}
                   </motion.h4>
                   
-                  <motion.p layoutId={`card-desc-${project.id}`} className="text-lg md:text-xl text-neutral-400 font-light mb-12 leading-relaxed max-w-2xl">
+                  <motion.p layoutId={`card-desc-${project.id}`} className="text-sm md:text-base lg:text-xl text-neutral-400 font-light mb-4 lg:mb-12 leading-relaxed max-w-2xl line-clamp-3">
                     {project.tagline}
                   </motion.p>
                   
-                  <div className="flex flex-wrap gap-2.5 mt-auto">
+                  <div className="hidden lg:flex flex-wrap gap-2.5 mt-auto">
                     {project.tech.map((t) => (
                       <span key={t} className="font-mono-tech text-xs px-4 py-2 border border-neutral-800/60 text-neutral-500 rounded-full bg-neutral-900/30">
                         {t}
@@ -116,18 +116,18 @@ export default function DeveloperSection() {
                   </div>
                 </motion.div>
 
-                {/* Card Main Snapshot - Takes up dynamic width based on orientation */}
+                {/* Card Main Snapshot (Bottom Half on Mobile, Right Half on Desktop) */}
                 {project.snapshots && project.snapshots.length > 0 && (
-                  <div className="w-full md:w-1/2 h-64 md:h-full bg-neutral-950/30 border-t md:border-t-0 md:border-l border-neutral-800 flex items-center justify-center p-6 md:p-12 shrink-0">
+                  <div className="w-full h-[50%] lg:w-1/2 lg:h-full bg-neutral-950/30 border-t lg:border-t-0 lg:border-l border-neutral-800 flex items-center justify-center p-4 lg:p-12 shrink-0">
                     <motion.div 
                       layoutId={`card-image-${project.id}`} 
-                      className={`relative rounded-xl overflow-hidden shadow-2xl border border-neutral-800/60 bg-neutral-900 w-full flex items-center justify-center ${['poultry_disease_detection', 'grounded_app', 'famspace'].includes(project.id) ? 'max-w-[260px] md:max-w-[300px] aspect-[9/16]' : 'aspect-video'}`}
+                      className={`relative rounded-xl overflow-hidden shadow-2xl border border-neutral-800/60 bg-neutral-900 flex items-center justify-center ${['poultry_disease_detection', 'grounded_app', 'famspace'].includes(project.id) ? 'w-auto h-full aspect-[9/16] max-w-[220px] lg:max-w-[300px]' : 'w-full max-h-full aspect-video'}`}
                     >
                       <div className="absolute inset-0 bg-neutral-900/20 group-hover:bg-transparent transition-colors duration-500 z-10 pointer-events-none" />
                       <img 
                         src={project.snapshots[0]} 
                         alt={project.title} 
-                        className="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-all duration-500" 
+                        className={`w-full h-full opacity-80 group-hover:opacity-100 transition-all duration-500 ${['poultry_disease_detection', 'grounded_app', 'famspace'].includes(project.id) ? 'object-contain p-2 lg:p-4' : 'object-cover'}`} 
                       />
                     </motion.div>
                   </div>

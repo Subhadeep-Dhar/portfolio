@@ -78,7 +78,7 @@ export default function Home() {
   });
 
   return (
-    <div ref={containerRef} className="theme-unified min-h-screen overflow-x-clip" style={{ backgroundColor: '#07090b' }}>
+    <div ref={containerRef} className="theme-unified min-h-screen" style={{ backgroundColor: '#07090b' }}>
       {/* 1. Custom boot loader */}
       <AnimatePresence>
         {loading && (
@@ -110,7 +110,7 @@ export default function Home() {
           <ThreeBackground />
 
           {/* Main Content Flow */}
-          <main className="relative z-10 flex flex-col items-center w-full max-w-[100vw] overflow-x-clip">
+          <main className="relative z-10 flex flex-col items-center w-full">
             <Hero />
             <About />
             <DeveloperSection />

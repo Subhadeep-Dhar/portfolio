@@ -42,7 +42,7 @@ export default function DeveloperSection() {
   const activeProject = devProjects.find((p) => p.id === activeProjectId);
 
   return (
-    <section id="ecosystem-section" ref={containerRef} className="py-32 md:py-48 relative z-10 w-full overflow-hidden">
+    <section id="ecosystem-section" ref={containerRef} className="py-32 md:py-48 relative z-10 w-full">
       <div className="section-container">
         {/* Section Header */}
         <div className="dev-header max-w-3xl mb-16 will-change-transform">
@@ -79,17 +79,21 @@ export default function DeveloperSection() {
           {devProjects.map((project, idx) => (
             <div 
               key={`wrapper-${project.id}`} 
-              className="dev-project-wrapper sticky top-[10vh] lg:top-[12vh] w-full flex items-center justify-center mb-16 lg:mb-32 origin-top"
-              style={{ zIndex: idx, height: '80vh' }}
+              className="dev-project-wrapper sticky top-[10vh] lg:top-[12vh] w-full flex items-center justify-center mb-16 lg:mb-32 origin-top h-[65vh] lg:h-[80vh]"
+              style={{ zIndex: idx }}
             >
               <motion.div
+                initial={{ opacity: 0, y: 120 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-10%" }}
+                transition={{ duration: 0.8, ease: "easeOut" }}
                 key={project.id}
                 layoutId={`card-container-${project.id}`}
                 onClick={() => setActiveProjectId(project.id)}
                 className="dev-project-item w-full h-full flex flex-col lg:flex-row bg-neutral-900 border border-neutral-800 rounded-[1.5rem] lg:rounded-[2rem] overflow-hidden cursor-pointer hover:border-[var(--active-accent)]/80 transition-colors group will-change-transform shadow-2xl"
               >
                 {/* Card Content (Top Half on Mobile, Left Half on Desktop) */}
-                <motion.div layoutId={`card-content-${project.id}`} className="w-full h-[50%] lg:w-1/2 lg:h-full p-6 lg:p-12 xl:p-16 flex flex-col justify-center relative bg-neutral-900 overflow-hidden shrink-0">
+                <motion.div layoutId={`card-content-${project.id}`} className="w-full h-[55%] lg:w-1/2 lg:h-full p-6 lg:p-12 xl:p-16 flex flex-col justify-center relative bg-neutral-900 overflow-hidden shrink-0">
                   <div className="flex items-center gap-3 mb-4 lg:mb-8">
                     <span className="font-mono-tech text-[10px] lg:text-xs px-3 py-1.5 rounded-full bg-neutral-900 border border-neutral-800 text-neutral-400 uppercase">
                       {project.year}
@@ -118,7 +122,7 @@ export default function DeveloperSection() {
 
                 {/* Card Main Snapshot (Bottom Half on Mobile, Right Half on Desktop) */}
                 {project.snapshots && project.snapshots.length > 0 && (
-                  <div className="w-full h-[50%] lg:w-1/2 lg:h-full bg-neutral-950/30 border-t lg:border-t-0 lg:border-l border-neutral-800 flex items-center justify-center p-4 lg:p-12 shrink-0">
+                  <div className="w-full h-[45%] lg:w-1/2 lg:h-full bg-neutral-950/30 border-t lg:border-t-0 lg:border-l border-neutral-800 flex items-center justify-center p-4 lg:p-12 shrink-0">
                     <motion.div 
                       layoutId={`card-image-${project.id}`} 
                       className={`relative rounded-xl overflow-hidden shadow-2xl border border-neutral-800/60 bg-neutral-900 flex items-center justify-center ${['poultry_disease_detection', 'grounded_app', 'famspace'].includes(project.id) ? 'w-auto h-full aspect-[9/16] max-w-[220px] lg:max-w-[300px]' : 'w-full max-h-full aspect-video'}`}

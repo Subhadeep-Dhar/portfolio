@@ -142,7 +142,7 @@ export const projects = [
   },
   {
     id: 'grounded_app',
-    title: 'Grounded — Discipline & Consistency Platform',
+    title: 'Grounded',
     tagline: 'A mobile app for daily challenges and accountability in everyday routines',
 
     problem:
@@ -223,7 +223,7 @@ export const projects = [
   },
   {
     id: 'famspace',
-    title: 'FamSpace – Offline-First Family Digital Vault',
+    title: 'FamSpace',
     tagline: 'Secure, hierarchical file manager for organizing family data',
     problem:
       'Families often store important documents and media across devices without a structured system, making organization and controlled sharing difficult. Existing solutions rely heavily on cloud storage, raising privacy concerns and requiring constant internet access.',
@@ -257,7 +257,7 @@ export const projects = [
   },
   {
     id: 'muse-mart',
-    title: 'Muse Mart — E-Commerce Platform',
+    title: 'Muse Mart',
     tagline: 'Full-stack musical instruments marketplace with real-time trending insights',
 
     problem:

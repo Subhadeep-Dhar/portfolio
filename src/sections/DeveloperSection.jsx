@@ -90,10 +90,16 @@ export default function DeveloperSection() {
                 {/* Card Main Snapshot - Takes up half width on Desktop */}
                 <motion.div layoutId={`card-image-${project.id}`} className="w-full md:w-1/2 h-64 md:h-full bg-neutral-950 border-b md:border-b-0 md:border-r border-neutral-800 relative flex items-center justify-center overflow-hidden shrink-0">
                   <div className="absolute inset-0 bg-neutral-900/20 group-hover:bg-transparent transition-colors duration-500 z-10 pointer-events-none" />
-                  <svg className="w-20 h-20 opacity-20 group-hover:opacity-30 transition-opacity duration-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                  </svg>
-                  <span className="absolute bottom-6 right-6 font-mono-tech text-xs uppercase tracking-widest opacity-30">Snapshot 1</span>
+                  {project.snapshots && project.snapshots.length > 0 ? (
+                    <img src={project.snapshots[0]} alt={project.title} className="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity duration-500" />
+                  ) : (
+                    <>
+                      <svg className="w-20 h-20 opacity-20 group-hover:opacity-30 transition-opacity duration-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                      </svg>
+                      <span className="absolute bottom-6 right-6 font-mono-tech text-xs uppercase tracking-widest opacity-30">Snapshot 1</span>
+                    </>
+                  )}
                 </motion.div>
 
                 {/* Card Content */}
@@ -157,11 +163,17 @@ export default function DeveloperSection() {
                 </button>
 
                 {/* Modal Header / Main Snapshot */}
-                <motion.div layoutId={`card-image-${activeProject.id}`} className="w-full h-64 md:h-96 bg-neutral-950 relative flex items-center justify-center shrink-0 border-b border-neutral-800">
-                   <svg className="w-16 h-16 opacity-20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                  </svg>
-                  <span className="absolute bottom-4 right-4 font-mono-tech text-xs uppercase tracking-widest opacity-30">Snapshot 1 (Hero)</span>
+                <motion.div layoutId={`card-image-${activeProject.id}`} className="w-full h-64 md:h-96 bg-neutral-950 relative flex items-center justify-center shrink-0 border-b border-neutral-800 overflow-hidden">
+                  {activeProject.snapshots && activeProject.snapshots.length > 0 ? (
+                    <img src={activeProject.snapshots[0]} alt={activeProject.title} className="w-full h-full object-cover" />
+                  ) : (
+                    <>
+                      <svg className="w-16 h-16 opacity-20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                      </svg>
+                      <span className="absolute bottom-4 right-4 font-mono-tech text-xs uppercase tracking-widest opacity-30">Snapshot 1 (Hero)</span>
+                    </>
+                  )}
                 </motion.div>
 
                 {/* Scrollable Content Area */}
@@ -195,10 +207,16 @@ export default function DeveloperSection() {
                       </div>
 
                       {/* Extra Snapshot Placeholder 2 */}
-                      <div className="w-full aspect-[21/9] bg-neutral-950 border border-neutral-800 rounded-lg relative flex items-center justify-center overflow-hidden">
-                        <svg className="w-8 h-8 opacity-20" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" /></svg>
-                        <span className="absolute bottom-3 right-3 font-mono-tech text-[10px] uppercase tracking-widest opacity-30">Snapshot 2 (Details)</span>
-                      </div>
+                      {activeProject.snapshots && activeProject.snapshots.length > 1 ? (
+                        <div className="w-full bg-neutral-950 border border-neutral-800 rounded-lg relative flex items-center justify-center overflow-hidden">
+                          <img src={activeProject.snapshots[1]} alt={`${activeProject.title} detail`} className="w-full h-auto object-cover" />
+                        </div>
+                      ) : (
+                        <div className="w-full aspect-[21/9] bg-neutral-950 border border-neutral-800 rounded-lg relative flex items-center justify-center overflow-hidden">
+                          <svg className="w-8 h-8 opacity-20" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" /></svg>
+                          <span className="absolute bottom-3 right-3 font-mono-tech text-[10px] uppercase tracking-widest opacity-30">Snapshot 2 (Details)</span>
+                        </div>
+                      )}
 
                       <div className="space-y-3">
                         <span className="mono-label text-[var(--active-accent)] block">How I Built It</span>
@@ -210,15 +228,28 @@ export default function DeveloperSection() {
                         <p className="text-neutral-300 font-light leading-relaxed text-base">{activeProject.result}</p>
                       </div>
 
-                      {/* Extra Snapshot Placeholder 3 */}
-                      <div className="grid grid-cols-2 gap-4">
-                        <div className="w-full aspect-square bg-neutral-950 border border-neutral-800 rounded-lg relative flex items-center justify-center overflow-hidden">
-                           <span className="absolute bottom-3 right-3 font-mono-tech text-[10px] uppercase tracking-widest opacity-30">Snapshot 3</span>
+                      {/* Extra Snapshot Placeholder 3 & 4 */}
+                      {(activeProject.snapshots && activeProject.snapshots.length > 2) ? (
+                        <div className="grid grid-cols-2 gap-4">
+                          <div className="w-full bg-neutral-950 border border-neutral-800 rounded-lg relative flex items-center justify-center overflow-hidden">
+                             <img src={activeProject.snapshots[2]} alt={`${activeProject.title} snapshot 3`} className="w-full h-auto object-cover" />
+                          </div>
+                          {activeProject.snapshots.length > 3 && (
+                            <div className="w-full bg-neutral-950 border border-neutral-800 rounded-lg relative flex items-center justify-center overflow-hidden">
+                               <img src={activeProject.snapshots[3]} alt={`${activeProject.title} snapshot 4`} className="w-full h-auto object-cover" />
+                            </div>
+                          )}
                         </div>
-                        <div className="w-full aspect-square bg-neutral-950 border border-neutral-800 rounded-lg relative flex items-center justify-center overflow-hidden">
-                           <span className="absolute bottom-3 right-3 font-mono-tech text-[10px] uppercase tracking-widest opacity-30">Snapshot 4</span>
+                      ) : (
+                        <div className="grid grid-cols-2 gap-4">
+                          <div className="w-full aspect-square bg-neutral-950 border border-neutral-800 rounded-lg relative flex items-center justify-center overflow-hidden">
+                             <span className="absolute bottom-3 right-3 font-mono-tech text-[10px] uppercase tracking-widest opacity-30">Snapshot 3</span>
+                          </div>
+                          <div className="w-full aspect-square bg-neutral-950 border border-neutral-800 rounded-lg relative flex items-center justify-center overflow-hidden">
+                             <span className="absolute bottom-3 right-3 font-mono-tech text-[10px] uppercase tracking-widest opacity-30">Snapshot 4</span>
+                          </div>
                         </div>
-                      </div>
+                      )}
 
                     </div>
 

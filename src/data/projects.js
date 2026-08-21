@@ -61,6 +61,12 @@ export const projects = [
       'Git',
       'Responsive UI Design',
     ],
+    snapshots: [
+      '/images/projects/dooars-tutors/snap1.png',
+      '/images/projects/dooars-tutors/snap2.png',
+      '/images/projects/dooars-tutors/snap3.png',
+      '/images/projects/dooars-tutors/snap4.png'
+    ],
     tags: ['Fullstack', 'AI', 'Next.js / React'],
     featured: true,
     status: 'completed',

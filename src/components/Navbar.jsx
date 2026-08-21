@@ -4,21 +4,15 @@ import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { siteConfig } from '@/data/siteConfig';
 import { useGestures } from '@/hooks/useGestures';
-const devLinks = [
-  { label: 'Profile',    href: '#profile' },
-  { label: 'Projects',   href: '#ecosystem-section' },
-  { label: 'Evolution', href: '#evolution' },
-  { label: 'Contact',   href: '#contact' },
+const unifiedLinks = [
+  { label: 'Profile', href: '#profile' },
+  { label: 'Software', href: '#ecosystem-section' },
+  { label: 'Research', href: '#research-section' },
+  { label: 'Experience', href: '#evolution' },
+  { label: 'Contact', href: '#contact' },
 ];
 
-const resLinks = [
-  { label: 'Profile',    href: '#profile' },
-  { label: 'Projects',  href: '#research-section' },
-  { label: 'Evolution', href: '#evolution' },
-  { label: 'Contact',   href: '#contact' },
-];
-
-export default function Navbar({ mode = 'home', onExitMode }) {
+export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const [gesturesEnabled, setGesturesEnabled] = useState(false);
@@ -56,79 +50,53 @@ export default function Navbar({ mode = 'home', onExitMode }) {
   }, []);
 
   const handleBrandClick = (e) => {
-    if (mode !== 'home') {
-      e.preventDefault();
-      // Use browser history to navigate back so gestures/buttons work
-      if (typeof window !== 'undefined' && window.history && window.history.length > 1) {
-        window.history.back();
-      } else if (onExitMode) {
-        onExitMode();
-      }
-    }
+    e.preventDefault();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
-  const currentLinks = mode === 'developer' ? devLinks : mode === 'researcher' ? resLinks : [];
-
   const handleNavClick = (e, href) => {
-    if (mode !== 'home') {
-      e.preventDefault();
-      const targetId = href.replace('#', '');
-      const targetEl = document.getElementById(targetId);
-      if (targetEl) {
-        targetEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      } else {
-        window.location.hash = href;
-      }
+    e.preventDefault();
+    const targetId = href.replace('#', '');
+    const targetEl = document.getElementById(targetId);
+    if (targetEl) {
+      targetEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    } else {
+      window.location.hash = href;
     }
   };
 
   return (
     <motion.header
-      initial={{ y: -60, opacity: 0 }}
+      initial={{ y: -100, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
-      transition={{ duration: 0.5, ease: 'easeOut' }}
-      className={`fixed top-0 left-0 right-0 z-40 transition-all duration-300 ${
-        scrolled ? 'bg-[#07090e]/85 backdrop-blur-md border-b border-gray-950' : 'bg-transparent'
-      }`}
+      transition={{ duration: 0.7, ease: 'easeOut' }}
+      className="fixed top-4 left-0 right-0 z-50 flex justify-center pointer-events-none transition-all duration-500"
     >
-      <div className="section-container">
-        <div className="flex items-center justify-between h-16">
-          {/* Logo / Brand Name Trigger (Reset Path) */}
+      <div 
+        className={`pointer-events-auto flex items-center justify-between px-8 h-20 rounded-full transition-all duration-500 border overflow-hidden relative shadow-2xl ${
+          scrolled 
+            ? 'w-[90%] max-w-5xl bg-neutral-900/60 backdrop-blur-xl border-white/10 shadow-black/50' 
+            : 'w-[95%] max-w-7xl bg-transparent border-transparent shadow-transparent'
+        }`}
+      >
+        <div className="flex w-full items-center justify-between h-full">
           <div className="flex items-center gap-3">
-            {mode !== 'home' && (
-              <button
-                onClick={() => {
-                  if (typeof window !== 'undefined' && window.history && window.history.length > 1) {
-                    window.history.back();
-                  } else if (onExitMode) {
-                    onExitMode();
-                  }
-                }}
-                aria-label="Go back"
-                className="text-gray-300 hover:text-[var(--active-accent)] transition-colors"
-              >
-                ←
-              </button>
-            )}
-
             <a
               href="#"
               onClick={handleBrandClick}
-              className="font-body text-base text-[var(--active-accent)] hover:text-gray-100 transition-colors tracking-normal font-semibold"
+              className="font-body text-xl md:text-2xl text-[var(--active-accent)] hover:text-gray-100 transition-colors tracking-normal font-semibold"
             >
               Subhadeep Dhar
             </a>
           </div>
 
-          {/* Dynamic Path Navigation */}
-          {mode !== 'home' && (
-            <nav className="hidden md:flex items-center gap-6">
-              {currentLinks.map((link) => (
+          <nav className="hidden md:flex items-center gap-7">
+            {unifiedLinks.map((link) => (
                 <a
                   key={link.href}
                   href={link.href}
                   onClick={(e) => handleNavClick(e, link.href)}
-                  className="font-body text-[14px] text-gray-300 hover:text-[var(--active-accent)] transition-colors tracking-normal font-medium"
+                  className="font-body text-[15px] md:text-lg text-gray-300 hover:text-white transition-colors tracking-wide font-medium"
                 >
                   {link.label}
                 </a>
@@ -138,39 +106,34 @@ export default function Navbar({ mode = 'home', onExitMode }) {
                   href={siteConfig.links.resume}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="font-body text-xs border border-[var(--active-accent)]/30 text-[var(--active-accent)] px-3 py-1 rounded hover:bg-[var(--active-accent)]/10 transition-all duration-200 tracking-normal font-medium"
+                  className="font-body text-sm md:text-base bg-white text-black px-6 py-2.5 rounded-full hover:scale-105 transition-all duration-300 font-semibold"
                 >
                   Resume
                 </a>
               )}
-            </nav>
-          )}
+          </nav>
 
-          {/* Mobile menu trigger */}
-          {mode !== 'home' && (
-            <button
-              className="md:hidden font-body text-[var(--active-accent)] text-sm focus:outline-none font-medium"
-              onClick={() => setMenuOpen(!menuOpen)}
-              aria-label="Toggle menu"
-            >
-              {menuOpen ? 'Close' : 'Menu'}
-            </button>
-          )}
+          <button
+            className="md:hidden font-body text-[var(--active-accent)] text-sm focus:outline-none font-medium"
+            onClick={() => setMenuOpen(!menuOpen)}
+            aria-label="Toggle menu"
+          >
+            {menuOpen ? 'Close' : 'Menu'}
+          </button>
         </div>
       </div>
 
-      {/* Mobile navigation panel */}
       <AnimatePresence>
-        {menuOpen && mode !== 'home' && (
+        {menuOpen && (
           <motion.div
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: 'auto' }}
-            exit={{ opacity: 0, height: 0 }}
+            initial={{ opacity: 0, y: -20, scale: 0.95 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, y: -20, scale: 0.95 }}
             transition={{ duration: 0.25 }}
-            className="md:hidden bg-[#0c0e14] border-t border-gray-950"
+            className="fixed top-20 left-1/2 -translate-x-1/2 w-[90%] max-w-sm bg-neutral-900/80 backdrop-blur-2xl border border-white/10 rounded-2xl shadow-2xl z-40 overflow-hidden md:hidden"
           >
-            <div className="section-container py-6 flex flex-col gap-4">
-              {currentLinks.map((link) => (
+            <div className="p-6 flex flex-col gap-4">
+              {unifiedLinks.map((link) => (
                 <a
                   key={link.href}
                   href={link.href}
@@ -178,7 +141,7 @@ export default function Navbar({ mode = 'home', onExitMode }) {
                     setMenuOpen(false);
                     handleNavClick(e, link.href);
                   }}
-                  className="font-body text-sm text-gray-400 hover:text-[var(--active-accent)] transition-colors tracking-normal font-medium"
+                  className="font-body text-base text-gray-300 hover:text-white transition-colors tracking-wide font-medium border-b border-white/5 pb-2 last:border-0"
                 >
                   {link.label}
                 </a>
@@ -188,7 +151,7 @@ export default function Navbar({ mode = 'home', onExitMode }) {
                   href={siteConfig.links.resume}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="font-body text-sm border border-[var(--active-accent)]/50 text-[var(--active-accent)] py-2 rounded text-center font-medium"
+                  className="font-body mt-2 text-sm bg-white text-black py-2.5 rounded-full text-center font-semibold hover:bg-gray-200 transition-colors"
                 >
                   View Resume
                 </a>

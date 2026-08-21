@@ -9,7 +9,7 @@ export const siteConfig = {
   // ─── Identity ─────────────────────────────────────────────────
   name: 'Subhadeep Dhar',
   handle: '@subhadeep_dhar',
-  headline: 'Building thoughtful products with care and attention to detail',
+  headline: 'Co-Founder of Dooars Tutors | Software Engineer | Researcher',
   subheadline: 'MCA Student · Developer · Researcher',
   location: 'Karnataka, India',
   available: true,          // set to false to hide "open to work" tag

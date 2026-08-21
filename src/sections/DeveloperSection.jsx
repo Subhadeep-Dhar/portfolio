@@ -1,199 +1,275 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { projects } from '@/data/projects';
 import TechEcosystem from '@/components/TechEcosystem';
+import TechMarquee from '@/components/TechMarquee';
+import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { useGSAP } from '@gsap/react';
+
+gsap.registerPlugin(ScrollTrigger);
 
 export default function DeveloperSection() {
   const [activeProjectId, setActiveProjectId] = useState(null);
 
-  // Filter projects for developer/builder paths
   const devProjects = projects.filter(
     (p) => !p.tags.includes('Remote Sensing / GIS')
   );
 
+  const containerRef = useRef(null);
+  
+  useGSAP(() => {
+    // Animate the section header
+    gsap.fromTo('.dev-header',
+      { opacity: 0, y: 50 },
+      {
+        opacity: 1, y: 0,
+        duration: 1,
+        ease: "power3.out",
+        scrollTrigger: {
+          trigger: containerRef.current,
+          start: "top 80%",
+        }
+      }
+    );
+
+  }, { scope: containerRef });
+
+  // Find active project object
+  const activeProject = devProjects.find((p) => p.id === activeProjectId);
+
   return (
-    <section id="ecosystem-section" className="py-24 relative z-20">
+    <section id="ecosystem-section" ref={containerRef} className="py-32 md:py-48 relative z-10">
       <div className="section-container">
         {/* Section Header */}
-        <div className="max-w-3xl mb-16">
-          <span className="mono-label block mb-2 text-neutral-500">Software Engineering</span>
-          <h2 className="text-3xl sm:text-4xl font-light text-neutral-100 tracking-tight leading-tight">
-            Developer & Builder
+        <div className="dev-header max-w-3xl mb-16 will-change-transform">
+          <span className="mono-label block mb-6 text-[var(--active-accent)]">Software Projects</span>
+          <h2 className="text-super-header font-light text-neutral-100 tracking-tighter leading-tight">
+            My Work
           </h2>
-          <p className="text-sm text-neutral-400 mt-2 max-w-xl leading-relaxed">
-            Architecting databases and designs, optimising structures, and caching pipelines.
+          <p className="text-base md:text-xl text-neutral-400 mt-6 max-w-2xl leading-relaxed font-light">
+            Building robust web applications, reliable backends, and seamless user experiences.
           </p>
         </div>
 
-        {/* 1. Tech Ecosystem Component */}
+        {/* 1. Tech Ecosystem Component - Commented out as requested */}
+        {/* 
         <div className="mb-24">
           <TechEcosystem />
-        </div>
+        </div> 
+        */}
 
-        {/* 2. Systems Specs */}
-        <div className="space-y-6">
-          <div className="flex flex-col gap-1 mb-8">
-            <span className="mono-label text-neutral-500">System Blueprints</span>
-            <h3 className="font-semibold text-lg text-neutral-200">Engineering experiments</h3>
-          </div>
-
-          <div className="grid gap-4">
-            {devProjects.map((project, idx) => {
-              const isOpen = activeProjectId === project.id;
-
-              return (
-                <div
-                  key={project.id}
-                  className="border border-neutral-900 bg-[#24201c]/10 rounded overflow-hidden hover:border-neutral-800 transition-colors duration-300"
-                >
-                  {/* Summary Header */}
-                  <div
-                    onClick={() => setActiveProjectId(isOpen ? null : project.id)}
-                    className="p-6 flex flex-col sm:flex-row sm:items-center justify-between gap-4 cursor-pointer select-none"
-                  >
-                    <div className="space-y-1">
-                      <div className="flex items-center gap-2.5">
-                        <span className="font-mono-tech text-xs text-neutral-500">
-                          Project {String(idx + 1).padStart(2, '0')}
-                        </span>
-                        <span className="font-mono-tech text-xs text-neutral-600">
-                          · {project.year}
-                        </span>
-                      </div>
-                      <h4 className="font-semibold text-sm text-neutral-200">
-                        {project.title}
-                      </h4>
-                      <p className="text-sm text-neutral-450 leading-relaxed font-light">
-                        {project.tagline}
-                      </p>
-                    </div>
-
-                    <div className="flex items-center gap-4">
-                      {/* Tech badges */}
-                      <div className="hidden md:flex gap-1.5">
-                        {project.tech.slice(0, 3).map((t) => (
-                          <span
-                            key={t}
-                            className="font-mono-tech text-xs px-2 py-0.5 border border-neutral-900 text-neutral-450 rounded bg-[#171411]/40"
-                          >
-                            {t}
-                          </span>
-                        ))}
-                      </div>
-
-                      <span className="font-mono-tech text-xs text-neutral-500 uppercase tracking-widest pl-2">
-                        {isOpen ? 'Close' : 'View Details'}
-                      </span>
-                    </div>
-                  </div>
-
-                  {/* Expanded Spec Panel */}
-                  <AnimatePresence>
-                    {isOpen && (
-                      <motion.div
-                        initial={{ height: 0 }}
-                        animate={{ height: 'auto' }}
-                        exit={{ height: 0 }}
-                        transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
-                        className="overflow-hidden bg-[#171411]/25 border-t border-neutral-900"
-                      >
-                        <div className="p-6 grid md:grid-cols-12 gap-8 text-sm text-neutral-400 leading-relaxed font-light">
-                          {/* Details parameters */}
-                          <div className="md:col-span-8 space-y-5">
-                            <div>
-                              <span className="mono-label text-neutral-600 block mb-1">Challenge</span>
-                              <p className="text-neutral-300">{project.problem}</p>
-                            </div>
-                            
-                            <div>
-                              <span className="mono-label text-neutral-600 block mb-1">Hypothesis</span>
-                              <p className="text-neutral-300">{project.hypothesis}</p>
-                            </div>
-
-                            <div>
-                              <span className="mono-label text-neutral-600 block mb-1">Implementation</span>
-                              <p className="text-neutral-300">{project.approach}</p>
-                            </div>
-
-                            <div>
-                              <span className="mono-label text-neutral-500 block mb-1">Results & Outcomes</span>
-                              <p className="text-neutral-200 font-normal">{project.result}</p>
-                            </div>
-
-                            <div>
-                              <span className="mono-label text-neutral-600 block mb-1">Future Plans</span>
-                              <p className="text-neutral-400">{project.future}</p>
-                            </div>
-                          </div>
-
-                          {/* Tech Meta parameters */}
-                          <div className="md:col-span-4 border-t md:border-t-0 md:border-l border-neutral-900 pt-6 md:pt-0 md:pl-6 space-y-4">
-                            <div>
-                              <span className="mono-label text-neutral-600 block mb-1">Technologies</span>
-                              <div className="flex flex-wrap gap-1.5">
-                                {project.tech.map((t) => (
-                                  <span
-                                    key={t}
-                                    className="font-mono-tech text-xs px-2 py-0.5 border border-neutral-900 text-neutral-450 rounded bg-[#171411]/50"
-                                  >
-                                    {t}
-                                  </span>
-                                ))}
-                              </div>
-                            </div>
-
-                            <div>
-                              <span className="mono-label text-neutral-650 block mb-1">Project Status</span>
-                              <span
-                                className={`status-tag text-xs inline-block ${
-                                  project.status === 'completed'
-                                    ? 'status-completed'
-                                    : 'status-in-progress'
-                                }`}
-                              >
-                                {project.status.toUpperCase()}
-                              </span>
-                            </div>
-
-                            {/* Project links */}
-                            {(project.links?.demo || project.links?.github) && (
-                              <div className="pt-4 border-t border-neutral-900 space-y-2">
-                                <span className="mono-label text-neutral-650 block mb-2">Project Links</span>
-                                {project.links.github && (
-                                  <a
-                                    href={project.links.github}
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    className="block font-mono-tech text-sm border border-neutral-900 text-neutral-450 hover:border-neutral-500 hover:text-neutral-250 text-center py-2 rounded transition-colors duration-200"
-                                  >
-                                    View Source Code
-                                  </a>
-                                )}
-                                {project.links.demo && (
-                                  <a
-                                    href={project.links.demo}
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    className="block font-mono-tech text-sm bg-neutral-900/10 border border-neutral-850 text-neutral-450 hover:bg-neutral-900/20 text-center py-2 rounded transition-colors duration-200"
-                                  >
-                                    Live Demo
-                                  </a>
-                                )}
-                              </div>
-                            )}
-                          </div>
-                        </div>
-                      </motion.div>
-                    )}
-                  </AnimatePresence>
-                </div>
-              );
-            })}
-          </div>
+        {/* New Tech Icons Marquee */}
+        <div className="mb-32">
+          <TechMarquee />
         </div>
       </div>
+
+      {/* 2. Systems Specs (Vertical Sticky Stacking Carousel) */}
+      <div className="dev-projects-wrapper w-full flex flex-col relative px-4 md:px-8 xl:px-0 mx-auto max-w-7xl mt-12 mb-48">
+        <div className="flex flex-col gap-1 mb-16 relative z-10">
+          <span className="mono-label text-[var(--active-accent)]">Selected Projects</span>
+          <h3 className="font-semibold text-3xl md:text-5xl text-neutral-200">What I've Built</h3>
+        </div>
+
+        <div className="relative w-full pb-[10vh]">
+          {devProjects.map((project, idx) => (
+            <div 
+              key={`wrapper-${project.id}`} 
+              className="dev-project-wrapper sticky top-[10vh] w-full h-[80vh] flex items-center justify-center mb-32 origin-top"
+              style={{ zIndex: idx }}
+            >
+              <motion.div
+                key={project.id}
+                layoutId={`card-container-${project.id}`}
+                onClick={() => setActiveProjectId(project.id)}
+                className="dev-project-item w-full h-full flex flex-col md:flex-row bg-neutral-900 border border-neutral-800 rounded-[2rem] overflow-hidden cursor-pointer hover:border-[var(--active-accent)]/80 transition-colors group will-change-transform shadow-2xl"
+              >
+                {/* Card Main Snapshot - Takes up half width on Desktop */}
+                <motion.div layoutId={`card-image-${project.id}`} className="w-full md:w-1/2 h-64 md:h-full bg-neutral-950 border-b md:border-b-0 md:border-r border-neutral-800 relative flex items-center justify-center overflow-hidden shrink-0">
+                  <div className="absolute inset-0 bg-neutral-900/20 group-hover:bg-transparent transition-colors duration-500 z-10 pointer-events-none" />
+                  <svg className="w-20 h-20 opacity-20 group-hover:opacity-30 transition-opacity duration-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                  </svg>
+                  <span className="absolute bottom-6 right-6 font-mono-tech text-xs uppercase tracking-widest opacity-30">Snapshot 1</span>
+                </motion.div>
+
+                {/* Card Content */}
+                <motion.div layoutId={`card-content-${project.id}`} className="p-8 md:p-12 lg:p-16 flex flex-col flex-grow justify-center relative bg-neutral-900">
+                  <div className="flex items-center gap-3 mb-8">
+                    <span className="font-mono-tech text-xs px-3 py-1.5 rounded-full bg-neutral-900 border border-neutral-800 text-neutral-400 uppercase">
+                      {project.year}
+                    </span>
+                    <span className="font-mono-tech text-xs text-[var(--active-accent)] uppercase tracking-wider font-medium">
+                      {project.status}
+                    </span>
+                  </div>
+                  
+                  <motion.h4 layoutId={`card-title-${project.id}`} className="font-semibold text-3xl md:text-5xl lg:text-6xl text-neutral-100 mb-6 tracking-tight leading-tight">
+                    {project.title}
+                  </motion.h4>
+                  
+                  <motion.p layoutId={`card-desc-${project.id}`} className="text-lg md:text-xl text-neutral-400 font-light mb-12 leading-relaxed max-w-2xl">
+                    {project.tagline}
+                  </motion.p>
+                  
+                  <div className="flex flex-wrap gap-2.5 mt-auto">
+                    {project.tech.map((t) => (
+                      <span key={t} className="font-mono-tech text-xs px-4 py-2 border border-neutral-800/60 text-neutral-500 rounded-full bg-neutral-900/30">
+                        {t}
+                      </span>
+                    ))}
+                  </div>
+                </motion.div>
+              </motion.div>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* Expanded Modal */}
+      <AnimatePresence>
+        {activeProject && (
+          <>
+            {/* Dark Overlay */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              onClick={() => setActiveProjectId(null)}
+              className="fixed inset-0 bg-black/80 backdrop-blur-sm z-[100] cursor-pointer"
+            />
+            
+            {/* Modal Container */}
+            <div className="fixed inset-0 z-[101] flex items-center justify-center p-4 md:p-8 pointer-events-none">
+              <motion.div
+                layoutId={`card-container-${activeProject.id}`}
+                className="bg-neutral-900 border border-neutral-800 rounded-2xl overflow-hidden w-full max-w-5xl max-h-[90vh] flex flex-col pointer-events-auto shadow-2xl relative"
+              >
+                {/* Close Button */}
+                <button 
+                  onClick={() => setActiveProjectId(null)}
+                  className="absolute top-4 right-4 z-20 bg-black/50 hover:bg-black p-2 rounded-full text-white backdrop-blur-md transition-colors"
+                >
+                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                </button>
+
+                {/* Modal Header / Main Snapshot */}
+                <motion.div layoutId={`card-image-${activeProject.id}`} className="w-full h-64 md:h-96 bg-neutral-950 relative flex items-center justify-center shrink-0 border-b border-neutral-800">
+                   <svg className="w-16 h-16 opacity-20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                  </svg>
+                  <span className="absolute bottom-4 right-4 font-mono-tech text-xs uppercase tracking-widest opacity-30">Snapshot 1 (Hero)</span>
+                </motion.div>
+
+                {/* Scrollable Content Area */}
+                <div className="overflow-y-auto p-6 md:p-10 flex-grow custom-scrollbar">
+                  <motion.div layoutId={`card-content-${activeProject.id}`}>
+                    <div className="flex items-center gap-3 mb-4">
+                      <span className="font-mono-tech text-xs px-2 py-1 rounded bg-neutral-800 text-neutral-400 uppercase">
+                        {activeProject.year}
+                      </span>
+                      <span className="font-mono-tech text-xs text-[var(--active-accent)] uppercase border border-[var(--active-accent)]/30 px-2 py-1 rounded">
+                        {activeProject.status}
+                      </span>
+                    </div>
+
+                    <motion.h4 layoutId={`card-title-${activeProject.id}`} className="font-semibold text-3xl md:text-5xl text-neutral-100 mb-4 tracking-tight">
+                      {activeProject.title}
+                    </motion.h4>
+                    
+                    <motion.p layoutId={`card-desc-${activeProject.id}`} className="text-lg md:text-xl text-neutral-400 font-light mb-10 max-w-3xl">
+                      {activeProject.tagline}
+                    </motion.p>
+                  </motion.div>
+
+                  <div className="grid md:grid-cols-12 gap-10">
+                    {/* Left Column: Details & More Snapshots */}
+                    <div className="md:col-span-8 space-y-10">
+                      
+                      <div className="space-y-3">
+                        <span className="mono-label text-[var(--active-accent)] block">The Problem</span>
+                        <p className="text-neutral-300 font-light leading-relaxed text-base">{activeProject.problem}</p>
+                      </div>
+
+                      {/* Extra Snapshot Placeholder 2 */}
+                      <div className="w-full aspect-[21/9] bg-neutral-950 border border-neutral-800 rounded-lg relative flex items-center justify-center overflow-hidden">
+                        <svg className="w-8 h-8 opacity-20" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" /></svg>
+                        <span className="absolute bottom-3 right-3 font-mono-tech text-[10px] uppercase tracking-widest opacity-30">Snapshot 2 (Details)</span>
+                      </div>
+
+                      <div className="space-y-3">
+                        <span className="mono-label text-[var(--active-accent)] block">How I Built It</span>
+                        <p className="text-neutral-300 font-light leading-relaxed text-base">{activeProject.approach}</p>
+                      </div>
+                      
+                      <div className="space-y-3">
+                        <span className="mono-label text-[var(--active-accent)] block">The Results</span>
+                        <p className="text-neutral-300 font-light leading-relaxed text-base">{activeProject.result}</p>
+                      </div>
+
+                      {/* Extra Snapshot Placeholder 3 */}
+                      <div className="grid grid-cols-2 gap-4">
+                        <div className="w-full aspect-square bg-neutral-950 border border-neutral-800 rounded-lg relative flex items-center justify-center overflow-hidden">
+                           <span className="absolute bottom-3 right-3 font-mono-tech text-[10px] uppercase tracking-widest opacity-30">Snapshot 3</span>
+                        </div>
+                        <div className="w-full aspect-square bg-neutral-950 border border-neutral-800 rounded-lg relative flex items-center justify-center overflow-hidden">
+                           <span className="absolute bottom-3 right-3 font-mono-tech text-[10px] uppercase tracking-widest opacity-30">Snapshot 4</span>
+                        </div>
+                      </div>
+
+                    </div>
+
+                    {/* Right Column: Metadata */}
+                    <div className="md:col-span-4 space-y-8">
+                      <div>
+                        <span className="mono-label text-neutral-500 block mb-3">Tech Stack</span>
+                        <div className="flex flex-wrap gap-2">
+                          {activeProject.tech.map((t) => (
+                            <span key={t} className="font-mono-tech text-xs px-3 py-1.5 border border-neutral-800 text-neutral-300 rounded-md bg-neutral-900/50">
+                              {t}
+                            </span>
+                          ))}
+                        </div>
+                      </div>
+
+                      {(activeProject.links?.demo || activeProject.links?.github) && (
+                        <div className="pt-8 border-t border-neutral-800 space-y-3">
+                          <span className="mono-label text-neutral-500 block mb-3">Links</span>
+                          {activeProject.links.github && (
+                            <a
+                              href={activeProject.links.github}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="flex items-center justify-center gap-2 font-mono-tech text-sm border border-neutral-700 text-white hover:bg-white hover:text-black py-3 rounded-md transition-all duration-300"
+                            >
+                              <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+                              View Source Code
+                            </a>
+                          )}
+                          {activeProject.links.demo && (
+                            <a
+                              href={activeProject.links.demo}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="flex items-center justify-center gap-2 font-mono-tech text-sm bg-[var(--active-accent)] text-black hover:bg-white py-3 rounded-md transition-all duration-300 font-bold"
+                            >
+                              Launch Live Demo
+                              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
+                            </a>
+                          )}
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                </div>
+              </motion.div>
+            </div>
+          </>
+        )}
+      </AnimatePresence>
     </section>
   );
 }

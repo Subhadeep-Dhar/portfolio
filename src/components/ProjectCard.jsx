@@ -48,23 +48,23 @@ export default function ProjectCard({ project, index }) {
               </span>
             </div>
 
-            <h3 className="font-display font-semibold text-lg text-[var(--color-text-main)] leading-tight mb-1 group-hover:text-[var(--active-accent)] transition-colors duration-200">
+            <h3 className="font-display font-semibold text-2xl md:text-3xl lg:text-4xl text-[var(--color-text-main)] leading-tight mb-2 group-hover:text-[var(--active-accent)] transition-colors duration-200">
               {project.title}
             </h3>
-            <p className="text-sm text-neutral-400 leading-relaxed">
+            <p className="text-base md:text-lg text-neutral-400 leading-relaxed max-w-2xl">
               {project.tagline}
             </p>
           </div>
 
           {/* Status badge + expand indicator */}
-          <div className="flex flex-col items-end gap-2 shrink-0">
-            <span className={`${statusClass} text-xs px-2 py-0.5 rounded font-mono`}>
+          <div className="flex flex-col items-end gap-3 shrink-0">
+            <span className={`${statusClass} text-xs md:text-sm px-3 py-1 rounded font-mono-tech uppercase tracking-wider`}>
               {project.status}
             </span>
             <motion.span
               animate={{ rotate: expanded ? 45 : 0 }}
               transition={{ duration: 0.2 }}
-              className="text-[var(--active-accent)] text-lg font-mono leading-none"
+              className="text-[var(--active-accent)] text-2xl md:text-3xl font-light leading-none"
             >
               +
             </motion.span>
@@ -76,13 +76,13 @@ export default function ProjectCard({ project, index }) {
           {project.tech.slice(0, 5).map((t) => (
             <span
               key={t}
-              className="font-mono text-xs px-2 py-0.5 rounded border border-[var(--color-border)] text-neutral-450 hover:border-[var(--active-accent)] hover:text-[var(--active-accent)] transition-colors duration-150"
+              className="font-mono-tech text-xs md:text-sm px-3 py-1 rounded border border-[var(--color-border)] text-neutral-450 hover:border-[var(--active-accent)] hover:text-[var(--active-accent)] transition-colors duration-150"
             >
               {t}
             </span>
           ))}
           {project.tech.length > 5 && (
-            <span className="font-mono text-xs px-2 py-0.5 text-neutral-500">
+            <span className="font-mono-tech text-xs md:text-sm px-3 py-1 text-neutral-500">
               +{project.tech.length - 5}
             </span>
           )}
@@ -102,20 +102,34 @@ export default function ProjectCard({ project, index }) {
           >
             <div className="border-t border-[var(--color-border)] mx-5 sm:mx-6" />
 
-            <div className="p-5 sm:p-6 space-y-4">
-              {/* Lab notebook rows */}
-              {[
-                { label: 'PROBLEM',    content: project.problem },
-                { label: 'HYPOTHESIS', content: project.hypothesis },
-                { label: 'APPROACH',   content: project.approach },
-                { label: 'RESULT',     content: project.result },
-                { label: 'NEXT',       content: project.future },
-              ].map(({ label, content }) => (
-                <div key={label}>
-                  <span className="mono-label block mb-1">{label}</span>
-                  <p className="text-sm text-neutral-400 leading-relaxed">{content}</p>
+            <div className="p-5 sm:p-6 space-y-8">
+              
+              {/* Snapshot Image Placeholders */}
+              <div className="w-full aspect-video bg-neutral-900 border border-neutral-800 rounded overflow-hidden relative flex items-center justify-center">
+                <div className="text-center text-neutral-600">
+                  <svg className="w-10 h-10 mx-auto mb-3 opacity-50" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                  </svg>
+                  <span className="font-mono-tech text-xs uppercase tracking-widest">Project Snapshot Placeholder</span>
+                  <p className="text-[10px] mt-1 opacity-50">Replace with Next.js Image component</p>
                 </div>
-              ))}
+              </div>
+
+              {/* Lab notebook rows */}
+              <div className="grid md:grid-cols-2 gap-8">
+                {[
+                  { label: 'PROBLEM',    content: project.problem },
+                  { label: 'HYPOTHESIS', content: project.hypothesis },
+                  { label: 'APPROACH',   content: project.approach },
+                  { label: 'RESULT',     content: project.result },
+                  { label: 'NEXT',       content: project.future },
+                ].map(({ label, content }) => (
+                  <div key={label}>
+                    <span className="mono-label block mb-2">{label}</span>
+                    <p className="text-sm md:text-base text-neutral-300 leading-relaxed font-light">{content}</p>
+                  </div>
+                ))}
+              </div>
 
               {/* Links */}
               {(project.links?.demo || project.links?.github) && (

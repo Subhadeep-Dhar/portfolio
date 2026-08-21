@@ -28,13 +28,13 @@ export default function SectionHeader({ id, label, title, subtitle, align = 'lef
         <span className="mono-label block mb-3">{label}</span>
       )}
 
-      <h2 className="font-display font-bold text-3xl sm:text-4xl text-[var(--color-text-main)] mb-3 leading-tight">
+      <h2 className="font-display font-bold text-5xl md:text-7xl lg:text-8xl text-[var(--color-text-main)] mb-6 leading-[0.9] tracking-tighter">
         {title}
       </h2>
 
       {/* Dynamic theme accent underline */}
       <div
-        className={`h-px w-16 bg-gradient-to-r from-[var(--active-accent)] to-transparent mb-4 ${
+        className={`h-1 w-24 bg-gradient-to-r from-[var(--active-accent)] to-transparent mb-4 ${
           isCenter ? 'mx-auto' : ''
         }`}
       />

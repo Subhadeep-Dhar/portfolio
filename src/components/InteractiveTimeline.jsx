@@ -1,7 +1,11 @@
 'use client';
 
-import { useState, useEffect } from 'react';
-import { motion } from 'framer-motion';
+import { useState, useEffect, useRef } from 'react';
+import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { useGSAP } from '@gsap/react';
+
+gsap.registerPlugin(ScrollTrigger);
 
 const TIMELINE_DATA = [
   {
@@ -70,45 +74,62 @@ const TIMELINE_DATA = [
   }
 ];
 
-export default function InteractiveTimeline({ mode = 'developer' }) {
+export default function InteractiveTimeline() {
   const [mounted, setMounted] = useState(false);
+  const containerRef = useRef(null);
+  const timelineRef = useRef(null);
 
   useEffect(() => {
     setMounted(true);
   }, []);
 
+  useGSAP(() => {
+    if (!mounted || !timelineRef.current) return;
+    
+    const items = gsap.utils.toArray('.timeline-item');
+    items.forEach((item, i) => {
+      gsap.fromTo(item,
+        { opacity: 0, x: -30 },
+        {
+          opacity: 1, x: 0,
+          duration: 0.6,
+          ease: "power2.out",
+          scrollTrigger: {
+            trigger: item,
+            start: "top 85%",
+            toggleActions: "play none none reverse"
+          }
+        }
+      );
+    });
+  }, { scope: containerRef, dependencies: [mounted] });
+
   if (!mounted) return null;
 
-  const filteredData = TIMELINE_DATA.filter(item => item.mode === 'both' || item.mode === mode);
+  const filteredData = TIMELINE_DATA;
 
   return (
-    <div id="evolution" className="py-24 relative bg-transparent select-none z-20">
+    <div id="evolution" ref={containerRef} className="py-32 md:py-48 relative bg-transparent select-none z-20">
       <div className="section-container">
         
         {/* Section Header */}
-        <div className="max-w-3xl mb-16">
-          <span className="mono-label block mb-2 text-[var(--active-accent)]">Evolution Log</span>
-          <h2 className="text-3xl sm:text-4xl font-light text-neutral-100 tracking-tight leading-tight">
-            {mode === 'developer' ? 'How I got here.' : 'Research & Academic Ledger'}
+        <div className="dev-header max-w-3xl mb-16 md:mb-24 px-6 md:px-12 xl:px-24 will-change-transform">
+          <span className="mono-label block mb-6 text-[var(--active-accent)]">Experience</span>
+          <h2 className="text-4xl sm:text-5xl lg:text-7xl font-light text-neutral-100 tracking-tighter leading-tight">
+            My Journey
           </h2>
-          <p className="text-sm text-neutral-450 mt-2 leading-relaxed font-light">
-            {mode === 'developer'
-              ? 'A chronological log of academic foundations, security operations, and systems engineering.'
-              : 'A chronological log of remote sensing analysis, GIS development, and academic milestones.'}
+          <p className="text-base sm:text-lg md:text-xl text-neutral-400 mt-6 max-w-2xl leading-relaxed font-light">
+            A chronological look at my academic foundations, research, and software engineering experience.
           </p>
         </div>
 
         {/* Vertical Timeline Structure */}
-        <div className="relative border-l border-neutral-900 ml-4 sm:ml-8 space-y-12 py-4">
+        <div ref={timelineRef} className="relative border-l border-neutral-900 ml-4 sm:ml-8 space-y-12 py-4">
           
           {filteredData.map((item, index) => (
-            <motion.div
+            <div
               key={index}
-              initial={{ opacity: 0, x: -10 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true, margin: "-60px" }}
-              transition={{ duration: 0.4, delay: index * 0.05 }}
-              className="relative pl-8 sm:pl-12 group"
+              className="timeline-item relative pl-8 sm:pl-12 group will-change-transform"
             >
               {/* Point Indicator on Vertical Line */}
               <div className="absolute -left-[9px] top-1.5 w-4 h-4 rounded-full border border-neutral-850 bg-[var(--color-bg)] flex items-center justify-center transition-colors duration-300 group-hover:border-[var(--active-accent)]">
@@ -132,11 +153,11 @@ export default function InteractiveTimeline({ mode = 'developer' }) {
                 </div>
 
                 {/* Content */}
-                <div className="space-y-1.5">
-                  <h4 className="font-semibold text-sm sm:text-base text-neutral-200 group-hover:text-[var(--active-accent)] transition-colors duration-300 leading-snug">
+                <div className="space-y-3">
+                  <h4 className="font-semibold text-lg sm:text-xl text-neutral-200 group-hover:text-[var(--active-accent)] transition-colors duration-300 leading-snug">
                     {item.title}
                   </h4>
-                  <p className="text-xs sm:text-sm text-neutral-400 leading-relaxed font-light">
+                  <p className="text-sm sm:text-base text-neutral-400 leading-relaxed font-light">
                     {item.desc}
                   </p>
                 </div>
@@ -151,7 +172,7 @@ export default function InteractiveTimeline({ mode = 'developer' }) {
                 </div>
 
               </div>
-            </motion.div>
+            </div>
           ))}
 
         </div>

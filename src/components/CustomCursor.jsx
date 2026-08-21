@@ -1,81 +1,82 @@
 'use client';
 
-import { useEffect, useState } from 'react';
-import { motion, useMotionValue, useSpring } from 'framer-motion';
+import { useEffect, useRef } from 'react';
 
-export default function CustomCursor({ mode = 'home' }) {
-  const [isHovered, setIsHovered] = useState(false);
-  const [isVisible, setIsVisible] = useState(false);
-
-  // Motion values for coordinates
-  const cursorX = useMotionValue(-100);
-  const cursorY = useMotionValue(-100);
-
-  // Spring physics config for lag ring
-  const springConfig = { damping: 30, stiffness: 250, mass: 0.5 };
-  const ringX = useSpring(cursorX, springConfig);
-  const ringY = useSpring(cursorY, springConfig);
+export default function CustomCursor() {
+  const canvasRef = useRef(null);
 
   useEffect(() => {
-    // Only enable on fine pointer hover devices (desktops)
-    const mediaQuery = window.matchMedia('(hover: hover) and (pointer: fine)');
-    if (!mediaQuery.matches) return;
+    const canvas = canvasRef.current;
+    const ctx = canvas.getContext('2d', { alpha: true });
+    
+    // Set canvas to full screen
+    const setSize = () => {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    };
+    setSize();
+    window.addEventListener('resize', setSize);
 
-    setIsVisible(true);
+    let mouse = { x: -100, y: -100 };
+    let points = [];
+    const maxPoints = 20;
 
-    const moveCursor = (e) => {
-      cursorX.set(e.clientX - 4);
-      cursorY.set(e.clientY - 4);
-      
-      // Auto-detect hover on links/buttons
-      const target = e.target;
-      const hoverable = target.closest('a, button, [role="button"], .interactive-node, button *');
-      setIsHovered(!!hoverable);
+    const onMouseMove = (e) => {
+      mouse.x = e.clientX;
+      mouse.y = e.clientY;
+    };
+    window.addEventListener('mousemove', onMouseMove);
+
+    let animationFrameId;
+
+    const render = () => {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      points.push({ x: mouse.x, y: mouse.y, age: 0 });
+
+      // Draw the trail
+      ctx.beginPath();
+      for (let i = 0; i < points.length; i++) {
+        const p = points[i];
+        
+        // Fading effect
+        const opacity = 1 - (p.age / maxPoints);
+        ctx.lineWidth = opacity * 8; // thicker at the front, thinner at tail
+        ctx.lineCap = "round";
+        ctx.lineJoin = "round";
+        ctx.strokeStyle = `rgba(155, 107, 78, ${opacity * 0.5})`; // burnished copper glow
+
+        if (i === 0) {
+          ctx.moveTo(p.x, p.y);
+        } else {
+          // Smooth bezier interpolation could be used here, but linear is fast and looks fine with small segments
+          ctx.lineTo(p.x, p.y);
+        }
+        
+        p.age++;
+      }
+      ctx.stroke();
+
+      // Remove old points
+      points = points.filter(p => p.age < maxPoints);
+
+      animationFrameId = requestAnimationFrame(render);
     };
 
-    window.addEventListener('mousemove', moveCursor);
+    render();
+
     return () => {
-      window.removeEventListener('mousemove', moveCursor);
+      window.removeEventListener('resize', setSize);
+      window.removeEventListener('mousemove', onMouseMove);
+      cancelAnimationFrame(animationFrameId);
     };
-  }, [cursorX, cursorY]);
-
-  if (!isVisible) return null;
-
-  // Determine cursor color based on focus mode
-  let activeColor = 'rgba(163, 163, 163, '; // default neutral gray
-  if (mode === 'developer') {
-    activeColor = 'rgba(155, 107, 78, '; // burnished copper
-  } else if (mode === 'researcher') {
-    activeColor = 'rgba(111, 129, 103, '; // terrain green
-  }
+  }, []);
 
   return (
-    <>
-      {/* Inner Dot */}
-      <motion.div
-        className="fixed top-0 left-0 w-2 h-2 rounded-full pointer-events-none z-50 mix-blend-difference"
-        style={{
-          x: cursorX,
-          y: cursorY,
-          backgroundColor: '#ffffff',
-        }}
-      />
-      {/* Outer Spring Ring */}
-      <motion.div
-        className="fixed top-0 left-0 w-8 h-8 rounded-full pointer-events-none z-50 border"
-        animate={{
-          scale: isHovered ? 1.5 : 1,
-          borderColor: isHovered ? activeColor + '0.8)' : activeColor + '0.35)',
-          backgroundColor: isHovered ? activeColor + '0.04)' : 'rgba(255, 255, 255, 0)',
-        }}
-        transition={{ duration: 0.2, ease: 'easeOut' }}
-        style={{
-          x: ringX,
-          y: ringY,
-          translateX: '-12px',
-          translateY: '-12px',
-        }}
-      />
-    </>
+    <canvas
+      ref={canvasRef}
+      className="fixed inset-0 pointer-events-none z-30"
+      style={{ mixBlendMode: 'screen' }}
+    />
   );
 }

@@ -1,9 +1,50 @@
 'use client';
 
-import { motion } from 'framer-motion';
+import { useRef } from 'react';
+import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { useGSAP } from '@gsap/react';
 import { siteConfig } from '@/data/siteConfig';
 
+gsap.registerPlugin(ScrollTrigger);
+
 export default function About() {
+  const containerRef = useRef(null);
+  const leftColRef = useRef(null);
+  const rightColRef = useRef(null);
+
+  useGSAP(() => {
+    // Parallax and fade for portrait
+    gsap.fromTo(leftColRef.current,
+      { opacity: 0, y: 100, scale: 0.95 },
+      { 
+        opacity: 1, y: 0, scale: 1, 
+        duration: 1.2, 
+        ease: "power3.out",
+        scrollTrigger: {
+          trigger: containerRef.current,
+          start: "top 80%",
+          end: "top 30%",
+          scrub: 0.5,
+        }
+      }
+    );
+
+    // Staggered reveal for right column text elements
+    gsap.fromTo(rightColRef.current.children,
+      { opacity: 0, y: 50 },
+      { 
+        opacity: 1, y: 0,
+        duration: 1, 
+        stagger: 0.15,
+        ease: "power3.out",
+        scrollTrigger: {
+          trigger: rightColRef.current,
+          start: "top 85%",
+        }
+      }
+    );
+  }, { scope: containerRef });
   const traits = [
     {
       label: 'Research',
@@ -24,22 +65,42 @@ export default function About() {
   ];
 
   return (
-    <section id="profile" className="py-24 relative z-20">
+    <section id="profile" ref={containerRef} className="py-32 md:py-48 relative z-20">
       <div className="section-container">
         {/* Separator line */}
-        <div className="h-px w-full bg-gradient-to-r from-transparent via-neutral-900 to-transparent mb-24" />
+        <div className="h-px w-full bg-gradient-to-r from-transparent via-neutral-800 to-transparent mb-24 md:mb-32" />
 
-        <div className="grid lg:grid-cols-12 gap-12 items-start">
-          {/* Left Column: Narrative Bio */}
-          <div className="lg:col-span-5 space-y-6">
+        <div className="grid lg:grid-cols-12 gap-16 lg:gap-24 items-center">
+          {/* Left Column: Portrait */}
+          <div 
+            ref={leftColRef}
+            className="lg:col-span-5 relative aspect-[4/5] rounded bg-neutral-900 border border-neutral-800 overflow-hidden group will-change-transform"
+          >
+            {/* Portrait Placeholder */}
+            <div className="absolute inset-0 bg-neutral-900/50 flex flex-col items-center justify-center text-neutral-600">
+              <svg className="w-12 h-12 mb-4 opacity-50" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+              </svg>
+              <span className="font-mono-tech text-xs uppercase tracking-widest">Portrait Placeholder</span>
+              <span className="text-xs mt-2 opacity-50 font-light">Replace in /public/images/</span>
+            </div>
+            {/* Uncomment and use Next.js Image component when you have the portrait */}
+            {/* <Image src="/images/portrait.jpg" alt="Subhadeep Dhar" fill className="object-cover grayscale hover:grayscale-0 transition-all duration-700" /> */}
+          </div>
+
+          {/* Right Column: Narrative Bio */}
+          <div 
+            ref={rightColRef}
+            className="lg:col-span-7 space-y-10"
+          >
             <div>
-              <span className="mono-label block mb-2 text-[var(--active-accent)]">PERSONAL PROFILE</span>
-              <h2 className="text-3xl font-light text-neutral-100 tracking-tight leading-tight">
+              <span className="mono-label block mb-6 text-[var(--active-accent)]">ABOUT ME</span>
+              <h2 className="text-4xl md:text-5xl lg:text-6xl font-light text-neutral-100 tracking-tighter leading-tight">
                 Working through problems with care and patience.
               </h2>
             </div>
             
-            <div className="space-y-4 text-sm sm:text-base text-neutral-300 leading-relaxed font-light">
+            <div className="space-y-6 text-base md:text-lg lg:text-xl text-neutral-400 leading-relaxed font-light">
               {siteConfig.bio.map((paragraph, i) => (
                 <p key={i}>
                   {paragraph}
@@ -47,47 +108,18 @@ export default function About() {
               ))}
             </div>
 
-            <div className="flex flex-wrap gap-2 pt-2">
-              <span className="font-mono-tech text-xs border border-neutral-900 px-3 py-1 rounded bg-[#24201c]/5 text-neutral-500 flex items-center gap-1.5">
-                <svg viewBox="0 0 24 24" className="w-3 h-3 shrink-0" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                  <path d="M12 21s-6-5.4-6-11a6 6 0 1 1 12 0c0 5.6-6 11-6 11Z" />
-                  <circle cx="12" cy="10" r="2.2" />
-                </svg>
-                {siteConfig.location}
-              </span>
-              <span className="font-mono-tech text-xs border border-neutral-900 px-3 py-1 rounded bg-[#24201c]/5 text-neutral-500">
-                MCA Scholar
-              </span>
-              {siteConfig.available && (
-                <span className="font-mono-tech text-xs border border-[var(--active-accent)]/30 text-[var(--active-accent)] px-3 py-1 rounded bg-[var(--active-accent)]/5">
-                  Available for freelance work
-                </span>
-              )}
-            </div>
-          </div>
-
-          {/* Right Column: Traits list */}
-          <div className="lg:col-span-7 grid sm:grid-cols-2 gap-4">
-            {traits.map((trait, idx) => (
-              <motion.div
-                key={trait.label}
-                initial={{ opacity: 0, y: 10 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: idx * 0.08, duration: 0.4 }}
-                className="p-5 border border-neutral-900/60 bg-neutral-950/80 backdrop-blur-md rounded group hover:border-neutral-800 transition-colors duration-300"
-              >
-                <div className="mb-3">
-                  <span className="font-mono-tech text-xs text-neutral-600">{trait.label}</span>
+            <div className="grid sm:grid-cols-2 gap-6 pt-8">
+              {traits.map((trait, idx) => (
+                <div key={trait.label} className="border-l border-neutral-800 pl-4 py-1">
+                  <h4 className="font-mono-tech text-[10px] sm:text-xs text-[var(--active-accent)] uppercase tracking-[0.2em] mb-2">
+                    {trait.label}
+                  </h4>
+                  <p className="text-sm md:text-base leading-relaxed text-neutral-500 font-light">
+                    {trait.desc}
+                  </p>
                 </div>
-                <h4 className="font-semibold text-sm text-neutral-350 uppercase tracking-wider mb-2">
-                  {trait.label}
-                </h4>
-                <p className="text-xs sm:text-sm leading-relaxed text-neutral-500 font-light">
-                  {trait.desc}
-                </p>
-              </motion.div>
-            ))}
+              ))}
+            </div>
           </div>
         </div>
       </div>

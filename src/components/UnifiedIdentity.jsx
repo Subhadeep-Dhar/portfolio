@@ -1,6 +1,11 @@
 'use client';
 
-import { motion } from 'framer-motion';
+import { useRef } from 'react';
+import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { useGSAP } from '@gsap/react';
+
+gsap.registerPlugin(ScrollTrigger);
 
 export default function UnifiedIdentity() {
   const pillars = [
@@ -21,8 +26,27 @@ export default function UnifiedIdentity() {
     }
   ];
 
+  const containerRef = useRef(null);
+
+  useGSAP(() => {
+    // Stagger animate the pillars
+    gsap.fromTo('.identity-pillar',
+      { opacity: 0, y: 30 },
+      {
+        opacity: 1, y: 0,
+        duration: 0.8,
+        stagger: 0.15,
+        ease: "power2.out",
+        scrollTrigger: {
+          trigger: '.identity-grid',
+          start: "top 85%",
+        }
+      }
+    );
+  }, { scope: containerRef });
+
   return (
-    <section className="py-28 relative overflow-hidden z-20">
+    <section ref={containerRef} className="py-28 relative overflow-hidden z-20">
       <div className="section-container">
         {/* Subtle grid line separator */}
         <div className="h-px w-full bg-gradient-to-r from-transparent via-neutral-900 to-transparent mb-24" />
@@ -50,15 +74,11 @@ export default function UnifiedIdentity() {
         </div>
 
         {/* Three Pillars Intersection */}
-        <div className="grid md:grid-cols-3 gap-6 max-w-5xl mx-auto">
+        <div className="identity-grid grid md:grid-cols-3 gap-6 max-w-5xl mx-auto">
           {pillars.map((item, index) => (
-            <motion.div
+            <div
               key={item.title}
-              initial={{ opacity: 0, y: 15 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: index * 0.1, duration: 0.5 }}
-              className="p-6 border border-neutral-900 bg-transparent rounded hover:border-neutral-800 transition-colors duration-300 flex flex-col justify-between"
+              className="identity-pillar p-6 border border-neutral-900 bg-transparent rounded hover:border-neutral-800 transition-colors duration-300 flex flex-col justify-between will-change-transform"
             >
               <div>
                 <span className="font-mono-tech text-xs text-neutral-500 border border-neutral-900 px-2 py-0.5 rounded bg-neutral-950/20 mb-4 inline-block">
@@ -71,7 +91,7 @@ export default function UnifiedIdentity() {
                   {item.desc}
                 </p>
               </div>
-            </motion.div>
+            </div>
           ))}
         </div>
       </div>

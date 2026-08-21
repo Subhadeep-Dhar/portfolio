@@ -125,13 +125,25 @@ export default function Navbar() {
 
       <AnimatePresence>
         {menuOpen && (
-          <motion.div
-            initial={{ opacity: 0, y: -20, x: "-50%", scale: 0.95 }}
-            animate={{ opacity: 1, y: 0, x: "-50%", scale: 1 }}
-            exit={{ opacity: 0, y: -20, x: "-50%", scale: 0.95 }}
-            transition={{ duration: 0.25 }}
-            className="absolute top-20 left-1/2 w-[90%] max-w-sm bg-neutral-900/80 backdrop-blur-2xl border border-white/10 rounded-2xl shadow-2xl z-40 overflow-hidden md:hidden pointer-events-auto"
-          >
+          <>
+            {/* Invisible overlay for outside clicks */}
+            <motion.div
+              key="overlay"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.2 }}
+              className="fixed inset-0 bg-transparent z-30 pointer-events-auto md:hidden"
+              onClick={() => setMenuOpen(false)}
+            />
+            <motion.div
+              key="menu"
+              initial={{ opacity: 0, y: -20, x: "-50%", scale: 0.95 }}
+              animate={{ opacity: 1, y: 0, x: "-50%", scale: 1 }}
+              exit={{ opacity: 0, y: -20, x: "-50%", scale: 0.95 }}
+              transition={{ duration: 0.25 }}
+              className="absolute top-20 left-1/2 w-[90%] max-w-sm bg-neutral-900/80 backdrop-blur-2xl border border-white/10 rounded-2xl shadow-2xl z-40 overflow-hidden md:hidden pointer-events-auto"
+            >
             <div className="p-6 flex flex-col gap-4">
               {unifiedLinks.map((link) => (
                 <a
@@ -158,6 +170,7 @@ export default function Navbar() {
               )}
             </div>
           </motion.div>
+          </>
         )}
       </AnimatePresence>
     </motion.header>

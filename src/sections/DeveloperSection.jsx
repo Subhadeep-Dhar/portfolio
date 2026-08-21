@@ -127,11 +127,10 @@ export default function DeveloperSection() {
                       layoutId={`card-image-${project.id}`} 
                       className={`relative rounded-xl overflow-hidden shadow-2xl border border-neutral-800/60 bg-neutral-900 flex items-center justify-center ${['poultry_disease_detection', 'grounded_app', 'famspace'].includes(project.id) ? 'w-auto h-full aspect-[9/16] max-w-[220px] lg:max-w-[300px]' : 'w-full max-h-full aspect-video'}`}
                     >
-                      <div className="absolute inset-0 bg-neutral-900/20 group-hover:bg-transparent transition-colors duration-500 z-10 pointer-events-none" />
                       <img 
                         src={project.snapshots[0]} 
                         alt={project.title} 
-                        className={`w-full h-full opacity-80 group-hover:opacity-100 transition-all duration-500 ${['poultry_disease_detection', 'grounded_app', 'famspace'].includes(project.id) ? 'object-contain p-2 lg:p-4' : 'object-cover'}`} 
+                        className={`w-full h-full transition-all duration-500 ${['poultry_disease_detection', 'grounded_app', 'famspace'].includes(project.id) ? 'object-contain p-2 lg:p-4' : 'object-cover'}`} 
                       />
                     </motion.div>
                   </div>
@@ -330,7 +329,6 @@ export default function DeveloperSection() {
               src={lightboxImage} 
               alt="Fullscreen snapshot" 
               className="w-full h-full object-contain drop-shadow-2xl"
-              onClick={(e) => e.stopPropagation()}
             />
           </div>
         )}

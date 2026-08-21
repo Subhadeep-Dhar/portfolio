@@ -23,43 +23,45 @@
  */
 
 export const projects = [
-  
   {
     id: 'dooars_tutors',
     title: 'Dooars Tutors',
-    tagline: 'An AI-powered platform for finding local tutors using Retrieval-Augmented Generation (RAG)',
+    tagline: 'A practical platform for finding tutors and coaching in local areas',
     problem:
-      'Students in local regions struggle to find reliable tutors with proper filtering. Existing solutions are unstructured, lacking interactive, conversational ways to discover the right fit based on complex requirements like subject, location, and class.',
+      'Students in local regions struggle to find reliable tutors with proper filtering, verified profiles, and location-based discovery. Existing solutions are either unstructured or lack real-time search and mapping features.',
     hypothesis:
-      'A full-stack platform featuring a conversational AI Agent can significantly improve discoverability. By combining a natural language interface with hybrid semantic and geospatial search, users can find highly relevant tutors intuitively.',
+      'A full-stack platform with advanced search, location integration, and structured tutor profiles can significantly improve discoverability and user experience for both students and tutors.',
     approach:
-      'Integrated Google\'s Gemini model using the Vercel AI SDK to create a conversational AI Agent. Implemented Server-Side Tool Calling to stream structured JSON, dynamically rendering React UI cards in the chat. The Node.js backend uses a custom LLM query parser, Redis caching, and MongoDB Atlas Vector Search for a robust hybrid search engine (geospatial + semantic).',
+      'Built the interface with Next.js and Tailwind and connected it to a Node.js backend with MongoDB and Redis for search, caching, and reliable performance. The project also includes map-based discovery, image uploads, email notifications, and secure login flows.',
     result:
-      'Delivered a scalable RAG platform with instant conversational search. The AI Agent seamlessly parses natural language into complex geographic and semantic database queries, rendering interactive UI responses directly in the chat.',
+      'A scalable, production-ready platform with instant search, interactive map-based discovery, and optimized performance leveraging caching and modern deployment pipelines on Vercel and Render.',
     future:
-      'Add chat directly between students and tutors, implement advanced analytics for search trends, and expand vector embeddings to include user reviews.',
+      'Add chat between students and tutors, better profile filtering, and a mobile-friendly experience for both sides of the platform.',
     tech: [
       'Next.js', 
       'TypeScript', 
       'Node.js', 
-      'Express',
-      'MongoDB Atlas Vector Search', 
+      'Express', 
+      'MongoDB Atlas', 
       'Redis',
       'Upstash',
-      'Vercel AI SDK',
-      'Google Gemini API',
-      'Authentication Systems',
-      'RAG',
+      'JavaScript',
       'Tailwind CSS', 
       'Shadcn UI', 
       'Framer Motion',
       'Zustand',
       'JWT Auth', 
-      'Google Maps API',
+      'Google Maps API', 
+      'Cloudinary', 
+      'Resend API',
+      'Email API',
       'Vercel', 
       'Render',
-      'Git',
       'Responsive UI Design',
+      'Authentication',
+      'Mongoose',
+      'Git',
+      'Github CI'
     ],
     snapshots: [
       '/images/projects/dooars-tutors/snap1.png',
@@ -67,7 +69,7 @@ export const projects = [
       '/images/projects/dooars-tutors/snap3.png',
       '/images/projects/dooars-tutors/snap4.png'
     ],
-    tags: ['Fullstack', 'AI', 'Next.js / React'],
+    tags: ['Fullstack', 'Next.js / React'],
     featured: true,
     status: 'completed',
     year: '2026',
@@ -133,6 +135,10 @@ export const projects = [
       demo: null,
       github: 'https://github.com/Subhadeep-Dhar/YT-Playlist-Downloader',
     },
+    snapshots: [
+      '/images/projects/yt-playlist-downloader/snap1.png',
+      '/images/projects/yt-playlist-downloader/snap2.png'
+    ],
   },
   {
     id: 'grounded_app',
@@ -160,12 +166,13 @@ export const projects = [
       'Firebase',
       'Firestore',
       'Expo Location',
+      'Google Maps',
       'Expo Notifications',
       'Open-Meteo API',
       'Location-based features',
       'JavaScript',
       'EAS Build',
-      'Authentication Systems',
+      'Authentication',
       'Google Maps API',
       'Geofencing',
       'User reminders',
@@ -272,7 +279,7 @@ export const projects = [
       'React',
       'Vite',
       'Node.js',
-      'Express',
+      'Express.js',
       'MongoDB Atlas',
       'Mongoose',
       'Redis',
@@ -298,7 +305,7 @@ export const projects = [
   },
   {
     id: 'portfolio_site',
-    title: 'Portfolio Website',
+    title: 'Portfolio',
     tagline: 'Showcasing my work and skills in a modern, responsive design',
     problem:
       'Developers often need a lightweight, high-performance way to present projects and skills without heavy frameworks or backend setup.',
@@ -309,9 +316,12 @@ export const projects = [
     result:
       'A fully static portfolio site with minimal dependencies, optimized for Lighthouse scores and fast loading, deployed on Vercel.',
     future:
-      'Add new projects dynamically and improve accessibility for enhanced UX.',
-    tech: ['Next.js', 'React', 'Tailwind CSS', 'JavaScript', 'Framer Motion', 'Vercel', 'Git', 'Responsive UI Design'],
+      'Add new projects dynamically, improve accessibility, and explore light theme/dark theme toggles for enhanced UX.',
+    tech: ['Next.js', 'React', 'Tailwind CSS', 'javascript', 'Framer Motion', 'Vercel', 'Git', 'Responsive UI Design'],
     tags: ['Frontend', 'Next.js / React'],
+    snapshots: [
+      '/images/projects/portfolio-site/snap1.png'
+    ],
     featured: true,
     status: 'completed',
     year: '2026',

@@ -13,6 +13,7 @@ gsap.registerPlugin(ScrollTrigger);
 
 export default function DeveloperSection() {
   const [activeProjectId, setActiveProjectId] = useState(null);
+  const [lightboxImage, setLightboxImage] = useState(null);
 
   const devProjects = projects.filter(
     (p) => !p.tags.includes('Remote Sensing / GIS')
@@ -78,7 +79,7 @@ export default function DeveloperSection() {
           {devProjects.map((project, idx) => (
             <div 
               key={`wrapper-${project.id}`} 
-              className="dev-project-wrapper sticky top-[10vh] w-full h-[80vh] flex items-center justify-center mb-32 origin-top"
+              className="dev-project-wrapper sticky top-[12vh] w-full h-[75vh] flex items-center justify-center mb-32 origin-top"
               style={{ zIndex: idx }}
             >
               <motion.div
@@ -87,21 +88,6 @@ export default function DeveloperSection() {
                 onClick={() => setActiveProjectId(project.id)}
                 className="dev-project-item w-full h-full flex flex-col md:flex-row bg-neutral-900 border border-neutral-800 rounded-[2rem] overflow-hidden cursor-pointer hover:border-[var(--active-accent)]/80 transition-colors group will-change-transform shadow-2xl"
               >
-                {/* Card Main Snapshot - Takes up half width on Desktop */}
-                <motion.div layoutId={`card-image-${project.id}`} className="w-full md:w-1/2 h-64 md:h-full bg-neutral-950 border-b md:border-b-0 md:border-r border-neutral-800 relative flex items-center justify-center overflow-hidden shrink-0">
-                  <div className="absolute inset-0 bg-neutral-900/20 group-hover:bg-transparent transition-colors duration-500 z-10 pointer-events-none" />
-                  {project.snapshots && project.snapshots.length > 0 ? (
-                    <img src={project.snapshots[0]} alt={project.title} className="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity duration-500" />
-                  ) : (
-                    <>
-                      <svg className="w-20 h-20 opacity-20 group-hover:opacity-30 transition-opacity duration-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                      </svg>
-                      <span className="absolute bottom-6 right-6 font-mono-tech text-xs uppercase tracking-widest opacity-30">Snapshot 1</span>
-                    </>
-                  )}
-                </motion.div>
-
                 {/* Card Content */}
                 <motion.div layoutId={`card-content-${project.id}`} className="p-8 md:p-12 lg:p-16 flex flex-col flex-grow justify-center relative bg-neutral-900">
                   <div className="flex items-center gap-3 mb-8">
@@ -129,6 +115,23 @@ export default function DeveloperSection() {
                     ))}
                   </div>
                 </motion.div>
+
+                {/* Card Main Snapshot - Takes up dynamic width based on orientation */}
+                {project.snapshots && project.snapshots.length > 0 && (
+                  <div className="w-full md:w-1/2 h-64 md:h-full bg-neutral-950/30 border-t md:border-t-0 md:border-l border-neutral-800 flex items-center justify-center p-6 md:p-12 shrink-0">
+                    <motion.div 
+                      layoutId={`card-image-${project.id}`} 
+                      className={`relative rounded-xl overflow-hidden shadow-2xl border border-neutral-800/60 bg-neutral-900 w-full flex items-center justify-center ${['poultry_disease_detection', 'grounded_app', 'famspace'].includes(project.id) ? 'max-w-[260px] md:max-w-[300px] aspect-[9/16]' : 'aspect-video'}`}
+                    >
+                      <div className="absolute inset-0 bg-neutral-900/20 group-hover:bg-transparent transition-colors duration-500 z-10 pointer-events-none" />
+                      <img 
+                        src={project.snapshots[0]} 
+                        alt={project.title} 
+                        className="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-all duration-500" 
+                      />
+                    </motion.div>
+                  </div>
+                )}
               </motion.div>
             </div>
           ))}
@@ -149,10 +152,10 @@ export default function DeveloperSection() {
             />
             
             {/* Modal Container */}
-            <div className="fixed inset-0 z-[101] flex items-center justify-center p-4 md:p-8 pointer-events-none">
+            <div className="fixed inset-0 z-[101] flex items-center justify-center pt-24 pb-8 px-4 md:px-8 pointer-events-none">
               <motion.div
                 layoutId={`card-container-${activeProject.id}`}
-                className="bg-neutral-900 border border-neutral-800 rounded-2xl overflow-hidden w-full max-w-5xl max-h-[90vh] flex flex-col pointer-events-auto shadow-2xl relative"
+                className="bg-neutral-900 border border-neutral-800 rounded-2xl overflow-hidden w-full max-w-5xl max-h-[85vh] flex flex-col pointer-events-auto shadow-2xl relative"
               >
                 {/* Close Button */}
                 <button 
@@ -163,18 +166,16 @@ export default function DeveloperSection() {
                 </button>
 
                 {/* Modal Header / Main Snapshot */}
-                <motion.div layoutId={`card-image-${activeProject.id}`} className="w-full h-64 md:h-96 bg-neutral-950 relative flex items-center justify-center shrink-0 border-b border-neutral-800 overflow-hidden">
-                  {activeProject.snapshots && activeProject.snapshots.length > 0 ? (
-                    <img src={activeProject.snapshots[0]} alt={activeProject.title} className="w-full h-full object-cover" />
-                  ) : (
-                    <>
-                      <svg className="w-16 h-16 opacity-20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                      </svg>
-                      <span className="absolute bottom-4 right-4 font-mono-tech text-xs uppercase tracking-widest opacity-30">Snapshot 1 (Hero)</span>
-                    </>
-                  )}
-                </motion.div>
+                {activeProject.snapshots && activeProject.snapshots.length > 0 && (
+                  <motion.div layoutId={`card-image-${activeProject.id}`} className={`w-full h-64 md:h-96 bg-neutral-950 relative flex items-center justify-center shrink-0 border-b border-neutral-800 overflow-hidden ${['poultry_disease_detection', 'grounded_app', 'famspace'].includes(activeProject.id) ? 'py-4' : ''}`}>
+                    <img 
+                      src={activeProject.snapshots[0]} 
+                      alt={activeProject.title} 
+                      className={`w-full h-full cursor-zoom-in hover:scale-[1.02] transition-transform duration-500 ${['poultry_disease_detection', 'grounded_app', 'famspace'].includes(activeProject.id) ? 'object-contain' : 'object-cover'}`} 
+                      onClick={(e) => { e.stopPropagation(); setLightboxImage(activeProject.snapshots[0]); }}
+                    />
+                  </motion.div>
+                )}
 
                 {/* Scrollable Content Area */}
                 <div className="overflow-y-auto p-6 md:p-10 flex-grow custom-scrollbar">
@@ -206,15 +207,15 @@ export default function DeveloperSection() {
                         <p className="text-neutral-300 font-light leading-relaxed text-base">{activeProject.problem}</p>
                       </div>
 
-                      {/* Extra Snapshot Placeholder 2 */}
-                      {activeProject.snapshots && activeProject.snapshots.length > 1 ? (
+                      {/* Extra Snapshot 2 */}
+                      {activeProject.snapshots && activeProject.snapshots.length > 1 && (
                         <div className="w-full bg-neutral-950 border border-neutral-800 rounded-lg relative flex items-center justify-center overflow-hidden">
-                          <img src={activeProject.snapshots[1]} alt={`${activeProject.title} detail`} className="w-full h-auto object-cover" />
-                        </div>
-                      ) : (
-                        <div className="w-full aspect-[21/9] bg-neutral-950 border border-neutral-800 rounded-lg relative flex items-center justify-center overflow-hidden">
-                          <svg className="w-8 h-8 opacity-20" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" /></svg>
-                          <span className="absolute bottom-3 right-3 font-mono-tech text-[10px] uppercase tracking-widest opacity-30">Snapshot 2 (Details)</span>
+                          <img 
+                            src={activeProject.snapshots[1]} 
+                            alt={`${activeProject.title} detail`} 
+                            className="w-full h-auto max-h-[60vh] object-contain cursor-zoom-in hover:opacity-90 transition-opacity" 
+                            onClick={(e) => { e.stopPropagation(); setLightboxImage(activeProject.snapshots[1]); }}
+                          />
                         </div>
                       )}
 
@@ -228,26 +229,27 @@ export default function DeveloperSection() {
                         <p className="text-neutral-300 font-light leading-relaxed text-base">{activeProject.result}</p>
                       </div>
 
-                      {/* Extra Snapshot Placeholder 3 & 4 */}
-                      {(activeProject.snapshots && activeProject.snapshots.length > 2) ? (
+                      {/* Extra Snapshot 3 & 4 */}
+                      {activeProject.snapshots && activeProject.snapshots.length > 2 && (
                         <div className="grid grid-cols-2 gap-4">
                           <div className="w-full bg-neutral-950 border border-neutral-800 rounded-lg relative flex items-center justify-center overflow-hidden">
-                             <img src={activeProject.snapshots[2]} alt={`${activeProject.title} snapshot 3`} className="w-full h-auto object-cover" />
+                             <img 
+                               src={activeProject.snapshots[2]} 
+                               alt={`${activeProject.title} snapshot 3`} 
+                               className="w-full h-auto max-h-[40vh] object-contain cursor-zoom-in hover:opacity-90 transition-opacity" 
+                               onClick={(e) => { e.stopPropagation(); setLightboxImage(activeProject.snapshots[2]); }}
+                             />
                           </div>
                           {activeProject.snapshots.length > 3 && (
                             <div className="w-full bg-neutral-950 border border-neutral-800 rounded-lg relative flex items-center justify-center overflow-hidden">
-                               <img src={activeProject.snapshots[3]} alt={`${activeProject.title} snapshot 4`} className="w-full h-auto object-cover" />
+                               <img 
+                                 src={activeProject.snapshots[3]} 
+                                 alt={`${activeProject.title} snapshot 4`} 
+                                 className="w-full h-auto max-h-[40vh] object-contain cursor-zoom-in hover:opacity-90 transition-opacity" 
+                                 onClick={(e) => { e.stopPropagation(); setLightboxImage(activeProject.snapshots[3]); }}
+                               />
                             </div>
                           )}
-                        </div>
-                      ) : (
-                        <div className="grid grid-cols-2 gap-4">
-                          <div className="w-full aspect-square bg-neutral-950 border border-neutral-800 rounded-lg relative flex items-center justify-center overflow-hidden">
-                             <span className="absolute bottom-3 right-3 font-mono-tech text-[10px] uppercase tracking-widest opacity-30">Snapshot 3</span>
-                          </div>
-                          <div className="w-full aspect-square bg-neutral-950 border border-neutral-800 rounded-lg relative flex items-center justify-center overflow-hidden">
-                             <span className="absolute bottom-3 right-3 font-mono-tech text-[10px] uppercase tracking-widest opacity-30">Snapshot 4</span>
-                          </div>
                         </div>
                       )}
 
@@ -299,6 +301,34 @@ export default function DeveloperSection() {
               </motion.div>
             </div>
           </>
+        )}
+      </AnimatePresence>
+
+      {/* Fullscreen Lightbox */}
+      <AnimatePresence>
+        {lightboxImage && (
+          <div 
+            className="fixed inset-0 z-[1000] flex items-center justify-center bg-black/95 backdrop-blur-2xl p-4 md:p-12 cursor-zoom-out" 
+            onClick={() => setLightboxImage(null)}
+          >
+            {/* Close Button for Lightbox */}
+            <button 
+              onClick={() => setLightboxImage(null)}
+              className="absolute top-6 right-6 md:top-8 md:right-8 z-20 bg-white/10 hover:bg-white/20 p-3 rounded-full text-white backdrop-blur-md transition-colors"
+            >
+              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+            </button>
+            <motion.img 
+              initial={{ opacity: 0, scale: 0.95 }} 
+              animate={{ opacity: 1, scale: 1 }} 
+              exit={{ opacity: 0, scale: 0.95 }} 
+              transition={{ type: 'spring', damping: 25, stiffness: 300 }}
+              src={lightboxImage} 
+              alt="Fullscreen snapshot" 
+              className="w-full h-full object-contain drop-shadow-2xl"
+              onClick={(e) => e.stopPropagation()}
+            />
+          </div>
         )}
       </AnimatePresence>
     </section>

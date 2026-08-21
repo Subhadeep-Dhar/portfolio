@@ -73,7 +73,7 @@ export default function Navbar() {
       className="fixed top-4 left-0 right-0 z-50 flex justify-center pointer-events-none transition-all duration-500"
     >
       <div 
-        className={`pointer-events-auto flex items-center justify-between px-8 h-20 rounded-full transition-all duration-500 border overflow-hidden relative shadow-2xl ${
+        className={`pointer-events-auto flex items-center justify-between px-6 md:px-8 h-14 md:h-16 rounded-full transition-all duration-500 border overflow-hidden relative shadow-2xl ${
           scrolled 
             ? 'w-[90%] max-w-5xl bg-neutral-900/60 backdrop-blur-xl border-white/10 shadow-black/50' 
             : 'w-[95%] max-w-7xl bg-transparent border-transparent shadow-transparent'

@@ -10,7 +10,7 @@ gsap.registerPlugin(ScrollTrigger);
 
 import dynamic from 'next/dynamic';
 import BootLoader from '@/components/BootLoader';
-import CustomCursor from '@/components/CustomCursor';
+import SwarmCursor from '@/components/SwarmCursor';
 import Navbar from '@/components/Navbar';
 
 const ThreeBackground = dynamic(() => import('@/components/ThreeBackground'), { ssr: false });
@@ -88,8 +88,20 @@ export default function Home() {
 
       {!loading && (
         <>
-          {/* 2. Custom interactive lag-ring cursor */}
-          <CustomCursor mode="developer" />
+          {/* 2. Swarm Cursor (React Bits) */}
+          <SwarmCursor 
+            color="#cfff01"
+            accentColor="#230ac2"
+            className="fixed inset-0 z-30 pointer-events-none" 
+            style={{ position: 'fixed' }}
+            count={10}
+            size={14}
+            speed={2.5}
+            spread={100}
+            wander={0.2}
+            trail={0}
+            scatterOnClick
+          />
 
           {/* Immersive header */}
           <Navbar />

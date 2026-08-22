@@ -292,6 +292,11 @@ export const projects = [
       'Tailwind CSS'
     ],
 
+    snapshots: [
+      '/images/projects/muse-mart/snap1.png',
+      '/images/projects/muse-mart/snap2.png'
+    ],
+
     tags: ['Fullstack', 'Next.js / React'],
 
     featured: true,

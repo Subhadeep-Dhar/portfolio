@@ -34,28 +34,28 @@ const TIMELINE_DATA = [
   },
   {
     year: '2024',
-    type: 'Research',
-    title: 'Asian Development Research Institute — Research Intern',
-    desc: 'Contributed to regional health surveillance mapping (IHIP-IDSP Bihar project). Modeled spatial trends to optimize department reporting indices.',
-    location: 'Patna, Bihar',
-    mode: 'researcher'
-  },
-  {
-    year: '2024',
     type: 'Work',
-    title: 'SH1ELD Tech — Web Developer',
+    title: 'SH1ELD Tech — Full-Stack Developer',
     desc: 'Built tailored tourism portals and local data workflows for regional agencies. Integrated API routes and optimized database access pipelines.',
     location: 'Gangtok, Sikkim',
     mode: 'developer'
   },
   {
     year: '2024',
-    type: 'Work',
-    title: 'Asian Development Reseasrch Institute — Research Intern',
-    desc: 'Enhanced regional health surveillance mapping (IHIP-IDSP Bihar project) by modeling spatial trends to optimize reporting indices.',
+    type: 'Research',
+    title: 'Asian Development Research Institute — Research Intern',
+    desc: 'Contributed to regional health surveillance mapping (IHIP-IDSP Bihar project). Modeled spatial trends to optimize department reporting indices.',
     location: 'Patna, Bihar',
-    mode: 'developer'
+    mode: 'researcher'
   },
+  // {
+  //   year: '2024',
+  //   type: 'Work',
+  //   title: 'Asian Development Reseasrch Institute — Research Intern',
+  //   desc: 'Enhanced regional health surveillance mapping (IHIP-IDSP Bihar project) by modeling spatial trends to optimize reporting indices.',
+  //   location: 'Patna, Bihar',
+  //   mode: 'developer'
+  // },
   {
     year: '2025',
     type: 'Education',

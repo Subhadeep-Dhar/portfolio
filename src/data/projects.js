@@ -80,8 +80,8 @@ export const projects = [
   },
   {
     "id": "poultry_disease_detection",
-    "title": "Poultry Disease Detection App",
-    "tagline": "A mobile tool for offline livestock disease checks in low-connectivity areas",
+    "title": "PoultryVision AI",
+    "tagline": "An Offline AI-Powered Poultry Disease Detection System Using MobileNetV2 and TensorFlow Lite",
     "problem":
       "Poultry farmers in remote, rural areas experience severe production and economic losses due to devastating outbreaks like Newcastle disease and Aflatoxicosis. Existing computer vision solutions depend heavily on high-speed internet connectivity, rendering them unusable in disconnected agricultural environments.",
     "hypothesis":

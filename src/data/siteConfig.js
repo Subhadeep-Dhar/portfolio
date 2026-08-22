@@ -1,7 +1,7 @@
 /**
  * ╔══════════════════════════════════════════════════════════════╗
  * ║  SITE CONFIGURATION                                          ║
- * ║  Update your personal info, links, and meta here.           ║
+ * ║  Update your personal info, links, and meta here.            ║
  * ╚══════════════════════════════════════════════════════════════╝
  */
 
@@ -34,7 +34,7 @@ export const siteConfig = {
   seo: {
     title:       'Subhadeep Dhar — Developer Lab',
     description: 'MCA student, developer, and analyst. I build thoughtful software at the intersection of data, language, and product.',
-    url:         'https://yourportfolio.dev', // need to change later
+    url:         'https://portfolio-subhadeep-dhar.vercel.app/',
     ogImage:     '/og.png',
   },
 };

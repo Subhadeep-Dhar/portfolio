@@ -141,8 +141,8 @@ const noise3 = (perm, x, y, z) => {
 };
 
 const SwarmCursor = ({
-  color = '#ffffff',
-  accentColor = '#ffffffff',
+  color = '#e5b87dff',
+  accentColor = '#dea791ff',
   count = 10,
   size = 10,
   merge = 0.77,

@@ -92,7 +92,21 @@ export default function Hero() {
             {siteConfig.name}
           </h1>
           <p ref={subtitleRef} className="text-lg md:text-2xl font-mono-tech text-gray-400 tracking-widest max-w-4xl mx-auto leading-relaxed mt-12 will-change-transform">
-            {siteConfig.headline}
+            {siteConfig.headline.split('Dooars Tutors').map((part, i, arr) => (
+              <span key={i}>
+                {part}
+                {i < arr.length - 1 && (
+                  <a 
+                    href="https://dooarstutors.in"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-[var(--active-accent)] font-semibold relative after:content-[''] after:absolute after:-bottom-1 after:left-0 after:w-full after:h-px after:bg-[var(--active-accent)] after:origin-right hover:after:origin-left after:scale-x-0 hover:after:scale-x-100 after:transition-transform after:duration-300 transition-colors"
+                  >
+                    Dooars Tutors
+                  </a>
+                )}
+              </span>
+            ))}
           </p>
         </div>
 

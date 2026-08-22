@@ -22,6 +22,7 @@ import ResearchSection from '@/sections/ResearchSection';
 import ExperienceLayer from '@/components/ExperienceLayer';
 import InteractiveTimeline from '@/components/InteractiveTimeline';
 import UnifiedIdentity from '@/components/UnifiedIdentity';
+import ParallaxDemo from '@/demos/default';
 import Contact from '@/sections/Contact';
 
 export default function Home() {
@@ -89,9 +90,10 @@ export default function Home() {
       {!loading && (
         <>
           {/* 2. Swarm Cursor (React Bits) */}
+          {/* CHANGE SWARMCURSOR COLORS HERE! */}
           <SwarmCursor 
-            color="#cfff01"
-            accentColor="#230ac2"
+            color="#e5b87d"
+            accentColor="#dea791"
             className="fixed inset-0 z-30 pointer-events-none" 
             style={{ position: 'fixed' }}
             count={10}
@@ -117,6 +119,7 @@ export default function Home() {
             <ResearchSection />
             <InteractiveTimeline mode="unified" />
             <UnifiedIdentity />
+            <ParallaxDemo />
             <Contact />
           </main>
         </>

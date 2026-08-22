@@ -355,6 +355,53 @@ export const projects = [
   //   },
   // },
   {
+    id: 'manipal_ndvi_lst',
+    title: 'NDVI–LST Multi-Temporal Analysis (Manipal)',
+    tagline: 'Assessing vegetation–temperature dynamics in a monsoon-driven coastal environment',
+    
+    problem:
+    'Understanding the interaction between vegetation greenness and land surface temperature (LST) in monsoon-dominated regions is challenging due to strong seasonal variability and persistent cloud cover, which limits consistent satellite observations.',
+    
+    hypothesis:
+    'Multi-temporal satellite observations can capture seasonal variability in vegetation and temperature, and reveal measurable relationships between NDVI, LST, and precipitation in a coastal monsoon environment.',
+    
+    approach:
+    'Landsat 8 Collection 2 Level-2 data were processed in Google Earth Engine to generate monthly median composites of NDVI and LST from 2020 to 2025. Cloud masking and quality filtering were applied, followed by temporal aggregation. CHIRPS precipitation data were aggregated to monthly totals. Statistical analysis included correlation and trend analysis, while QGIS was used for spatial visualization and seasonal composite mapping.',
+    
+    result:
+      'The study revealed strong seasonal variability, with higher NDVI during monsoon periods and elevated LST during pre-monsoon months. A weak inverse relationship between NDVI and LST (r ≈ −0.26) was observed, indicating that vegetation contributes to temperature moderation but is not the dominant controlling factor. Precipitation showed a stronger influence on vegetation dynamics.',
+      
+      future:
+      'Future work can incorporate higher-resolution datasets, lag-based climatic analysis, and spatial modeling to better understand vegetation–temperature coupling and improve environmental monitoring in monsoon-affected regions.',
+      
+      tech: [
+        'Remote Sensing',
+        'Google Earth Engine',
+        'Landsat 8',
+        'CHIRPS',
+      'QGIS',
+      'Time-Series Analysis',
+      'GIS',
+      'Satellite Imagery',
+      'Geospatial Analysis'
+    ],
+    
+    tags: [
+      'Remote Sensing / GIS',
+      'Research'
+    ],
+
+    featured: true,
+    status: 'completed',
+    year: '2026',
+    location: 'Manipal, India',
+    
+    links: {
+      demo: null,
+      github: null,
+    },
+  },
+  {
     id: 'south_lhonak_glacier',
     title: 'South Lhonak Glacier Health Assessment',
     tagline: 'Analyzing glacier velocity and health post-Teesta flood hazard in Sikkim',
@@ -374,53 +421,6 @@ export const projects = [
     status: 'completed',
     year: '2024',
     location: 'Sikkim, India',
-    links: {
-      demo: null,
-      github: null,
-    },
-  },
-  {
-    id: 'manipal_ndvi_lst',
-    title: 'NDVI–LST Multi-Temporal Analysis (Manipal)',
-    tagline: 'Assessing vegetation–temperature dynamics in a monsoon-driven coastal environment',
-
-    problem:
-      'Understanding the interaction between vegetation greenness and land surface temperature (LST) in monsoon-dominated regions is challenging due to strong seasonal variability and persistent cloud cover, which limits consistent satellite observations.',
-
-    hypothesis:
-      'Multi-temporal satellite observations can capture seasonal variability in vegetation and temperature, and reveal measurable relationships between NDVI, LST, and precipitation in a coastal monsoon environment.',
-
-    approach:
-      'Landsat 8 Collection 2 Level-2 data were processed in Google Earth Engine to generate monthly median composites of NDVI and LST from 2020 to 2025. Cloud masking and quality filtering were applied, followed by temporal aggregation. CHIRPS precipitation data were aggregated to monthly totals. Statistical analysis included correlation and trend analysis, while QGIS was used for spatial visualization and seasonal composite mapping.',
-
-    result:
-      'The study revealed strong seasonal variability, with higher NDVI during monsoon periods and elevated LST during pre-monsoon months. A weak inverse relationship between NDVI and LST (r ≈ −0.26) was observed, indicating that vegetation contributes to temperature moderation but is not the dominant controlling factor. Precipitation showed a stronger influence on vegetation dynamics.',
-
-    future:
-      'Future work can incorporate higher-resolution datasets, lag-based climatic analysis, and spatial modeling to better understand vegetation–temperature coupling and improve environmental monitoring in monsoon-affected regions.',
-
-    tech: [
-      'Remote Sensing',
-      'Google Earth Engine',
-      'Landsat 8',
-      'CHIRPS',
-      'QGIS',
-      'Time-Series Analysis',
-      'GIS',
-      'Satellite Imagery',
-      'Geospatial Analysis'
-    ],
-
-    tags: [
-      'Remote Sensing / GIS',
-      'Research'
-    ],
-
-    featured: true,
-    status: 'completed',
-    year: '2026',
-    location: 'Manipal, India',
-
     links: {
       demo: null,
       github: null,

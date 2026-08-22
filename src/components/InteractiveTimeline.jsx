@@ -19,7 +19,7 @@ const TIMELINE_DATA = [
   {
     year: '2024',
     type: 'Work',
-    title: 'SH1ELD Tech — InfoSec Intern',
+    title: 'SH1ELD Tech InfoSec Solutions — Developer Intern',
     desc: 'Conducted system log audits, analyzed vulnerability metrics, and mapped early local security configurations.',
     location: 'Gangtok, Sikkim',
     mode: 'developer'
@@ -35,7 +35,7 @@ const TIMELINE_DATA = [
   {
     year: '2024',
     type: 'Work',
-    title: 'SH1ELD Tech — Full-Stack Developer',
+    title: 'SH1ELD Tech InfoSec Solutions — Full-Stack Developer',
     desc: 'Built tailored tourism portals and local data workflows for regional agencies. Integrated API routes and optimized database access pipelines.',
     location: 'Gangtok, Sikkim',
     mode: 'developer'

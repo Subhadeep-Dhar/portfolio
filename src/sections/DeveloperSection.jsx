@@ -78,8 +78,9 @@ export default function DeveloperSection() {
         <div className="relative w-full pb-[10vh]">
           {devProjects.map((project, idx) => (
             <div 
+              id={project.id}
               key={`wrapper-${project.id}`} 
-              className="dev-project-wrapper sticky top-[10vh] lg:top-[12vh] w-full flex items-center justify-center mb-16 lg:mb-32 origin-top h-[65vh] lg:h-[80vh]"
+              className="scroll-mt-24 md:scroll-mt-32 dev-project-wrapper sticky top-[10vh] lg:top-[12vh] w-full flex items-center justify-center mb-16 lg:mb-32 origin-top h-[65vh] lg:h-[80vh]"
               style={{ zIndex: idx }}
             >
               <motion.div

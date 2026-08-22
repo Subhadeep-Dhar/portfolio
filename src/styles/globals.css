@@ -189,3 +189,16 @@ h1, h2, h3, h4, .font-display {
     padding: 0 2rem;
   }
 }
+
+/* Responsive Parallax Overrides */
+@media (max-width: 768px) {
+  .parallax-mobile-height {
+    height: 60vh !important;
+  }
+  .parallax-mobile-crop {
+    /* The person is on the LEFT side of the image, so align 35% to keep them visible.
+       You can increase this percentage (e.g. 40%, 50%) to push them further left, 
+       or decrease it (e.g. 20%, 10%) to push them further right on the screen! */
+    object-position: 15% center !important; 
+  }
+}

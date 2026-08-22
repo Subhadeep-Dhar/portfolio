@@ -51,8 +51,7 @@ export function ParallaxComponent() {
 
   return (
     <div className="parallax w-full relative" ref={parallaxRef}>
-      {/* Reduced height to 100vh to eliminate aggressive horizontal zoom so the person is visible */}
-      <section className="relative w-full overflow-hidden parallax__header" style={{ height: '100vh' }}>
+      <section className="relative w-full overflow-hidden parallax__header parallax-mobile-height" style={{ height: '100vh' }}>
         <div className="absolute inset-0 parallax__visuals">
           <div className="absolute top-0 left-0 w-full h-2 bg-black z-50 parallax__black-line-overflow"></div>
           
@@ -67,7 +66,7 @@ export function ParallaxComponent() {
               <img 
                 src="/images/parallax/layer-1-base-no-person.svg" 
                 loading="eager" alt="Base Layer" 
-                className="absolute left-0 w-full object-cover parallax__layer-img" 
+                className="absolute left-0 w-full object-cover parallax__layer-img parallax-mobile-crop" 
                 style={{ top: '-30%', height: '130%' }}
               />
             </div>
@@ -76,7 +75,7 @@ export function ParallaxComponent() {
               <img 
                 src="/images/parallax/layer-2-kanchenjunga-transparent.svg" 
                 loading="eager" alt="Kanchenjunga Mountain" 
-                className="absolute left-0 w-full object-cover parallax__layer-img" 
+                className="absolute left-0 w-full object-cover parallax__layer-img parallax-mobile-crop" 
                 style={{ top: '-30%', height: '130%' }}
               />
             </div>
@@ -85,7 +84,7 @@ export function ParallaxComponent() {
               <img 
                 src="/images/parallax/layer-3-person-foreground-transparent1.svg" 
                 loading="eager" alt="Foreground Clouds" 
-                className="absolute left-0 w-full object-cover parallax__layer-img" 
+                className="absolute left-0 w-full object-cover parallax__layer-img parallax-mobile-crop" 
                 style={{ top: '-30%', height: '130%' }}
               />
             </div>

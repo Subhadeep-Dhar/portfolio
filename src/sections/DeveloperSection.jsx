@@ -80,7 +80,7 @@ export default function DeveloperSection() {
             <div 
               id={project.id}
               key={`wrapper-${project.id}`} 
-              className="scroll-mt-24 md:scroll-mt-32 dev-project-wrapper sticky top-[10vh] lg:top-[12vh] w-full flex items-center justify-center mb-16 lg:mb-32 origin-top h-[65vh] lg:h-[80vh]"
+              className="scroll-mt-24 md:scroll-mt-32 dev-project-wrapper sticky top-[10vh] lg:top-[12vh] w-full flex items-center justify-center mb-16 lg:mb-32 origin-top h-[75vh] lg:h-[80vh]"
               style={{ zIndex: idx }}
             >
               <motion.div
@@ -93,8 +93,8 @@ export default function DeveloperSection() {
                 onClick={() => setActiveProjectId(project.id)}
                 className="dev-project-item w-full h-full flex flex-col lg:flex-row bg-neutral-900 border border-neutral-800 rounded-[1.5rem] lg:rounded-[2rem] overflow-hidden cursor-pointer hover:border-[var(--active-accent)]/80 transition-colors group will-change-transform shadow-2xl"
               >
-                {/* Card Content (Top Half on Mobile, Left Half on Desktop) */}
-                <motion.div layoutId={`card-content-${project.id}`} className="w-full h-[55%] lg:w-1/2 lg:h-full p-6 lg:p-12 xl:p-16 flex flex-col justify-center relative bg-neutral-900 overflow-hidden shrink-0">
+                {/* Card Content */}
+                <motion.div layoutId={`card-content-${project.id}`} className="w-full flex-1 lg:w-1/2 lg:h-full p-6 lg:p-12 xl:p-16 flex flex-col justify-center relative bg-neutral-900 overflow-y-auto no-scrollbar shrink-0">
                   <div className="flex items-center gap-3 mb-4 lg:mb-8">
                     <span className="font-mono-tech text-[10px] lg:text-xs px-3 py-1.5 rounded-full bg-neutral-900 border border-neutral-800 text-neutral-400 uppercase">
                       {project.year}
@@ -104,11 +104,11 @@ export default function DeveloperSection() {
                     </span>
                   </div>
                   
-                  <motion.h4 layoutId={`card-title-${project.id}`} className="font-semibold text-2xl md:text-4xl lg:text-5xl xl:text-6xl text-neutral-100 mb-2 lg:mb-6 tracking-tight leading-tight line-clamp-2">
+                  <motion.h4 layoutId={`card-title-${project.id}`} className="font-semibold text-2xl md:text-4xl lg:text-5xl xl:text-6xl text-neutral-100 mb-2 lg:mb-6 tracking-tight leading-snug pb-1">
                     {project.title}
                   </motion.h4>
                   
-                  <motion.p layoutId={`card-desc-${project.id}`} className="text-sm md:text-base lg:text-xl text-neutral-400 font-light mb-4 lg:mb-12 leading-relaxed max-w-2xl line-clamp-3">
+                  <motion.p layoutId={`card-desc-${project.id}`} className="text-sm md:text-base lg:text-xl text-neutral-400 font-light mb-4 lg:mb-12 leading-relaxed max-w-2xl line-clamp-3 lg:line-clamp-none">
                     {project.tagline}
                   </motion.p>
                   
@@ -121,9 +121,9 @@ export default function DeveloperSection() {
                   </div>
                 </motion.div>
 
-                {/* Card Main Snapshot (Bottom Half on Mobile, Right Half on Desktop) */}
+                {/* Card Main Snapshot */}
                 {project.snapshots && project.snapshots.length > 0 && (
-                  <div className="w-full h-[45%] lg:w-1/2 lg:h-full bg-neutral-950/30 border-t lg:border-t-0 lg:border-l border-neutral-800 flex items-center justify-center p-4 lg:p-12 shrink-0">
+                  <div className="w-full h-[35%] min-h-[200px] lg:min-h-0 lg:h-full lg:w-1/2 bg-neutral-950/30 border-t lg:border-t-0 lg:border-l border-neutral-800 flex items-center justify-center p-4 lg:p-12 shrink-0">
                     <motion.div 
                       layoutId={`card-image-${project.id}`} 
                       className={`relative rounded-xl overflow-hidden shadow-2xl border border-neutral-800/60 bg-neutral-900 flex items-center justify-center ${['poultry_disease_detection', 'grounded_app', 'famspace'].includes(project.id) ? 'w-auto h-full aspect-[9/16] max-w-[220px] lg:max-w-[300px]' : 'w-full max-h-full aspect-video'}`}

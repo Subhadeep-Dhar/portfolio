@@ -109,7 +109,7 @@ export default function Home() {
   });
 
   return (
-    <div ref={containerRef} className="theme-unified min-h-screen" style={{ backgroundColor: '#07090b' }}>
+    <div ref={containerRef} className={`theme-unified min-h-screen ${loading ? "overflow-hidden max-h-screen" : ""}`} style={{ backgroundColor: '#07090b' }}>
       
       {/* 1. Custom boot loader */}
       <AnimatePresence>
@@ -118,9 +118,12 @@ export default function Home() {
         )}
       </AnimatePresence>
 
-      {!loading && (
-        <>
-          {/* 2. Swarm Cursor (React Bits) */}
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: loading ? 0 : 1 }}
+        transition={{ duration: 1, ease: "easeOut" }}
+      >
+        {/* 2. Swarm Cursor (React Bits) */}
           {/* CHANGE SWARMCURSOR COLORS HERE! */}
           <SwarmCursor 
             color="#e5b87d"
@@ -154,8 +157,7 @@ export default function Home() {
             <ParallaxDemo />
             <Contact />
           </main>
-        </>
-      )}
+        </motion.div>
     </div>
   );
 }

@@ -89,10 +89,10 @@ export default function Hero() {
         {/* Main massive headline and name */}
         <div className="space-y-8 [perspective:1000px]">
           <h1 ref={titleRef} className="text-super-hero font-light text-gray-100 will-change-transform">
-            {siteConfig.name}
+            Engineering<br />Creativity
           </h1>
           <p ref={subtitleRef} className="text-lg md:text-2xl font-mono-tech text-gray-400 tracking-widest max-w-4xl mx-auto leading-relaxed mt-12 will-change-transform">
-            {siteConfig.headline.split('Dooars Tutors').map((part, i, arr) => (
+            {siteConfig.name} — {siteConfig.headline.split('Dooars Tutors').map((part, i, arr) => (
               <span key={i}>
                 {part}
                 {i < arr.length - 1 && (

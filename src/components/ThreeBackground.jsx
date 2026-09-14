@@ -1,100 +1,177 @@
-'use client';
+﻿'use client';
 
-import { useRef, useMemo, useEffect } from 'react';
+import { useRef, useMemo, useEffect, useState } from 'react';
 import { Canvas, useFrame, useThree } from '@react-three/fiber';
-import { Points, PointMaterial } from '@react-three/drei';
 import * as THREE from 'three';
+
+// Generate safe unicode characters dynamically
+const generateUniqueSymbols = () => {
+  const ranges = [
+    [0x0985, 0x09B9], // Bengali
+    [0x0904, 0x0939], // Devanagari (Hindi)
+    [0x0B85, 0x0BB9], // Tamil
+    [0x0C05, 0x0C39], // Telugu
+    [0x0D05, 0x0D39], // Malayalam
+    [0x0C85, 0x0CB9], // Kannada
+    [0x0A85, 0x0AB9], // Gujarati
+    [0x0A05, 0x0A39], // Gurmukhi (Punjabi)
+    [0x0B05, 0x0B39], // Odia
+    [0x03B1, 0x03C9], // Greek
+    [0x0410, 0x042F], // Cyrillic
+    [0x3041, 0x3096], // Hiragana
+    [0x4E00, 0x4E50]  // Chinese/Kanji
+  ];
+  let chars = [];
+  for (const [start, end] of ranges) {
+    for (let code = start; code <= end; code++) {
+      chars.push(String.fromCharCode(code));
+    }
+  }
+  // Shuffle to randomize
+  for (let i = chars.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [chars[i], chars[j]] = [chars[j], chars[i]];
+  }
+  return chars.slice(0, 500); // Limit exactly to 500 for safety
+};
+
+const allSymbols = generateUniqueSymbols();
 
 function ParticleField() {
   const ref = useRef();
   const { mouse, viewport } = useThree();
+
+  const [maxScroll, setMaxScroll] = useState(1);
   const scrollRef = useRef(0);
-  
+
   useEffect(() => {
     const handleScroll = () => {
-      const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
-      scrollRef.current = maxScroll > 0 ? window.scrollY / maxScroll : 0;
+      const scrollY = window.scrollY;
+      const height = document.documentElement.scrollHeight - window.innerHeight;
+      setMaxScroll(height);
+      scrollRef.current = height > 0 ? scrollY / height : 0;
     };
     window.addEventListener('scroll', handleScroll, { passive: true });
-    // Trigger once to set initial position
     handleScroll();
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  // Generate a realistic 3D spiral galaxy
-  const { positions, colors } = useMemo(() => {
+  // 1. Generate OS-native font textures (100% crash proof, guaranteed language support)
+  const symbolTextures = useMemo(() => {
+    if (typeof document === 'undefined') return [];
+    return allSymbols.map(sym => {
+      const canvas = document.createElement('canvas');
+      canvas.width = 64;
+      canvas.height = 64;
+      const ctx = canvas.getContext('2d');
+      ctx.fillStyle = '#ffffff';
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'middle';
+      // Native OS font rendering for 500 characters
+      ctx.font = 'bold 40px sans-serif'; 
+      ctx.fillText(sym, 32, 34);
+      const texture = new THREE.CanvasTexture(canvas);
+      texture.minFilter = THREE.LinearFilter;
+      return texture;
+    });
+  }, []);
+
+  // 2. Generate 3D Positions & Colors
+  const { positions, colors, textData } = useMemo(() => {
     const isMobile = typeof window !== 'undefined' ? window.innerWidth < 768 : false;
-    const count = isMobile ? 600 : 1500; // Drastically reduced for mobile
+    const count = isMobile ? 400 : 1000; 
+    
     const positions = new Float32Array(count * 3);
     const colors = new Float32Array(count * 3);
+    const textData = [];
     
-    // Core color: warm starlight, Outer color: deep space blue
     const colorInside = new THREE.Color("#ffb380"); 
     const colorOutside = new THREE.Color("#1b3984"); 
 
     const radius = 30;
-    const branches = 4; // 4 arms for a fuller galaxy
-    const spin = 1.5; // More twist
-    const randomness = 6; // Much more scattered
-    const randomnessPower = 2; // Less crushed to the perfect line
+    const branches = 4;
+    const spin = 1.5;
+    const randomness = 6;
+    const randomnessPower = 2;
+
+    const generatePos = (i, totalCount) => {
+      const isAmbient = i > totalCount * 0.75;
+      if (isAmbient) {
+        return [
+          (Math.random() - 0.5) * radius * 4,
+          (Math.random() - 0.5) * radius * 4,
+          (Math.random() - 0.5) * radius * 4
+        ];
+      } else {
+        const r = Math.sqrt(Math.random()) * radius;
+        const spinAngle = r * spin;
+        const branchAngle = ((i % branches) / branches) * Math.PI * 2;
+        const randomX = Math.pow(Math.random(), randomnessPower) * (Math.random() < 0.5 ? 1 : -1) * randomness * (r / radius + 0.5);
+        const randomY = Math.pow(Math.random(), randomnessPower) * (Math.random() < 0.5 ? 1 : -1) * (randomness * 2.5) * (r / radius + 0.5); 
+        const randomZ = Math.pow(Math.random(), randomnessPower) * (Math.random() < 0.5 ? 1 : -1) * randomness * (r / radius + 0.5);
+        return [
+          Math.cos(branchAngle + spinAngle) * r + randomX,
+          randomY,
+          Math.sin(branchAngle + spinAngle) * r + randomZ
+        ];
+      }
+    };
+
+    const getColor = (r) => {
+      const mixedColor = colorInside.clone();
+      mixedColor.lerp(colorOutside, r / radius);
+      return mixedColor;
+    };
 
     for (let i = 0; i < count; i++) {
       const i3 = i * 3;
+      const [x, y, z] = generatePos(i, count);
+      const isAmbient = i > count * 0.75;
       
-      // 25% of particles are ambient deep space stars completely surrounding the galaxy
-      const isAmbient = i > count * 0.75; 
+      positions[i3] = x;
+      positions[i3 + 1] = y;
+      positions[i3 + 2] = z;
 
       if (isAmbient) {
-        // Widely scattered deep space stars
-        positions[i3] = (Math.random() - 0.5) * radius * 4;
-        positions[i3 + 1] = (Math.random() - 0.5) * radius * 4;
-        positions[i3 + 2] = (Math.random() - 0.5) * radius * 4;
-
-        // Dimmer, deep blue stars for the background
         colors[i3] = colorOutside.r * 0.8;
         colors[i3 + 1] = colorOutside.g * 0.8;
         colors[i3 + 2] = colorOutside.b * 0.8;
       } else {
-      // Math.sqrt pulls more particles towards the outer edges instead of grouping at the center
-      const r = Math.sqrt(Math.random()) * radius;
-      const spinAngle = r * spin;
-      const branchAngle = ((i % branches) / branches) * Math.PI * 2;
-
-      // Curve the randomness so dust clusters closer to the arms but remains scattered
-      // Massively increase the Y scatter (thickness) so particles float up around the camera
-      const randomX = Math.pow(Math.random(), randomnessPower) * (Math.random() < 0.5 ? 1 : -1) * randomness * (r / radius + 0.5);
-      const randomY = Math.pow(Math.random(), randomnessPower) * (Math.random() < 0.5 ? 1 : -1) * (randomness * 2.5) * (r / radius + 0.5); 
-      const randomZ = Math.pow(Math.random(), randomnessPower) * (Math.random() < 0.5 ? 1 : -1) * randomness * (r / radius + 0.5);
-
-      positions[i3] = Math.cos(branchAngle + spinAngle) * r + randomX;
-      positions[i3 + 1] = randomY; 
-      positions[i3 + 2] = Math.sin(branchAngle + spinAngle) * r + randomZ;
-
-        // Interpolate color based on distance from core
-        const mixedColor = colorInside.clone();
-        mixedColor.lerp(colorOutside, r / radius);
-        
-        colors[i3] = mixedColor.r;
-        colors[i3 + 1] = mixedColor.g;
-        colors[i3 + 2] = mixedColor.b;
+        const r = Math.sqrt(x*x + z*z);
+        const col = getColor(r);
+        colors[i3] = col.r;
+        colors[i3 + 1] = col.g;
+        colors[i3 + 2] = col.b;
       }
     }
+
+    const textCount = isMobile ? 250 : 500;
+    for (let i = 0; i < textCount; i++) {
+      const [x, y, z] = generatePos(i, textCount);
+      const isAmbient = i > textCount * 0.75;
+      
+      const r = Math.sqrt(x*x + z*z);
+      const col = isAmbient ? new THREE.Color(colorOutside).multiplyScalar(0.8) : getColor(r);
+      
+      textData.push({
+        position: [x, y, z],
+        color: col,
+        scale: 0.4 + Math.random() * 0.6
+      });
+    }
     
-    return { positions, colors };
+    return { positions, colors, textData };
   }, []);
+
 
   useFrame((state, delta) => {
     if (ref.current) {
-      // Base slow rotation
       ref.current.rotation.x -= delta / 10;
       ref.current.rotation.y -= delta / 15;
       
-      // Gentle parallax reacting to mouse pointer (GSAP-like buttery smooth target easing)
       const targetX = (mouse.x * viewport.width) / 100;
       const targetY = (mouse.y * viewport.height) / 100;
-      
-      // Link scroll position to Z-axis rotation for a spinning galaxy effect
-      const targetZ = scrollRef.current * Math.PI * 3; // Spin 1.5 times over full page scroll
+      const targetZ = scrollRef.current * Math.PI * 3; 
       
       ref.current.rotation.x += 0.02 * (targetY - ref.current.rotation.x);
       ref.current.rotation.y += 0.02 * (targetX - ref.current.rotation.y);
@@ -104,31 +181,30 @@ function ParticleField() {
 
   return (
     <group rotation={[Math.PI * 0.15, 0, Math.PI / 4]}>
-      <points ref={ref} frustumCulled={false}>
-        <bufferGeometry>
-          <bufferAttribute 
-            attach="attributes-position" 
-            count={positions.length / 3} 
-            array={positions} 
-            itemSize={3} 
-          />
-          <bufferAttribute 
-            attach="attributes-color" 
-            count={colors.length / 3} 
-            array={colors} 
-            itemSize={3} 
-          />
-        </bufferGeometry>
-        <pointsMaterial 
-          size={0.12}
-          sizeAttenuation={true}
-          depthWrite={false}
-          blending={THREE.AdditiveBlending}
-          vertexColors={true}
-          transparent={true}
-          opacity={0.8}
-        />
-      </points>
+      <group ref={ref}>
+        {/* Core Galaxy Particles */}
+        <points frustumCulled={false}>
+          <bufferGeometry>
+            <bufferAttribute attach="attributes-position" count={positions.length / 3} array={positions} itemSize={3} />
+            <bufferAttribute attach="attributes-color" count={colors.length / 3} array={colors} itemSize={3} />
+          </bufferGeometry>
+          <pointsMaterial size={0.15} sizeAttenuation={true} depthWrite={false} blending={THREE.AdditiveBlending} vertexColors={true} transparent={true} opacity={0.6} />
+        </points>
+
+        {/* 500 Beautiful OS-Native Sprites representing global languages */}
+        {symbolTextures.length > 0 && textData.map((data, idx) => (
+          <sprite key={idx} position={data.position} scale={[data.scale, data.scale, 1]}>
+            <spriteMaterial 
+              map={symbolTextures[idx % symbolTextures.length]} 
+              color={data.color} 
+              transparent={true} 
+              opacity={0.8} 
+              depthWrite={false} 
+              blending={THREE.AdditiveBlending} 
+            />
+          </sprite>
+        ))}
+      </group>
     </group>
   );
 }
@@ -136,14 +212,9 @@ function ParticleField() {
 export default function ThreeBackground() {
   return (
     <div className="fixed inset-0 z-0 pointer-events-none bg-transparent">
-      <Canvas 
-        camera={{ position: [0, 0, 10] }} 
-        dpr={1} 
-        gl={{ antialias: false, powerPreference: "high-performance", alpha: true }}
-      >
+      <Canvas camera={{ position: [0, 0, 10] }} dpr={1} gl={{ antialias: false, powerPreference: "high-performance", alpha: true }}>
         <ParticleField />
       </Canvas>
-      {/* Vignette Overlay for cinematic feel, completely neutral black alpha */}
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_transparent_20%,_rgba(0,0,0,0.8)_100%)] pointer-events-none" />
     </div>
   );

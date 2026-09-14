@@ -51,11 +51,22 @@ export default function InteractiveBackground({ focus = 'home' }) {
     window.addEventListener('mouseleave', handleMouseLeave);
     window.addEventListener('mousedown', handleMouseDown);
 
+    // Cultural and Personal Symbols for the Milky Way background
+    const items = [
+      '\u0985', '\u0986', '\u0995', '\u0996', '\u0997', '\u099A', '\u099B', '\u099C', 
+      '\u099F', '\u09A0', '\u09A4', '\u09A5', '\u09A6', '\u09A7', '\u09A8', '\u09AA', 
+      '\u09AB', '\u09AC', '\u09AD', '\u09AE', '\u09AF', '\u09B0', '\u09B2', '\u09B6', 
+      '\u09B7', '\u09B8', '\u09B9',
+      'Bengal', 'Sikkim', 'Nepal', 'North East', 'Bhutan', 'Tibet', 'Himalayas',
+      'Kanchenjunga', 'Mount Everest', 'Makalu', 'Lhotse', 'Sandakphu', 'Singalila', 'Annapurna', 'Nanda Devi',
+      'Aurora', 'Milky Way', 'Paragliding', 'Mountaineering', 'Explore', 'Trek', 'Dreams', 'Wanderlust'
+    ];
+    
     // Pre-build star coordinates for Milky Way Galaxy (Researcher Mode)
     const stars = [];
     const numStars = 220;
     for (let i = 0; i < numStars; i++) {
-      const isMilkyWay = Math.random() < 0.75; // 75% of stars lie in the Milky Way band
+      const isMilkyWay = Math.random() < 0.75; // 75% of items lie in the Milky Way band
       let x, y;
       if (isMilkyWay) {
         x = Math.random() * width;
@@ -65,9 +76,23 @@ export default function InteractiveBackground({ focus = 'home' }) {
         x = Math.random() * width;
         y = Math.random() * height * 0.8;
       }
+      
+      const typeRand = Math.random();
+      let type, text = null, fontSize = null;
+      if (typeRand < 0.15) {
+        type = 'dot';
+      } else {
+        type = 'text';
+        text = items[Math.floor(Math.random() * items.length)];
+        fontSize = 10 + Math.random() * 14; // Text size for depth
+      }
+
       stars.push({
         x,
         y,
+        type,
+        text,
+        fontSize,
         radius: 0.5 + Math.random() * 1.3,
         phase: Math.random() * Math.PI * 2,
         speed: 0.008 + Math.random() * 0.015,
@@ -286,7 +311,7 @@ export default function InteractiveBackground({ focus = 'home' }) {
           ctx.fillStyle = mwGrad;
           ctx.fillRect(0, 0, width, height);
 
-          // 3. Twinkling Stars (Parallax Scroll)
+          // 3. Twinkling Stars & Cultural Symbols (Parallax Scroll)
           stars.forEach((star) => {
             const starY = star.y - scrollProgress * (height * 0.35);
             if (starY < -20 || starY > height + 20) return;
@@ -295,9 +320,15 @@ export default function InteractiveBackground({ focus = 'home' }) {
             ctx.fillStyle = star.phase > Math.PI 
               ? `rgba(184, 199, 194, ${alpha})` 
               : `rgba(210, 193, 168, ${alpha})`;
-            ctx.beginPath();
-            ctx.arc(star.x, starY, star.radius, 0, Math.PI * 2);
-            ctx.fill();
+            
+            if (star.type === 'text') {
+              ctx.font = `${star.fontSize}px 'Inter', -apple-system, sans-serif`;
+              ctx.fillText(star.text, star.x, starY);
+            } else {
+              ctx.beginPath();
+              ctx.arc(star.x, starY, star.radius, 0, Math.PI * 2);
+              ctx.fill();
+            }
           });
         }
 

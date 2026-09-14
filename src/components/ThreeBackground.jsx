@@ -1,6 +1,6 @@
 ﻿'use client';
 
-import { useRef, useMemo, useEffect, useState } from 'react';
+import { useRef, useMemo, useEffect } from 'react';
 import { Canvas, useFrame, useThree } from '@react-three/fiber';
 import * as THREE from 'three';
 
@@ -39,16 +39,14 @@ const allSymbols = generateUniqueSymbols();
 
 function ParticleField() {
   const ref = useRef();
-  const { mouse, viewport } = useThree();
+  
 
-  const [maxScroll, setMaxScroll] = useState(1);
   const scrollRef = useRef(0);
 
   useEffect(() => {
     const handleScroll = () => {
       const scrollY = window.scrollY;
       const height = document.documentElement.scrollHeight - window.innerHeight;
-      setMaxScroll(height);
       scrollRef.current = height > 0 ? scrollY / height : 0;
     };
     window.addEventListener('scroll', handleScroll, { passive: true });
@@ -169,8 +167,8 @@ function ParticleField() {
       ref.current.rotation.x -= delta / 10;
       ref.current.rotation.y -= delta / 15;
       
-      const targetX = (mouse.x * viewport.width) / 100;
-      const targetY = (mouse.y * viewport.height) / 100;
+      const targetX = ((state.pointer ? state.pointer.x : state.mouse.x) * state.viewport.width) / 100;
+      const targetY = ((state.pointer ? state.pointer.y : state.mouse.y) * state.viewport.height) / 100;
       const targetZ = scrollRef.current * Math.PI * 3; 
       
       ref.current.rotation.x += 0.02 * (targetY - ref.current.rotation.x);

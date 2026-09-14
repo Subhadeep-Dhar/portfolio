@@ -50,7 +50,7 @@ function ParticleField() {
     
     // Chunk generation into 25 canvas creations per frame to keep the bootloader 60fps
     const generateChunk = () => {
-      const end = Math.min(i + 25, allSymbols.length);
+      const end = Math.min(i + 10, allSymbols.length);
       for (; i < end; i++) {
         const canvas = document.createElement('canvas');
         canvas.width = 64;
@@ -252,11 +252,11 @@ function ParticleField() {
 
 export default function ThreeBackground() {
   return (
-    <div className="fixed inset-0 z-0 pointer-events-none bg-transparent">
+    <div className="fixed top-0 left-0 w-full h-[100svh] z-0 pointer-events-none bg-transparent">
       <Canvas camera={{ position: [0, 0, 10] }} dpr={1} gl={{ antialias: false, powerPreference: "high-performance", alpha: true }}>
         <ParticleField />
       </Canvas>
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_transparent_20%,_rgba(0,0,0,0.8)_100%)] pointer-events-none" />
+      <div className="absolute top-0 left-0 w-full h-[100svh] bg-[radial-gradient(ellipse_at_center,_transparent_20%,_rgba(0,0,0,0.8)_100%)] pointer-events-none" />
     </div>
   );
 }

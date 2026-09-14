@@ -4,35 +4,41 @@ import { useRef, useMemo, useEffect, useState } from 'react';
 import { Canvas, useFrame, useThree } from '@react-three/fiber';
 import * as THREE from 'three';
 
-// Generate safe unicode characters dynamically
+// Explicit list of visually striking, 100% valid unicode characters (NO unassigned tofu boxes)
+const VALID_CHARS = 
+  // --- 10 INDIAN LANGUAGES ---
+  "অআইঈউঊঋএঐওঔকখগঘঙচছজঝঞটঠডঢণতথদধনপফবভমযরলশষসহড়ঢ়য়" + // 1. Bengali
+  "अआइईउऊऋएऐओऔकखगघङचछजझञटठडढणतथदधनपफबभमयरलवशषसह" + // 2. Hindi (Devanagari)
+  "அஆஇஈஉஊஎஏஐஒஓஔகஙசஞடணதநபமயரலவழளறன" + // 3. Tamil
+  "అఆఇఈఉఊఋఎఏఐఒఓఔకఖగఘఙచఛజఝఞటఠడఢణతథదధనపఫబభమయరలవశషసహ" + // 4. Telugu
+  "അആഇഈഉഊഋഎഏഐഒഓഔകഖഗഘങചഛജഝഞടഠഡഢണതഥദധനപഫബഭമയരലവശഷസഹ" + // 5. Malayalam
+  "ಅಆಇಈಉಊಋಎಏಐಒಓಔಕಖಗಘಙಚಛಜಝಞಟಠಡಢಣತಥದಧನಪಫಬಭಮಯರಲವಶಷಸಹ" + // 6. Kannada
+  "અઆઇઈઉઊઋએઐઓઔકખગઘઙચછજઝઞટઠડઢણતથદધનપફબભમયરલવશષસહ" + // 7. Gujarati
+  "ਅਆਇਈਉਊਏਐਓਔਕਖਗਘਙਚਛਜਝਞਟਠਡਢਣਤਥਦਧਨਪਫਬਭਮਯਰਲਵਸ਼ਸਹ" + // 8. Gurmukhi (Punjabi)
+  "ଅଆଇଈଉଊଋଏଐଓଔକଖଗଘଙଚଛଜଝଞଟଠଡଢଣତଥଦଧନପଫବଭମଯରଲଳଵଶଷସହ" + // 9. Odia
+  "ᱚᱛᱜᱝᱞᱟᱠᱡᱢᱣᱤᱥᱦᱧᱨᱩᱪᱫᱬᱭᱮᱯᱰᱱᱲᱳᱴᱵᱶᱷ" + // 10. Santali (Ol Chiki)
+  
+  // --- 5 INTERNATIONAL LANGUAGES ---
+  "αβγδεζηθικλμνξοπρστυφχψω" + // 11. Greek
+  "АБВГДЕЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ" + // 12. Cyrillic (Russian)
+  "あいうえおかきくけこさしすせそたちつてとなにぬねのはひふへほまみむめもやゆよらりるれろわをん" + // 13. Japanese (Hiragana)
+  "宙星空天宇銀河光輝夢幻神龍剣魔法命魂愛平和希望未来" + // 14. Chinese (Kanji Space Theme)
+  "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz"; // 15. English (Latin)
+
 const generateUniqueSymbols = () => {
-  const ranges = [
-    [0x0985, 0x09B9], // Bengali
-    [0x0904, 0x0939], // Devanagari (Hindi)
-    [0x0B85, 0x0BB9], // Tamil
-    [0x0C05, 0x0C39], // Telugu
-    [0x0D05, 0x0D39], // Malayalam
-    [0x0C85, 0x0CB9], // Kannada
-    [0x0A85, 0x0AB9], // Gujarati
-    [0x0A05, 0x0A39], // Gurmukhi (Punjabi)
-    [0x0B05, 0x0B39], // Odia
-    [0x03B1, 0x03C9], // Greek
-    [0x0410, 0x042F], // Cyrillic
-    [0x3041, 0x3096], // Hiragana
-    [0x4E00, 0x4E50]  // Chinese/Kanji
-  ];
-  let chars = [];
-  for (const [start, end] of ranges) {
-    for (let code = start; code <= end; code++) {
-      chars.push(String.fromCharCode(code));
-    }
+  let chars = VALID_CHARS.split('');
+  
+  // Duplicate array until we have at least 500 characters
+  while (chars.length < 500) {
+    chars = chars.concat(VALID_CHARS.split(''));
   }
+  
   // Shuffle to randomize
   for (let i = chars.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1));
     [chars[i], chars[j]] = [chars[j], chars[i]];
   }
-  return chars.slice(0, 500); // Limit exactly to 500 for safety
+  return chars.slice(0, 500);
 };
 
 const allSymbols = generateUniqueSymbols();

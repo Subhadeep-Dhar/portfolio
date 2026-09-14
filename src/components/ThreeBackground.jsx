@@ -69,7 +69,7 @@ function ParticleField() {
     const textData = [];
     
     const colorInside = new THREE.Color("#ffb380"); 
-    const colorOutside = new THREE.Color("#1b3984"); 
+    const colorOutside = new THREE.Color("#d4a373"); 
 
     const radius = 30;
     const branches = 4;
@@ -154,19 +154,28 @@ function ParticleField() {
   const dampedMouse = useRef(new THREE.Vector2(0, 0));
 
   useEffect(() => {
+    // Zero-overhead resize observer
+    const resizeObserver = new ResizeObserver((entries) => {
+      for (let entry of entries) {
+        if (entry.target === document.body) {
+          const newHeight = entry.contentRect.height - window.innerHeight;
+          maxScrollRef.current = newHeight > 0 ? newHeight : 1;
+        }
+      }
+    });
+
+    resizeObserver.observe(document.body);
+    
     const handleResize = () => {
-      const height = document.documentElement.scrollHeight - window.innerHeight;
+      const height = document.body.scrollHeight - window.innerHeight;
       maxScrollRef.current = height > 0 ? height : 1;
     };
     window.addEventListener('resize', handleResize, { passive: true });
-    // MutationObserver to catch dynamic page height changes on load
-    const observer = new MutationObserver(handleResize);
-    observer.observe(document.body, { childList: true, subtree: true });
-    
     handleResize();
+
     return () => {
+      resizeObserver.disconnect();
       window.removeEventListener('resize', handleResize);
-      observer.disconnect();
     };
   }, []);
 
@@ -176,7 +185,7 @@ function ParticleField() {
       const currentScrollRaw = window.scrollY / maxScrollRef.current;
       
       // 2. Frame-independent mathematical damping (removes all variable refresh rate jitter)
-      dampedScroll.current = THREE.MathUtils.damp(dampedScroll.current, currentScrollRaw, 4, delta);
+      dampedScroll.current = THREE.MathUtils.damp(dampedScroll.current, currentScrollRaw, 25, delta);
       
       const mx = state.pointer ? state.pointer.x : state.mouse.x || 0;
       const my = state.pointer ? state.pointer.y : state.mouse.y || 0;

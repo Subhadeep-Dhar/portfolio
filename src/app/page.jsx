@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
@@ -28,6 +28,39 @@ import Contact from '@/sections/Contact';
 export default function Home() {
   const [loading, setLoading] = useState(true);
   const containerRef = useRef(null);
+
+  // Synthesized zero-latency, zero-network click sound
+  useEffect(() => {
+    const playClickSound = () => {
+      if (!window.audioCtx) {
+        const AudioContext = window.AudioContext || window.webkitAudioContext;
+        if (!AudioContext) return;
+        window.audioCtx = new AudioContext();
+      }
+      const ctx = window.audioCtx;
+      if (ctx.state === 'suspended') ctx.resume();
+      
+      const osc = ctx.createOscillator();
+      const gainNode = ctx.createGain();
+      
+      osc.type = 'sine';
+      osc.frequency.setValueAtTime(800, ctx.currentTime);
+      osc.frequency.exponentialRampToValueAtTime(100, ctx.currentTime + 0.05);
+      
+      gainNode.gain.setValueAtTime(0.05, ctx.currentTime);
+      gainNode.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.05);
+      
+      osc.connect(gainNode);
+      gainNode.connect(ctx.destination);
+      
+      osc.start();
+      osc.stop(ctx.currentTime + 0.05);
+    };
+
+    window.addEventListener('click', playClickSound, { passive: true });
+    return () => window.removeEventListener('click', playClickSound);
+  }, []);
+
 
   // Scroll background colors
   useGSAP(() => {

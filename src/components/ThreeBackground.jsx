@@ -1,6 +1,6 @@
 ﻿'use client';
 
-import { useRef, useMemo, useEffect } from 'react';
+import { useRef, useMemo, useEffect, useState } from 'react';
 import { Canvas, useFrame, useThree } from '@react-three/fiber';
 import * as THREE from 'three';
 
@@ -40,23 +40,42 @@ const allSymbols = generateUniqueSymbols();
 function ParticleField() {
   const ref = useRef();
 
-  // 1. Generate OS-native font textures (100% crash proof, guaranteed language support)
-  const symbolTextures = useMemo(() => {
-    if (typeof document === 'undefined') return [];
-    return allSymbols.map(sym => {
-      const canvas = document.createElement('canvas');
-      canvas.width = 64;
-      canvas.height = 64;
-      const ctx = canvas.getContext('2d');
-      ctx.fillStyle = '#ffffff';
-      ctx.textAlign = 'center';
-      ctx.textBaseline = 'middle';
-      ctx.font = 'bold 40px sans-serif'; 
-      ctx.fillText(sym, 32, 34);
-      const texture = new THREE.CanvasTexture(canvas);
-      texture.minFilter = THREE.LinearFilter;
-      return texture;
-    });
+  // 1. Generate OS-native font textures asynchronously (Zero main-thread lag)
+  const [symbolTextures, setSymbolTextures] = useState([]);
+
+  useEffect(() => {
+    if (typeof document === 'undefined') return;
+    const textures = [];
+    let i = 0;
+    
+    // Chunk generation into 25 canvas creations per frame to keep the bootloader 60fps
+    const generateChunk = () => {
+      const end = Math.min(i + 25, allSymbols.length);
+      for (; i < end; i++) {
+        const canvas = document.createElement('canvas');
+        canvas.width = 64;
+        canvas.height = 64;
+        const ctx = canvas.getContext('2d');
+        ctx.fillStyle = '#ffffff';
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+        ctx.font = 'bold 40px sans-serif'; 
+        ctx.fillText(allSymbols[i], 32, 34);
+        
+        const texture = new THREE.CanvasTexture(canvas);
+        texture.minFilter = THREE.LinearFilter;
+        textures.push(texture);
+      }
+      
+      if (i < allSymbols.length) {
+        requestAnimationFrame(generateChunk); // Yield to browser to draw frame
+      } else {
+        setSymbolTextures(textures);
+      }
+    };
+    
+    // Start generating asynchronously
+    requestAnimationFrame(generateChunk);
   }, []);
 
   // 2. Generate 3D Positions & Colors

@@ -39,20 +39,6 @@ const allSymbols = generateUniqueSymbols();
 
 function ParticleField() {
   const ref = useRef();
-  
-
-  const scrollRef = useRef(0);
-
-  useEffect(() => {
-    const handleScroll = () => {
-      const scrollY = window.scrollY;
-      const height = document.documentElement.scrollHeight - window.innerHeight;
-      scrollRef.current = height > 0 ? scrollY / height : 0;
-    };
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    handleScroll();
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
 
   // 1. Generate OS-native font textures (100% crash proof, guaranteed language support)
   const symbolTextures = useMemo(() => {
@@ -65,7 +51,6 @@ function ParticleField() {
       ctx.fillStyle = '#ffffff';
       ctx.textAlign = 'center';
       ctx.textBaseline = 'middle';
-      // Native OS font rendering for 500 characters
       ctx.font = 'bold 40px sans-serif'; 
       ctx.fillText(sym, 32, 34);
       const texture = new THREE.CanvasTexture(canvas);
@@ -161,19 +146,49 @@ function ParticleField() {
     return { positions, colors, textData };
   }, []);
 
+  
+
+  // Deterministic damping states
+  const maxScrollRef = useRef(1);
+  const dampedScroll = useRef(0);
+  const dampedMouse = useRef(new THREE.Vector2(0, 0));
+
+  useEffect(() => {
+    const handleResize = () => {
+      const height = document.documentElement.scrollHeight - window.innerHeight;
+      maxScrollRef.current = height > 0 ? height : 1;
+    };
+    window.addEventListener('resize', handleResize, { passive: true });
+    // MutationObserver to catch dynamic page height changes on load
+    const observer = new MutationObserver(handleResize);
+    observer.observe(document.body, { childList: true, subtree: true });
+    
+    handleResize();
+    return () => {
+      window.removeEventListener('resize', handleResize);
+      observer.disconnect();
+    };
+  }, []);
 
   useFrame((state, delta) => {
     if (ref.current) {
-      ref.current.rotation.x -= delta / 10;
-      ref.current.rotation.y -= delta / 15;
+      // 1. Read scroll directly without firing DOM events (100% zero latency)
+      const currentScrollRaw = window.scrollY / maxScrollRef.current;
       
-      const targetX = ((state.pointer ? state.pointer.x : state.mouse.x) * state.viewport.width) / 100;
-      const targetY = ((state.pointer ? state.pointer.y : state.mouse.y) * state.viewport.height) / 100;
-      const targetZ = scrollRef.current * Math.PI * 3; 
+      // 2. Frame-independent mathematical damping (removes all variable refresh rate jitter)
+      dampedScroll.current = THREE.MathUtils.damp(dampedScroll.current, currentScrollRaw, 4, delta);
       
-      ref.current.rotation.x += 0.02 * (targetY - ref.current.rotation.x);
-      ref.current.rotation.y += 0.02 * (targetX - ref.current.rotation.y);
-      ref.current.rotation.z += 0.03 * (targetZ - ref.current.rotation.z);
+      const mx = state.pointer ? state.pointer.x : state.mouse.x || 0;
+      const my = state.pointer ? state.pointer.y : state.mouse.y || 0;
+      dampedMouse.current.x = THREE.MathUtils.damp(dampedMouse.current.x, mx, 4, delta);
+      dampedMouse.current.y = THREE.MathUtils.damp(dampedMouse.current.y, my, 4, delta);
+
+      // 3. Absolute deterministic rotation
+      const time = state.clock.elapsedTime;
+      
+      ref.current.rotation.x = (-time / 10) + ((dampedMouse.current.y * state.viewport.height) / 100);
+      ref.current.rotation.y = (-time / 15) + ((dampedMouse.current.x * state.viewport.width) / 100);
+      ref.current.rotation.z = dampedScroll.current * Math.PI * 3;
     }
   });
 

@@ -12,6 +12,7 @@ import dynamic from 'next/dynamic';
 import BootLoader from '@/components/BootLoader';
 import SwarmCursor from '@/components/SwarmCursor';
 import Navbar from '@/components/Navbar';
+import MusicPlayer from '@/components/MusicPlayer';
 
 const ThreeBackground = dynamic(() => import('@/components/ThreeBackground'), { ssr: false });
 
@@ -29,9 +30,9 @@ export default function Home() {
   const [loading, setLoading] = useState(true);
   const containerRef = useRef(null);
 
-  // Synthesized zero-latency, zero-network click sound
+      // Synthesized zero-latency, zero-network click sound
   useEffect(() => {
-    const playClickSound = () => {
+    const handleInteraction = () => {
       if (!window.audioCtx) {
         const AudioContext = window.AudioContext || window.webkitAudioContext;
         if (!AudioContext) return;
@@ -42,23 +43,19 @@ export default function Home() {
       
       const osc = ctx.createOscillator();
       const gainNode = ctx.createGain();
-      
       osc.type = 'sine';
       osc.frequency.setValueAtTime(800, ctx.currentTime);
       osc.frequency.exponentialRampToValueAtTime(100, ctx.currentTime + 0.05);
-      
       gainNode.gain.setValueAtTime(0.05, ctx.currentTime);
       gainNode.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.05);
-      
       osc.connect(gainNode);
       gainNode.connect(ctx.destination);
-      
       osc.start();
       osc.stop(ctx.currentTime + 0.05);
     };
 
-    window.addEventListener('click', playClickSound, { passive: true });
-    return () => window.removeEventListener('click', playClickSound);
+    window.addEventListener('click', handleInteraction, { passive: true });
+    return () => window.removeEventListener('click', handleInteraction);
   }, []);
 
 
@@ -113,6 +110,7 @@ export default function Home() {
 
   return (
     <div ref={containerRef} className="theme-unified min-h-screen" style={{ backgroundColor: '#07090b' }}>
+      
       {/* 1. Custom boot loader */}
       <AnimatePresence>
         {loading && (
@@ -140,6 +138,7 @@ export default function Home() {
 
           {/* Immersive header */}
           <Navbar />
+          <MusicPlayer />
 
           {/* Three.js interactive background */}
           <ThreeBackground />

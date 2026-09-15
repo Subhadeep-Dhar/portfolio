@@ -10,6 +10,7 @@ import { siteConfig } from '@/data/siteConfig';
 export const metadata = {
   title:       siteConfig.seo.title,
   description: siteConfig.seo.description,
+  keywords:    siteConfig.seo.keywords,
   metadataBase: new URL(siteConfig.seo.url),
   openGraph: {
     title:       siteConfig.seo.title,
@@ -23,6 +24,9 @@ export const metadata = {
     title:       siteConfig.seo.title,
     description: siteConfig.seo.description,
     images:      [siteConfig.seo.ogImage],
+  },
+  verification: {
+    google: 'dab59391ec3b6ffa', // Using the code extracted from the verification filename
   },
 };
 

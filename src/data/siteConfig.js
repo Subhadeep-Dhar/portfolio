@@ -32,9 +32,10 @@ export const siteConfig = {
 
   // ─── SEO ──────────────────────────────────────────────────────
   seo: {
-    title:       'Subhadeep Dhar — Developer Lab',
-    description: 'MCA student, developer, and analyst. I build thoughtful software at the intersection of data, language, and product.',
+    title:       'Subhadeep Dhar — Developer Portfolio & Lab',
+    description: 'Portfolio of Subhadeep Dhar, MCA student, software developer, and researcher. Discover my projects, skills, and experience in building thoughtful software.',
     url:         'https://portfolio-subhadeep-dhar.vercel.app/',
     ogImage:     '/og.png',
+    keywords:    ['Subhadeep Dhar', 'Subhadeep', 'Subhadeep Dhar Portfolio', 'Developer', 'Software Engineer', 'Dooars Tutors', 'MCA Student'],
   },
 };
